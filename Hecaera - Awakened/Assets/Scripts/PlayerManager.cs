@@ -9,30 +9,22 @@ namespace SoulsLike
         InputHandler inputHandler;
         Animator anim;
         CameraHandler cameraHandler;
-        PlayerLocomotion playerLocomotion;
+        PlayerLocomotionManager playerLocomotion;
         PlayerAnimatorManager playerAnimatorManager;
+        PlayerStatsManager playerStatsManager;
 
         public GameObject interactableUIGameObject;
         public GameObject itemInteractableGameObject;
 
-        public bool isInteracting;
-
-        [Header("Player Flags")]
-        public bool isSprinting;
-        public bool isInAir;
-        public bool isGrounded;
-        public bool canDoCombo;
-        public bool isUsingRightHand;
-        public bool isUsingLeftHand;
-        public bool isInvulnerable;
-
         private void Awake()
         {
             cameraHandler = FindObjectOfType<CameraHandler>();
+            backStabCollider = GetComponentInChildren<CriticalDamageCollider>();
             inputHandler = GetComponent<InputHandler>();
-            playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
-            anim = GetComponentInChildren<Animator>();
-            playerLocomotion = GetComponent<PlayerLocomotion>();
+            playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+            anim = GetComponent<Animator>();
+            playerLocomotion = GetComponent<PlayerLocomotionManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
         }
 
         // Start is called before the first frame update
@@ -55,11 +47,15 @@ namespace SoulsLike
 
             anim.SetBool("isBlocking", isBlocking);
             anim.SetBool("isInAir", isInAir);
+            anim.SetBool("isDead", playerStatsManager.isDead);
 
             inputHandler.TickInput(delta);
             playerAnimatorManager.canRotate = anim.GetBool("canRotate");
             playerLocomotion.HandleRollingAndSprinting(delta);
             playerLocomotion.HandleJumping();
+            playerStatsManager.RegenerateStamina();
+
+            CheckForInteractableObject();
         }
 
         private void FixedUpdate()
@@ -100,11 +96,59 @@ namespace SoulsLike
 
         #region Player Interactions
 
+        public void CheckForInteractableObject()
+        {
+            RaycastHit hit;
+
+            // Added second ShpereCast to keep triggering when player walks over interactable object
+            if (Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f))
+            {
+                if(hit.collider.tag == "Interactable")
+                {
+                    Interactable interactableObject = hit.collider.GetComponent<Interactable>();
+
+                    if(interactableObject != null)
+                    {
+                        string interactableText = interactableObject.interactableText;
+                        interactableUIGameObject.SetActive(true);
+
+                        if (inputHandler.a_Input)
+                        {
+                            hit.collider.GetComponent<Interactable>().Interact(this);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(interactableUIGameObject != null)
+                {
+                    interactableUIGameObject.SetActive(false);
+                }
+
+                if(interactableUIGameObject != null && inputHandler.a_Input)
+                {
+                    itemInteractableGameObject.SetActive(false);
+                }
+            }
+        }
+
         public void OpenChestInteraction(Transform playerStandsHereWhenOpeningChest)
         {
             playerLocomotion.rigidbody.velocity = Vector3.zero; //Stop the player from sliding
             transform.position = playerStandsHereWhenOpeningChest.transform.position;
             playerAnimatorManager.PlayTargetAnimation("Open Chest", true);
+        }
+
+        public void PassThroughFogWallInteraction(Transform fogWallEntrance)
+        {
+            playerLocomotion.rigidbody.velocity = Vector3.zero; //Stop the player from sliding
+
+            Vector3 rotationDirection = fogWallEntrance.transform.forward;
+            Quaternion turnRotation = Quaternion.LookRotation(rotationDirection);
+            transform.rotation = turnRotation;
+
+            playerAnimatorManager.PlayTargetAnimation("Pass Through Fog", true);
         }
 
         #endregion

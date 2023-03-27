@@ -14,6 +14,7 @@ namespace SoulsLike
 
         public bool b_Input;
         public bool a_Input;
+        public bool x_Input;
         public bool y_Input;
         public bool rb_Input;
         public bool rt_Input;
@@ -43,7 +44,9 @@ namespace SoulsLike
         public Transform criticalAttackRayCastStartPoint;
 
         PlayerControls inputActions;
+        PlayerCombatManager playerCombatManager;
         PlayerManager playerManager;
+        PlayerStatsManager playerStatsManager;
         CameraHandler cameraHandler;
         PlayerAnimatorManager animatorHandler;
 
@@ -52,9 +55,11 @@ namespace SoulsLike
 
         private void Awake()
         {
+            playerCombatManager = GetComponent<PlayerCombatManager>();
             playerManager = GetComponent<PlayerManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
-            animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
+            animatorHandler = GetComponent<PlayerAnimatorManager>();
         }
 
         public void OnEnable()
@@ -72,6 +77,7 @@ namespace SoulsLike
                 inputActions.PlayerQuickSlots.DPadRight.performed += i => d_Pad_Right = true;
                 inputActions.PlayerQuickSlots.DPadLeft.performed += i => d_Pad_Left = true; 
                 inputActions.PlayerActions.A.performed += i => a_Input = true;
+                inputActions.PlayerActions.X.performed += i => x_Input = true;
                 inputActions.PlayerActions.Roll.performed += i => b_Input = true;
                 inputActions.PlayerActions.Roll.canceled += i => b_Input = false;
                 inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
@@ -98,8 +104,10 @@ namespace SoulsLike
             HandleCombatInput(delta);
             HandleQuickSlotsInput();
             HandleInventoryInput();
+            HandleLockOnInput();
             HandleTwoHandInput();
             HandleCriticalAttackInput();
+            HandleUseConsumableInput();
         }
 
         private void HandleMoveInput(float delta)
@@ -120,7 +128,13 @@ namespace SoulsLike
             {
                 rollInputTimer += delta;
 
-                if(moveAmount > 0.5f)
+                if(playerStatsManager.currentStamina <= 0)
+                {
+                    b_Input = false;
+                    sprintFlag = false;
+                }
+
+                if(moveAmount > 0.5f && playerStatsManager.currentStamina > 0)
                 {
                     sprintFlag = true;
                 }
@@ -143,14 +157,17 @@ namespace SoulsLike
             //RB Input handles the RIGHT hand weapon's light attack
             if (rb_Input)
             {
+                playerCombatManager.HandleRBAction();
             }
 
             if (rt_Input)
             {
+                playerCombatManager.HandleRTAction();
             }
 
             if (lb_Input)
             {
+                playerCombatManager.HandleLBAction();
             }
             else
             {
@@ -165,6 +182,7 @@ namespace SoulsLike
                 }
                 else
                 {
+                    playerCombatManager.HandleLTAction();
                 }
                 
                 //Else handle light attack if melee weapon
@@ -198,6 +216,45 @@ namespace SoulsLike
             }
         }
 
+        private void HandleLockOnInput()
+        {
+            if(lockOnInput && lockOnFlag == false)
+            {
+                lockOnInput = false;
+                cameraHandler.HandleLockOn();
+                if(cameraHandler.nearestLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.nearestLockOnTarget;
+                    lockOnFlag = true;
+                }
+            }
+            else if (lockOnInput && lockOnFlag)
+            {
+                lockOnInput = false;
+                lockOnFlag = false;
+                cameraHandler.ClearLockOnTargets();
+            }
+
+            if(lockOnFlag && right_Stick_Left_Input)
+            {
+                right_Stick_Left_Input = false;
+                cameraHandler.HandleLockOn();
+                if(cameraHandler.leftLockTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.leftLockTarget;
+                }
+            }
+            else if (lockOnFlag && right_Stick_Right_Input)
+            {
+                right_Stick_Right_Input = false;
+                cameraHandler.HandleLockOn();
+                if (cameraHandler.rightLockTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.rightLockTarget;
+                }
+            }
+        }
+
         private void HandleTwoHandInput()
         {
             if (y_Input)
@@ -220,8 +277,16 @@ namespace SoulsLike
             if (critical_Attack_Input)
             {
                 critical_Attack_Input = false;
+                playerCombatManager.AttemptBackStabOrRiposte();
             }
         }
     
+        private void HandleUseConsumableInput()
+        {
+            if (x_Input)
+            {
+                x_Input = false;
+            }
+        }
     }
 }
