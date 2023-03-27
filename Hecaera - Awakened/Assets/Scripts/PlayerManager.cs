@@ -13,6 +13,7 @@ namespace SoulsLike
         PlayerAnimatorManager playerAnimatorManager;
         PlayerStatsManager playerStatsManager;
 
+        InteractableUI interactableUI;
         public GameObject interactableUIGameObject;
         public GameObject itemInteractableGameObject;
 
@@ -23,6 +24,7 @@ namespace SoulsLike
             inputHandler = GetComponent<InputHandler>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             anim = GetComponent<Animator>();
+            interactableUI = FindObjectOfType<InteractableUI>();
             playerLocomotion = GetComponent<PlayerLocomotionManager>();
             playerStatsManager = GetComponent<PlayerStatsManager>();
         }
@@ -110,10 +112,12 @@ namespace SoulsLike
                     if(interactableObject != null)
                     {
                         string interactableText = interactableObject.interactableText;
+                        interactableUI.interactableText.text = interactableText;
                         interactableUIGameObject.SetActive(true);
 
                         if (inputHandler.a_Input)
                         {
+                            Debug.Log("Input");
                             hit.collider.GetComponent<Interactable>().Interact(this);
                         }
                     }

@@ -39,6 +39,7 @@ namespace SoulsLike
         protected virtual void Update()
         {
             HandlePoiseResetTimer();
+            currentStamina = 100;
         }
 
         private void Start()

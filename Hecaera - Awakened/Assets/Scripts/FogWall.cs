@@ -8,7 +8,7 @@ namespace SoulsLike
     {
         private void Awake()
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 
         public void ActivateFogWall()
