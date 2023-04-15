@@ -17,6 +17,8 @@ namespace SoulsLike
         public GameObject interactableUIGameObject;
         public GameObject itemInteractableGameObject;
 
+        private float pressedInteractButtonTimer = 0;
+
         private void Awake()
         {
             cameraHandler = FindObjectOfType<CameraHandler>();
@@ -40,6 +42,7 @@ namespace SoulsLike
         void Update()
         {
             float delta = Time.deltaTime;
+            pressedInteractButtonTimer -= Time.deltaTime;
             isInteracting = anim.GetBool("isInteracting");
             canDoCombo = anim.GetBool("canDoCombo");
             isUsingRightHand = anim.GetBool("isUsingRightHand");
@@ -57,7 +60,15 @@ namespace SoulsLike
             playerLocomotion.HandleJumping();
             playerStatsManager.RegenerateStamina();
 
+            if (inputHandler.a_Input)
+                pressedInteractButtonTimer = 2f;
+
             CheckForInteractableObject();
+
+            if(isInteracting && interactableUIGameObject.activeInHierarchy)
+            {
+                interactableUIGameObject.SetActive(false);
+            }
         }
 
         private void FixedUpdate()
@@ -115,9 +126,8 @@ namespace SoulsLike
                         interactableUI.interactableText.text = interactableText;
                         interactableUIGameObject.SetActive(true);
 
-                        if (inputHandler.a_Input)
+                        if (inputHandler.a_Input || pressedInteractButtonTimer > 0)
                         {
-                            Debug.Log("Input");
                             hit.collider.GetComponent<Interactable>().Interact(this);
                         }
                     }
@@ -153,6 +163,8 @@ namespace SoulsLike
             transform.rotation = turnRotation;
 
             playerAnimatorManager.PlayTargetAnimation("Pass Through Fog", true);
+            pressedInteractButtonTimer = 0;
+            interactableUIGameObject.SetActive(false);
         }
 
         #endregion

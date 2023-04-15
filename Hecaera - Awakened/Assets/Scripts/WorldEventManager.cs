@@ -7,6 +7,8 @@ namespace SoulsLike
     public class WorldEventManager : MonoBehaviour
     {
         public List<FogWall> fogWalls;
+        UIBossHealthBar bossHealthBar;
+        EnemyBossManager boss;
 
         public bool bossFightIsActive; //is currently fighting boss
         public bool bossHasBeenAwakened; //woke the boss/watched the cutscene (died during the fight for example)
@@ -14,14 +16,17 @@ namespace SoulsLike
 
         private void Awake()
         {
+            bossHealthBar = FindObjectOfType<UIBossHealthBar>();
         }
 
         public void ActivateBossFight()
         {
             bossFightIsActive = true;
             bossHasBeenAwakened = true;
-            
-            foreach(FogWall wall in fogWalls)
+
+            bossHealthBar.SetUIHealthBarToActive();
+
+            foreach (FogWall wall in fogWalls)
             {
                 wall.ActivateFogWall();
             }
