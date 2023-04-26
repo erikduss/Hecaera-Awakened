@@ -60,6 +60,7 @@ namespace SoulsLike
         private void Start()
         {
             environmentLayer = LayerMask.NameToLayer("Environment");
+            lookAngle = 180;
         }
 
         public void FollowTarget(float delta)
