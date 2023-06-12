@@ -16,11 +16,11 @@ void Update(){
 }
 
 private void move(){
-   transform.position += transform.forward * inputZ * Time.deltaTime*7;
+   transform.position += transform.forward * inputZ * Time.deltaTime*3;
 }
 
 private void rotate(){
-   transform.Rotate(new Vector3(0f, inputX * Time.deltaTime*20, 0f));
+   transform.Rotate(new Vector3(0f, inputX * Time.deltaTime*5, 0f));
 }
 
 }
