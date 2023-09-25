@@ -5,8 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class CharacterSaveData
 {
+    [Header("SCENE INDEX")]
+    public int sceneIndex = 6; //6 is default at the moment (test scene)
+
     [Header("Character Name")]
-    public string characterName;
+    public string characterName = "Character";
 
     [Header("Time Played")]
     public float secondsPlayed;
