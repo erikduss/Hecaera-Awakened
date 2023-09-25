@@ -22,6 +22,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private Vector3 rollDirection;
     [SerializeField] float dodgeStaminaCost = 25f;
 
+    [SerializeField] float jumpStaminaCost = 25f;
+
     protected override void Awake()
     {
         base.Awake();
@@ -172,5 +174,33 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
 
         player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
+    }
+
+    public void AttemptToPerformJump()
+    {
+        //If we are performing a general action we do not allow jumping. (Can change later with jump attack)
+        if (player.isPerformingAction)
+            return;
+
+        //Can only jump when we have stamina
+        if (player.playerNetworkManager.currentStamina.Value <= 0)
+            return;
+
+        if (player.isJumping)
+            return;
+
+        if (!player.isGrounded)
+            return;
+
+        player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_Start_01", false);
+
+        player.isJumping = true;
+
+        player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+    }
+
+    public void ApplyJumpingVelocity()
+    {
+
     }
 }
