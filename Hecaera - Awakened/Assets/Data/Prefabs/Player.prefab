@@ -48397,12 +48397,13 @@ GameObject:
   - component: {fileID: 2610028167278047851}
   - component: {fileID: 8005042125403141410}
   - component: {fileID: -2247516724813827955}
-  - component: {fileID: -5776226094217108612}
   - component: {fileID: -2178375840483864606}
   - component: {fileID: -9148108534826181151}
-  - component: {fileID: 7135133068949086043}
   - component: {fileID: -1526992028417973424}
   - component: {fileID: 1830548547190764190}
+  - component: {fileID: -136507462171082800}
+  - component: {fileID: -5776226094217108612}
+  - component: {fileID: 7135133068949086043}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -48500,6 +48501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b33a563333b484992a71efc49d1464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityForce: -5.55
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
@@ -48515,26 +48517,11 @@ MonoBehaviour:
   sprintingSpeed: 6.5
   rotationSpeed: 15
   sprintingStaminaCost: 12.5
-  dodgeStaminaCost: 25
+  jumpHeight: 2
   jumpStaminaCost: 25
---- !u!143 &-5776226094217108612
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7883420388067512447}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1.9
-  m_Radius: 0.23
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.95, z: 0}
+  jumpForwardSpeed: 5
+  freeFallSpeed: 2
+  dodgeStaminaCost: 25
 --- !u!114 &-2178375840483864606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48564,9 +48551,15 @@ MonoBehaviour:
     m_InternalValue: 0
   endurance:
     m_InternalValue: 10
+  vitality:
+    m_InternalValue: 10
   currentStamina:
     m_InternalValue: 0
   maxStamina:
+    m_InternalValue: 0
+  currentHealth:
+    m_InternalValue: 0
+  maxHealth:
     m_InternalValue: 0
   characterName:
     m_InternalValue:
@@ -48649,6 +48642,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4681e198bf1df78408e6dcffd9d1cfce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1526992028417973424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883420388067512447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 540487bd6cf03d7449d4e5efa1b7388f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1830548547190764190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883420388067512447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77390434017ead947a562f63cdcc3812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminaRegenerationAmount: 4
+  staminaRegenerationDelay: 1
+--- !u!114 &-136507462171082800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883420388067512447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd4a8749a5147646a69f13bd81adb00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: c6d9cca58bc0e5947b9fb9d09fe4b03b, type: 2}
+  processEffect: 0
+--- !u!143 &-5776226094217108612
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883420388067512447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.9
+  m_Radius: 0.23
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!82 &7135133068949086043
 AudioSource:
   m_ObjectHideFlags: 0
@@ -48745,32 +48796,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-1526992028417973424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7883420388067512447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 540487bd6cf03d7449d4e5efa1b7388f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1830548547190764190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7883420388067512447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77390434017ead947a562f63cdcc3812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  staminaRegenerationAmount: 4
-  staminaRegenerationDelay: 1
 --- !u!1 &7963021266372608932
 GameObject:
   m_ObjectHideFlags: 0
