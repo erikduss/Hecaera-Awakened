@@ -63,6 +63,6 @@ public class CharacterLocomotionManager : MonoBehaviour
     //Debug to check the ground check sphere
     protected void OnDrawGizmosSelected()
     {
-        Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
+        //Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
     }
 }

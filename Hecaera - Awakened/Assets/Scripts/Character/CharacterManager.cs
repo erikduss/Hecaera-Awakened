@@ -30,6 +30,11 @@ public class CharacterManager : NetworkBehaviour
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
     }
 
+    protected virtual void Start()
+    {
+        IgnoreMyOwnColliders();
+    }
+
     protected virtual void Update()
     {
         animator.SetBool("IsGrounded", isGrounded);
@@ -82,5 +87,29 @@ public class CharacterManager : NetworkBehaviour
     public virtual void ReviveCharacter()
     {
 
+    }
+
+    protected virtual void IgnoreMyOwnColliders()
+    {
+        Collider characterControllerCollider = GetComponent<Collider>();
+        Collider[] damagableCharacterColliders = GetComponentsInChildren<Collider>();
+        List<Collider> ignoreColliders = new List<Collider>();
+
+        //add all damagable character colliders to the list of colliders to ignore
+        foreach(var collider in damagableCharacterColliders)
+        {
+            ignoreColliders.Add(collider);
+        }
+
+        ignoreColliders.Add(characterControllerCollider);
+
+        //Go through every collider in the list and ignore all other colliders in the ignore list
+        foreach(var collider in ignoreColliders)
+        {
+            foreach(var otherCollider in ignoreColliders)
+            {
+                Physics.IgnoreCollision(collider, otherCollider, true);
+            }
+        }
     }
 }
