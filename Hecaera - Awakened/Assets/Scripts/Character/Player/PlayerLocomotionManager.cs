@@ -24,6 +24,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float jumpForwardSpeed = 5f;
     [SerializeField] float freeFallSpeed = 2f;
     private Vector3 jumpDirection;
+    private float jumpDirectionMultiplier = 1f;
 
     [Header("Dodge")]
     private Vector3 rollDirection;
@@ -58,6 +59,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     public void HandleAllMovement()
     {
+        //Getting the movement values at all time, fixes the issue of not rotating mid air
+        GetMovementValues();
+
         HandleGroundedMovement();
         HandleRotation();
         HandleJumpingMovement();
@@ -75,8 +79,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (!player.canMove)
             return;
-
-        GetMovementValues();
 
         //our movement direction is based on our cameras facing perspective and our movement inputs.
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
@@ -105,7 +107,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private void HandleJumpingMovement()
     {
-        if (player.isJumping)
+        if (player.characterNetworkManager.isJumping.Value)
         {
             player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
         }
@@ -203,26 +205,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
 
         player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
-
-        jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
-        jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
-        jumpDirection.y = 0f;
-
-        if(jumpDirection != Vector3.zero)
-        {
-            if (player.playerNetworkManager.isSprinting.Value)
-            {
-                jumpDirection *= 1;
-            }
-            else if (PlayerInputManager.instance.moveAmount >= 0.5f)
-            {
-                jumpDirection *= 0.5f;
-            }
-            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
-            {
-                jumpDirection *= 0.25f;
-            }
-        }
     }
 
     public void AttemptToPerformJump()
@@ -235,17 +217,42 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.playerNetworkManager.currentStamina.Value <= 0)
             return;
 
-        if (player.isJumping)
+        if (player.characterNetworkManager.isJumping.Value)
             return;
 
         if (!player.isGrounded)
             return;
 
-        player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_Start_01", false);
+        player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_Start_01", false, true, true);
 
-        player.isJumping = true;
+        if (player.IsOwner)
+        {
+            player.characterNetworkManager.isJumping.Value = true;
+        }
 
         player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+
+        jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+        jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+        jumpDirection.y = 0f;
+
+        if (jumpDirection != Vector3.zero)
+        {
+            if (player.playerNetworkManager.isSprinting.Value)
+            {
+                jumpDirectionMultiplier = 1f;
+            }
+            else if (PlayerInputManager.instance.moveAmount >= 0.5f)
+            {
+                jumpDirectionMultiplier = 0.5f;
+            }
+            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+            {
+                jumpDirectionMultiplier = 0.25f;
+            }
+
+            jumpDirection *= jumpDirectionMultiplier;
+        }
     }
 
     public void ApplyJumpingVelocity()

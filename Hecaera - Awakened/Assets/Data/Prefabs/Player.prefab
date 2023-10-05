@@ -48786,7 +48786,6 @@ MonoBehaviour:
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   isPerformingAction: 0
-  isJumping: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
@@ -48811,11 +48810,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b33a563333b484992a71efc49d1464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityForce: -5.55
+  gravityForce: -9.807
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
-  groundCheckSphereRadius: 0.3
+  groundCheckSphereRadius: 0.2
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYvelocity: -5
@@ -48860,6 +48859,8 @@ MonoBehaviour:
   isDead:
     m_InternalValue: 0
   isSprinting:
+    m_InternalValue: 0
+  isJumping:
     m_InternalValue: 0
   endurance:
     m_InternalValue: 10
