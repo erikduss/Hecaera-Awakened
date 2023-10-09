@@ -11,14 +11,32 @@ public class PlayerNetworkManager : CharacterNetworkManager
     public NetworkVariable<FixedString64Bytes> characterName = new NetworkVariable<FixedString64Bytes>("Character", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Equipment")]
+    public NetworkVariable<int> currentWeaponBeingUsed = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> currentRightHandWeaponID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> currentLeftHandWeaponID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    public NetworkVariable<bool> isUsingRightHand = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isUsingLeftHand = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     protected override void Awake()
     {
         base.Awake();
 
         player = GetComponent<PlayerManager>(); 
+    }
+
+    public void SetCharacterActionHand(bool rightHandedAction)
+    {
+        if (rightHandedAction)
+        {
+            isUsingLeftHand.Value = false;
+            isUsingRightHand.Value = true;
+        }
+        else
+        {
+            isUsingLeftHand.Value = true;
+            isUsingRightHand.Value = false;
+        }
     }
 
     public void SetNewMaxHealthValue(int oldVitality, int newVitality)
@@ -47,5 +65,45 @@ public class PlayerNetworkManager : CharacterNetworkManager
         WeaponItem newWeapon = Instantiate(WorldItemDatabase.Instance.GetWeaponByID(newID));
         player.playerInventoryManager.currentLeftHandWeapon = newWeapon;
         player.playerEquipmentManager.LoadLeftWeapon();
+    }
+
+    public void OnCurrentCurrentWeaponBeingUsedIDChange(int oldID, int newID)
+    {
+        WeaponItem newWeapon = Instantiate(WorldItemDatabase.Instance.GetWeaponByID(newID));
+        player.playerCombatManager.currentWeaponBeingUsed = newWeapon;
+    }
+
+    //Item Action
+    [ServerRpc]
+    public void NotifyTheServerOfWeaponActionServerRpc(ulong clientID, int actionID, int weaponID)
+    {
+        if (IsServer)
+        {
+            NotifyTheServerOfWeaponActionClientRpc(clientID, actionID, weaponID);
+        }
+    }
+
+    [ClientRpc]
+    private void NotifyTheServerOfWeaponActionClientRpc(ulong clientID, int actionID, int weaponID)
+    {
+        //we do not want to play the action again for the character that called the action
+        if(clientID != NetworkManager.Singleton.LocalClientId)
+        {
+            PerformWeaponBasedAction(actionID, weaponID);
+        }
+    }
+
+    private void PerformWeaponBasedAction(int actionID, int weaponID)
+    {
+        WeaponItemAction weaponAction = WorldActionManager.Instance.GetWeaponItemActionByID(actionID);
+
+        if (weaponAction != null)
+        {
+            weaponAction.AttemptToPerformAction(player, WorldItemDatabase.Instance.GetWeaponByID(weaponID));
+        }
+        else
+        {
+            Debug.LogError("WEAPON ACTION ID OUT OF BOUNDS, CANNOT PERFORM ACTION " + actionID + " OF WEAPON " + weaponID);
+        }
     }
 }

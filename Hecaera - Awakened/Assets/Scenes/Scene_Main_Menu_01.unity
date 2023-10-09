@@ -2716,6 +2716,7 @@ MonoBehaviour:
   dodgeInput: 0
   sprintInput: 0
   jumpInput: 0
+  RB_Input: 0
 --- !u!1 &982515391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5392,6 +5393,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8717685319916197330}
   m_CullTransparentMesh: 1
+--- !u!1001 &7150172874416903468
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289609, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7150172874995289615, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
+      propertyPath: m_Name
+      value: World Action Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dc307a9ae37d3de41ac8f4ef575a1a34, type: 3}
 --- !u!224 &8446448936986530375
 RectTransform:
   m_ObjectHideFlags: 0

@@ -26,6 +26,8 @@ public class WorldItemDatabase : MonoBehaviour
             Destroy(gameObject);
         }
 
+        DontDestroyOnLoad(gameObject);
+
         //Add all our weapons to item list
         foreach(var weapon in weapons)
         {

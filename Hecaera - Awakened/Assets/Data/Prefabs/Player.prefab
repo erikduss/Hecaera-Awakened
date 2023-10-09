@@ -48705,6 +48705,7 @@ GameObject:
   - component: {fileID: -136507462171082800}
   - component: {fileID: 8693554422468628043}
   - component: {fileID: 3455564075168663540}
+  - component: {fileID: 5596331543505562064}
   - component: {fileID: 7135133068949086043}
   - component: {fileID: -5776226094217108612}
   - component: {fileID: 7726279426374180486}
@@ -48798,6 +48799,7 @@ MonoBehaviour:
   playerStatsManager: {fileID: 0}
   playerInventoryManager: {fileID: 0}
   playerEquipmentManager: {fileID: 0}
+  playerCombatManager: {fileID: 0}
 --- !u!114 &-2247516724813827955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48943,9 +48945,15 @@ MonoBehaviour:
         byte0059: 0
         byte0060: 0
         byte0061: 0
+  currentWeaponBeingUsed:
+    m_InternalValue: 0
   currentRightHandWeaponID:
     m_InternalValue: 0
   currentLeftHandWeaponID:
+    m_InternalValue: 0
+  isUsingRightHand:
+    m_InternalValue: 0
+  isUsingLeftHand:
     m_InternalValue: 0
 --- !u!114 &-9148108534826181151
 MonoBehaviour:
@@ -49029,18 +49037,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fbb4c3c246ffe4b8f40ede2906b7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRightHandWeapon: {fileID: 11400000, guid: a9f5109064f3b4d45923447eb51b0f72, type: 2}
+  currentRightHandWeapon: {fileID: 11400000, guid: 3f830249c0ecfd34db892ae3b7af3bd9, type: 2}
   currentLeftHandWeapon: {fileID: 11400000, guid: a9f5109064f3b4d45923447eb51b0f72, type: 2}
   weaponsInRightHandSlots:
+  - {fileID: 11400000, guid: 3f830249c0ecfd34db892ae3b7af3bd9, type: 2}
+  - {fileID: 11400000, guid: 83763fa0eee2dbf479c28c4073e74fbf, type: 2}
   - {fileID: 11400000, guid: a9f5109064f3b4d45923447eb51b0f72, type: 2}
-  - {fileID: 11400000, guid: a9f5109064f3b4d45923447eb51b0f72, type: 2}
-  - {fileID: 0}
   rightHandWeaponIndex: 0
   weaponsInLeftHandSlots:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   leftHandWeaponIndex: 0
+--- !u!114 &5596331543505562064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883420388067512447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87afbc92ec6bec34ea5467e7b8e75a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponBeingUsed: {fileID: 0}
 --- !u!82 &7135133068949086043
 AudioSource:
   m_ObjectHideFlags: 0
