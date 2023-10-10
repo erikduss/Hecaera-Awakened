@@ -20,8 +20,12 @@ public class WeaponItem : Item
     [Header("Weapon Poise")]
     public float poiseDamage = 10;
 
-    [Header("Stamina Costs")]
+    [Header("Attack Modifiers")]
+    public float light_Attack_01_Modifier = 1;
+
+    [Header("Stamina Cost Modifiers")]
     public int baseStaminaCost = 20;
+    public float lightAttackStaminaCostMultiplier = 1;
 
     [Header("Actions")]
     public WeaponItemAction oh_RB_Action; //one hand, right bumper action

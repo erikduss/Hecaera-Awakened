@@ -93,6 +93,9 @@ public class PlayerManager : CharacterManager
         if (IsOwner && !IsServer)
         {
             LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.instance.currentCharacterData);
+            
+            //Possibly fixes issue of client starting without stats.
+            WorldSaveGameManager.instance.LoadGame();
         }
     }
 
