@@ -6,6 +6,9 @@ public class WorldCharacterEffectsManager : MonoBehaviour
 {
     public static WorldCharacterEffectsManager Instance;
 
+    [Header("VFX")]
+    public GameObject bloodSplatterVFX; //the default blood splatter VFX
+
     [Header("Damage")]
     public TakeDamageEffect takeDamageEffect;
 

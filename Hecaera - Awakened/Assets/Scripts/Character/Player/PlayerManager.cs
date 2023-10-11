@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
@@ -65,6 +66,8 @@ public class PlayerManager : CharacterManager
     {
         base.OnNetworkSpawn();
 
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+
         //IF THIS IS THE PLAYER OBJECT OWNED BY THIS CLIENT
         if (IsOwner)
         {
@@ -96,6 +99,23 @@ public class PlayerManager : CharacterManager
             
             //Possibly fixes issue of client starting without stats.
             WorldSaveGameManager.instance.LoadGame();
+        }
+    }
+
+    private void OnClientConnectedCallback(ulong clientID)
+    {
+        WorldGameSessionManager.Instance.AddPlayerToActivePlayersList(this);
+
+        //if we are the host we already have all the players and dont need to load them.
+        if(!IsServer && IsOwner)
+        {
+            foreach (PlayerManager player in WorldGameSessionManager.Instance.players)
+            {
+                if(player != this)
+                {
+                    player.LoadOtherPlayerCharacterWhenJoiningServer();
+                }
+            }
         }
     }
 
@@ -156,6 +176,14 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
         playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
+    }
+
+    public void LoadOtherPlayerCharacterWhenJoiningServer()
+    {
+        //sync weapons
+        playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
+        playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+
     }
 
     private void DebugMenu()
