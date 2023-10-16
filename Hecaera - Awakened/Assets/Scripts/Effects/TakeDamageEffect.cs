@@ -44,6 +44,7 @@ public class TakeDamageEffect : InstantCharacterEffect
             return;
 
         CalculateDamage(character);
+        PlayDirectionalBasedDamageAnimation(character);
 
         PlayDamageSFX(character);
         PlayDamageVFX(character);
@@ -79,5 +80,46 @@ public class TakeDamageEffect : InstantCharacterEffect
         AudioClip physicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.physicalDamageSFX);
 
         character.characterSoundFXManager.PlaySoundFX(physicalDamageSFX);
+    }
+
+    private void PlayDirectionalBasedDamageAnimation(CharacterManager character)
+    {
+        if (!character.IsOwner)
+            return;
+
+        //Calculate if poise is broken, for now it always is.
+        poiseBroken = true;
+
+        if (angleHitFrom >= 145 && angleHitFrom <= 180)
+        {
+            //front
+            damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
+        }
+        else if(angleHitFrom <= -145 && angleHitFrom >= -180)
+        {
+            //front
+            damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.forward_Medium_Damage);
+        }
+        else if(angleHitFrom >= -45 && angleHitFrom <= 45)
+        {
+            //back
+            damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.backward_Medium_Damage);
+        }
+        else if (angleHitFrom >= -144 && angleHitFrom <= -45)
+        {
+            //left
+            damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.left_Medium_Damage);
+        }
+        else if (angleHitFrom >= 45 && angleHitFrom <= 144)
+        {
+            //right
+            damageAnimation = character.characterAnimatorManager.GetRandomAnimationFromList(character.characterAnimatorManager.right_Medium_Damage);
+        }
+
+        if (poiseBroken)
+        {
+            character.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
+            character.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
+        }
     }
 }
