@@ -32,7 +32,7 @@ public class UI_Match_Scroll_Wheel_To_Selected_Button : MonoBehaviour
     {
         Canvas.ForceUpdateCanvases();
 
-        Vector2 newPosition = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) - (Vector2)scrollRect.transform.InverseTransformPoint(transform.position);
+        Vector2 newPosition = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
 
         //we only want to lock the position on the y axis (up and down)
         newPosition.x = 0;
