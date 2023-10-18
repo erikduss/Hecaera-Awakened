@@ -342,6 +342,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1062926850571278753}
   - {fileID: 2367419769009093528}
   - {fileID: 2367752215305727276}
   - {fileID: 2367613959501626278}
@@ -1162,7 +1163,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5923747486400378145}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2358789185490142636
 MeshFilter:
@@ -1328,7 +1329,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5923747486400378145}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2359404907435400146
 MeshFilter:
@@ -1526,7 +1527,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5923747486400378145}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2359271914693707398
 MeshFilter:
@@ -1884,6 +1885,37 @@ CapsuleCollider:
   m_Height: 0.29
   m_Direction: 0
   m_Center: {x: 0.03, y: 0, z: 0}
+--- !u!1 &3114533587570841352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062926850571278753}
+  m_Layer: 10
+  m_Name: LockOnTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1062926850571278753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114533587570841352}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.11450217, y: 0.05408525, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5923747486400378145}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3881281150228921574
 GameObject:
   m_ObjectHideFlags: 0
@@ -48418,7 +48450,7 @@ Transform:
   - {fileID: 575764574057427973}
   - {fileID: 7883420387786813178}
   m_Father: {fileID: 5923747486400378145}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &6536351701014122255
 CapsuleCollider:
@@ -48786,6 +48818,8 @@ MonoBehaviour:
   characterNetworkManager: {fileID: 0}
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
+  characterCombatManager: {fileID: 0}
+  characterSoundFXManager: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -48863,6 +48897,8 @@ MonoBehaviour:
   isSprinting:
     m_InternalValue: 0
   isJumping:
+    m_InternalValue: 0
+  isLockedOn:
     m_InternalValue: 0
   endurance:
     m_InternalValue: 10
@@ -48967,6 +49003,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4681e198bf1df78408e6dcffd9d1cfce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Forward_Medium_03: Hit_Forward_Medium_03
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Backward_Medium_03: Hit_Backward_Medium_03
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Left_Medium_03: Hit_Left_Medium_03
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  hit_Right_Medium_03: Hit_Right_Medium_03
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  left_Medium_Damage: []
+  right_Medium_Damage: []
 --- !u!114 &-1526992028417973424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49005,6 +49058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd4a8749a5147646a69f13bd81adb00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodSplatterVFX: {fileID: 0}
   effectToTest: {fileID: 11400000, guid: c6d9cca58bc0e5947b9fb9d09fe4b03b, type: 2}
   processEffect: 0
 --- !u!114 &8693554422468628043
@@ -49061,6 +49115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87afbc92ec6bec34ea5467e7b8e75a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTarget: {fileID: 0}
+  currentAttackType: 0
+  lockOnTransform: {fileID: 1062926850571278753}
   currentWeaponBeingUsed: {fileID: 0}
 --- !u!82 &7135133068949086043
 AudioSource:

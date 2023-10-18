@@ -10,20 +10,23 @@ public class PlayerInputManager : MonoBehaviour
     PlayerControls playerControls;
 
     [Header("Movement input")]
-    [SerializeField] Vector2 movementInput;
-    public float verticalInput;
-    public float horizontalInput;
+    [SerializeField] Vector2 movement_Input;
+    public float vertical_Input;
+    public float horizontal_Input;
     public float moveAmount;
 
     [Header("Camera movement input")]
-    [SerializeField] Vector2 cameraInput;
-    public float cameraVerticalInput;
-    public float cameraHorizontalInput;
+    [SerializeField] Vector2 camera_Input;
+    public float cameraVertical_Input;
+    public float cameraHorizontal_Input;
+
+    [Header("Lock On Input")]
+    [SerializeField] bool lock_On_Input;
 
     [Header("Player action input")]
-    [SerializeField] bool dodgeInput = false;
-    [SerializeField] bool sprintInput = false;
-    [SerializeField] bool jumpInput = false;
+    [SerializeField] bool dodge_Input = false;
+    [SerializeField] bool sprint_Input = false;
+    [SerializeField] bool jump_Input = false;
     [SerializeField] bool RB_Input = false;
 
     private void Awake()
@@ -83,15 +86,17 @@ public class PlayerInputManager : MonoBehaviour
         {
             playerControls = new PlayerControls();
 
-            playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-            playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
-            playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
-            playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+            playerControls.PlayerMovement.Movement.performed += i => movement_Input = i.ReadValue<Vector2>();
+            playerControls.PlayerCamera.Movement.performed += i => camera_Input = i.ReadValue<Vector2>();
+            playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
+            playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
             playerControls.PlayerActions.RB.performed += i => RB_Input = true;
 
+            playerControls.PlayerActions.LockOn.performed += i => lock_On_Input = true;
+
             //Holding the input sets the bool to true. Releasing it sets it to false.
-            playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
-            playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+            playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;
+            playerControls.PlayerActions.Sprint.canceled += i => sprint_Input = false;
         }
 
         playerControls.Enable();
@@ -125,6 +130,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleAllInputs()
     {
+        HandleLockOnInput();
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
@@ -133,13 +139,46 @@ public class PlayerInputManager : MonoBehaviour
         HandleRBInput();
     }
 
+    private void HandleLockOnInput()
+    {
+        if (player.playerNetworkManager.isLockedOn.Value)
+        {
+            if(player.playerCombatManager.currentTarget == null)
+            {
+                return;
+            }
+
+            if (player.playerCombatManager.currentTarget.characterNetworkManager.isDead.Value)
+            {
+                player.playerNetworkManager.isLockedOn.Value = false;
+            }
+
+            //attempt to find new target.
+        }
+
+        if (lock_On_Input && player.playerNetworkManager.isLockedOn.Value)
+        {
+            lock_On_Input = false;
+            //disable lock on
+            return;
+        }
+
+        if (lock_On_Input && !player.playerNetworkManager.isLockedOn.Value)
+        {
+            lock_On_Input = false;
+            //enable lock on
+
+            PlayerCamera.instance.HandleLocatingLockOnTargets();
+        }
+    }
+
     private void HandlePlayerMovementInput()
     {
-        verticalInput = movementInput.y;
-        horizontalInput = movementInput.x;
+        vertical_Input = movement_Input.y;
+        horizontal_Input = movement_Input.x;
 
         //RETURNS THE ABSOLUTE NUMBER, (meaning number without the negative sign, so its always positive)
-        moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
+        moveAmount = Mathf.Clamp01(Mathf.Abs(vertical_Input) + Mathf.Abs(horizontal_Input));
 
         //Clamp the value so they are always 0, 0.5 or 1
         if(moveAmount <= 0.5 && moveAmount > 0)
@@ -160,15 +199,15 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleCameraMovementInput()
     {
-        cameraVerticalInput = -cameraInput.y;
-        cameraHorizontalInput = cameraInput.x;
+        cameraVertical_Input = -camera_Input.y;
+        cameraHorizontal_Input = camera_Input.x;
     }
 
     private void HandleDodgeInput()
     {
-        if (dodgeInput)
+        if (dodge_Input)
         {
-            dodgeInput = false;
+            dodge_Input = false;
 
             player.playerLocomotionManager.AttemptToPerformDodge();
         }
@@ -176,7 +215,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleSprintingInput()
     {
-        if (sprintInput)
+        if (sprint_Input)
         {
             player.playerLocomotionManager.HandleSprinting();
         }
@@ -188,9 +227,9 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleJumpInput()
     {
-        if (jumpInput)
+        if (jump_Input)
         {
-            jumpInput = false;
+            jump_Input = false;
 
             player.playerLocomotionManager.AttemptToPerformJump();
         }
