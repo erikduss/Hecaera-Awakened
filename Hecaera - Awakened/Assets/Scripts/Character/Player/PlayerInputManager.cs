@@ -21,7 +21,10 @@ public class PlayerInputManager : MonoBehaviour
     public float cameraHorizontal_Input;
 
     [Header("Lock On Input")]
-    [SerializeField] bool lock_On_Input;
+    [SerializeField] bool lockOn_Input;
+    [SerializeField] bool lockOn_Left_Input;
+    [SerializeField] bool lockOn_Right_Input;
+    private Coroutine lockOnCoroutine;
 
     [Header("Player action input")]
     [SerializeField] bool dodge_Input = false;
@@ -92,7 +95,9 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
             playerControls.PlayerActions.RB.performed += i => RB_Input = true;
 
-            playerControls.PlayerActions.LockOn.performed += i => lock_On_Input = true;
+            playerControls.PlayerActions.LockOn.performed += i => lockOn_Input = true;
+            playerControls.PlayerActions.SeekLeftLockOnTarget.performed += i => lockOn_Left_Input = true;
+            playerControls.PlayerActions.SeekRightLockOnTarget.performed += i => lockOn_Right_Input = true;
 
             //Holding the input sets the bool to true. Releasing it sets it to false.
             playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;
@@ -131,6 +136,7 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleAllInputs()
     {
         HandleLockOnInput();
+        HandleLockOnSwitchTargetInput();
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
@@ -151,24 +157,72 @@ public class PlayerInputManager : MonoBehaviour
             if (player.playerCombatManager.currentTarget.characterNetworkManager.isDead.Value)
             {
                 player.playerNetworkManager.isLockedOn.Value = false;
-            }
 
-            //attempt to find new target.
+                //attempt to find new target.
+                //Make sure the coroutine doesnt run multiple at the time.
+                if (lockOnCoroutine != null)
+                {
+                    StopCoroutine(lockOnCoroutine);
+                }
+
+                lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
+            }
         }
 
-        if (lock_On_Input && player.playerNetworkManager.isLockedOn.Value)
+        if (lockOn_Input && player.playerNetworkManager.isLockedOn.Value)
         {
-            lock_On_Input = false;
+            lockOn_Input = false;
+            PlayerCamera.instance.ClearLockOnTargets();
+            player.playerNetworkManager.isLockedOn.Value = false;
             //disable lock on
             return;
         }
 
-        if (lock_On_Input && !player.playerNetworkManager.isLockedOn.Value)
+        if (lockOn_Input && !player.playerNetworkManager.isLockedOn.Value)
         {
-            lock_On_Input = false;
+            lockOn_Input = false;
             //enable lock on
 
             PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+            if(PlayerCamera.instance.nearestLockOnTarget != null)
+            {
+                player.playerCombatManager.SetTarget(PlayerCamera.instance.nearestLockOnTarget);
+                player.playerNetworkManager.isLockedOn.Value = true;
+            }
+        }
+    }
+
+    private void HandleLockOnSwitchTargetInput()
+    {
+        if (lockOn_Left_Input)
+        {
+            lockOn_Left_Input = false;
+
+            if (player.playerNetworkManager.isLockedOn.Value)
+            {
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+                if(PlayerCamera.instance.leftLockOnTarget != null)
+                {
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
+                }
+            }
+        }
+
+        if (lockOn_Right_Input)
+        {
+            lockOn_Right_Input = false;
+
+            if (player.playerNetworkManager.isLockedOn.Value)
+            {
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+                if (PlayerCamera.instance.rightLockOnTarget != null)
+                {
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
+                }
+            }
         }
     }
 
@@ -194,7 +248,16 @@ public class PlayerInputManager : MonoBehaviour
         //Strafing is only used for locking on.
         if (player == null)
             return;
-        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
+
+        if (!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value)
+        {
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
+        }
+        else
+        {
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(horizontal_Input, vertical_Input, player.playerNetworkManager.isSprinting.Value);
+        }
+        
     }
 
     private void HandleCameraMovementInput()

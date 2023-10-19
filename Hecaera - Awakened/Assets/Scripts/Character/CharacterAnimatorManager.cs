@@ -89,16 +89,61 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, bool isSprinting)
     {
-        float horizontalAmount = horizontalValue;
-        float verticalAmount = verticalValue;
+        float snappedHorizontal;
+        float snappedVertical;
 
-        if(isSprinting)
+        //Snap horizontal values
+        if(horizontalValue > 0 && horizontalValue <= 0.5f)
         {
-            verticalAmount = 2;
+            snappedHorizontal = 0.5f;
+        }
+        else if(horizontalValue > 0.5f && horizontalValue <= 1f)
+        {
+            snappedHorizontal= 1f;
+        }
+        else if (horizontalValue < 0 && horizontalValue >= -0.5f)
+        {
+            snappedHorizontal = -0.5f;
+        }
+        else if (horizontalValue < -0.5f && horizontalValue >= -1f)
+        {
+            snappedHorizontal = -1f;
+        }
+        else
+        {
+            snappedHorizontal = 0f;
         }
 
-        character.animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);
-        character.animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);
+        //Snap vertical values
+        if (verticalValue > 0 && verticalValue <= 0.5f)
+        {
+            snappedVertical = 0.5f;
+        }
+        else if (verticalValue > 0.5f && verticalValue <= 1f)
+        {
+            snappedVertical = 1f;
+        }
+        else if (verticalValue < 0 && verticalValue >= -0.5f)
+        {
+            snappedVertical = -0.5f;
+        }
+        else if (verticalValue < -0.5f && verticalValue >= -1f)
+        {
+            snappedVertical = -1f;
+        }
+        else
+        {
+            snappedVertical = 0f;
+        }
+
+
+        if (isSprinting)
+        {
+            snappedVertical = 2;
+        }
+
+        character.animator.SetFloat(horizontal, snappedHorizontal, 0.1f, Time.deltaTime);
+        character.animator.SetFloat(vertical, snappedVertical, 0.1f, Time.deltaTime);
     }
 
     public virtual void PlayTargetActionAnimation(

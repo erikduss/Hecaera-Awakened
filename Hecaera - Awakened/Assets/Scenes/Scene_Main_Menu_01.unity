@@ -12983,7 +12983,9 @@ MonoBehaviour:
   camera_Input: {x: 0, y: 0}
   cameraVertical_Input: 0
   cameraHorizontal_Input: 0
-  lock_On_Input: 0
+  lockOn_Input: 0
+  lockOn_Left_Input: 0
+  lockOn_Right_Input: 0
   dodge_Input: 0
   sprint_Input: 0
   jump_Input: 0
@@ -42565,6 +42567,10 @@ PrefabInstance:
     - target: {fileID: 4516241446513854362, guid: 34a674e64b6107e4488674413595b1e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160223673806622215, guid: 34a674e64b6107e4488674413595b1e6, type: 3}
+      propertyPath: setCameraHeightSpeed
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5160223673806622215, guid: 34a674e64b6107e4488674413595b1e6, type: 3}
       propertyPath: leftAndRightRotationSpeed

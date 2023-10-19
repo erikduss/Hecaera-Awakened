@@ -87,6 +87,9 @@ public class TakeDamageEffect : InstantCharacterEffect
         if (!character.IsOwner)
             return;
 
+        if (character.characterNetworkManager.isDead.Value)
+            return;
+
         //Calculate if poise is broken, for now it always is.
         poiseBroken = true;
 
