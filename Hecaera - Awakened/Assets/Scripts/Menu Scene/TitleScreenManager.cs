@@ -8,23 +8,34 @@ public class TitleScreenManager : MonoBehaviour
 {
     public static TitleScreenManager Instance;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource menuMusicAudio;
+
     [Header("Menus")]
     [SerializeField] GameObject titleScreenMainMenu;
     [SerializeField] GameObject titleScreenLoadMenu;
+    [SerializeField] GameObject titleScreenSettingsMenu;
 
     [Header("Buttons")]
+    [SerializeField] Button pressToStartButton;
     [SerializeField] Button mainMenuNewGameButton;
     [SerializeField] Button loadMenureturnButton;
     [SerializeField] Button mainMenuLoadGameButton;
     [SerializeField] Button noCharacterSlotsOkayButton;
     [SerializeField] Button deleteCharacterPopUpConfirmButton;
+    [SerializeField] Button returnFromSettingsButton;
+    [SerializeField] Button abandonChangedSettingsConfirmButton;
 
     [Header("Pop Ups")]
     [SerializeField] GameObject noCharacterSlotsPopUp;
     [SerializeField] GameObject deleteCharacterSlotPopUp;
+    [SerializeField] GameObject abandonChangedSettingsPopUp;
 
     [Header("Character Slots")]
     public CharacterSlot currentSeletedSlot = CharacterSlot.NO_SLOT;
+
+    public bool continuedPastSplashScreen = false;
+    [SerializeField] private TitleScreenSettingsMenuManager settingsMenuManager;
 
     private void Awake()
     {
@@ -38,8 +49,37 @@ public class TitleScreenManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!continuedPastSplashScreen)
+        {
+            if (Input.anyKey)
+            {
+                continuedPastSplashScreen = true;
+                pressToStartButton.onClick.Invoke();
+            }
+        }
+    }
+
+    private void Start()
+    {
+        SetAudioFromSoundManager();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    private void SetAudioFromSoundManager()
+    {
+        menuMusicAudio.clip = WorldSoundFXManager.instance.menuMusicTrack;
+        menuMusicAudio.Play();
+    }
+
     public void StartNetworkAsHost()
     {
+        continuedPastSplashScreen = true;
         NetworkManager.Singleton.StartHost();
     }
 
@@ -59,6 +99,22 @@ public class TitleScreenManager : MonoBehaviour
     public void CloseLoadGameMenu()
     {
         titleScreenLoadMenu.SetActive(false);
+        titleScreenMainMenu.SetActive(true);
+
+        mainMenuLoadGameButton.Select();
+    }
+
+    public void OpenSettingsMenu()
+    {
+        titleScreenMainMenu.SetActive(false);
+        titleScreenSettingsMenu.SetActive(true);
+
+        returnFromSettingsButton.Select();
+    }
+
+    public void CloseSettingsMenu()
+    {
+        titleScreenSettingsMenu.SetActive(false);
         titleScreenMainMenu.SetActive(true);
 
         mainMenuLoadGameButton.Select();
@@ -110,5 +166,26 @@ public class TitleScreenManager : MonoBehaviour
     {
         deleteCharacterSlotPopUp.SetActive(false);
         loadMenureturnButton.Select();
+    }
+
+    public void RevertSettingsChanges()
+    {
+        abandonChangedSettingsPopUp.SetActive(false);
+        //reset settings!
+        settingsMenuManager.SetAllSettingsFromLoadedSettingsData();
+
+        CloseSettingsMenu();
+    }
+
+    public void DisplayAbandonChangedSettingsPopUp()
+    {
+        abandonChangedSettingsPopUp.SetActive(true);
+        abandonChangedSettingsConfirmButton.Select();
+    }
+
+    public void CloseAbandonChangedSettingsPopUp()
+    {
+        abandonChangedSettingsPopUp.SetActive(false);
+        returnFromSettingsButton.Select();
     }
 }

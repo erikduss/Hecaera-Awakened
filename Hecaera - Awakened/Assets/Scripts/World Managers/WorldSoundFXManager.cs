@@ -6,6 +6,9 @@ public class WorldSoundFXManager : MonoBehaviour
 {
     public static WorldSoundFXManager instance;
 
+    [Header("Menu Sounds")]
+    public AudioClip menuMusicTrack;
+
     [Header("Damage Sounds")]
     public AudioClip[] physicalDamageSFX;
  

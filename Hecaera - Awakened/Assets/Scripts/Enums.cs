@@ -22,6 +22,14 @@ public enum CharacterSlot
     NO_SLOT
 }
 
+public enum AudioSourceType
+{
+    DEFAULT,
+    MUSIC,
+    SFX,
+    DIALOG
+}
+
 public enum WeaponModelSlot
 {
     RightHand,

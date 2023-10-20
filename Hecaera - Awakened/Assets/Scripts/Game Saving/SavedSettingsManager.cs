@@ -1,0 +1,76 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SavedSettingsManager : MonoBehaviour
+{
+    public static SavedSettingsManager instance;
+
+    public SettingsSaveData LoadedSettingsData { private set { loadedSettingsData = value; } get { return loadedSettingsData; } }
+    private SettingsSaveData loadedSettingsData;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+            //Always make sure to load in the settings
+            LoadSaveSettings();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        if(LoadedSettingsData != null)
+        {
+            WorldAudioVolumesManager.Instance.LoadAudioFromSavedSettingsData();
+        }
+    }
+
+    public void SaveSettings(SettingsSaveData saveData)
+    {
+        PlayerPrefs.SetFloat("MainVolume", saveData.mainVolume);
+        PlayerPrefs.SetFloat("MusicVolume", saveData.musicVolume);
+        PlayerPrefs.SetFloat("SFXVolume", saveData.SFXVolume);
+        PlayerPrefs.SetFloat("DialogVolume", saveData.dialogVolume);
+
+        PlayerPrefs.Save();
+
+        LoadedSettingsData.mainVolume = saveData.mainVolume;
+        LoadedSettingsData.musicVolume = saveData.musicVolume;
+        LoadedSettingsData.SFXVolume = saveData.SFXVolume;
+        LoadedSettingsData.dialogVolume = saveData.dialogVolume;
+    }
+
+    public SettingsSaveData LoadSaveSettings()
+    {
+        //Create a new save data with values that are saved in the playerprefs (or the default in settinsSaveData)
+        loadedSettingsData = new SettingsSaveData();
+
+        if (PlayerPrefs.HasKey("MainVolume"))
+        {
+            loadedSettingsData.mainVolume = PlayerPrefs.GetFloat("MainVolume");
+        }
+
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            loadedSettingsData.musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+        }
+
+        if (PlayerPrefs.HasKey("SFXVolume"))
+        {
+            loadedSettingsData.SFXVolume = PlayerPrefs.GetFloat("SFXVolume");
+        }
+
+        if (PlayerPrefs.HasKey("DialogVolume"))
+        {
+            loadedSettingsData.dialogVolume = PlayerPrefs.GetFloat("DialogVolume");
+        }
+
+        return loadedSettingsData;
+    }
+}
