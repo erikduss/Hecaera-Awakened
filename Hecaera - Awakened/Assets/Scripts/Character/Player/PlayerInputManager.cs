@@ -30,7 +30,15 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool dodge_Input = false;
     [SerializeField] bool sprint_Input = false;
     [SerializeField] bool jump_Input = false;
+
+    [Header("Bumper Inputs")]
     [SerializeField] bool RB_Input = false;
+    [SerializeField] bool LB_Input = false;
+
+    [Header("Trigger Inputs")]
+    [SerializeField] bool RT_Input = false;
+    [SerializeField] bool Hold_RT_Input = false;
+
 
     private void Awake()
     {
@@ -93,8 +101,17 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerCamera.Movement.performed += i => camera_Input = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
             playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+            
+            //Bumpers (top (main) bumper of controller)
             playerControls.PlayerActions.RB.performed += i => RB_Input = true;
+            playerControls.PlayerActions.LB.performed += i => LB_Input = true;
 
+            //Triggers (bottom bumper of controller)
+            playerControls.PlayerActions.RT.performed += i => RT_Input = true;
+            playerControls.PlayerActions.HoldRT.performed += i => Hold_RT_Input = true;
+            playerControls.PlayerActions.HoldRT.canceled += i => Hold_RT_Input = false; //if trigger released.
+
+            //Lock on
             playerControls.PlayerActions.LockOn.performed += i => lockOn_Input = true;
             playerControls.PlayerActions.SeekLeftLockOnTarget.performed += i => lockOn_Left_Input = true;
             playerControls.PlayerActions.SeekRightLockOnTarget.performed += i => lockOn_Right_Input = true;
@@ -143,6 +160,9 @@ public class PlayerInputManager : MonoBehaviour
         HandleSprintingInput();
         HandleJumpInput();
         HandleRBInput();
+        HandleRTInput();
+        HandleHoldRTInput();
+        HandleLBInput();
     }
 
     private void HandleLockOnInput()
@@ -307,6 +327,43 @@ public class PlayerInputManager : MonoBehaviour
             player.playerNetworkManager.SetCharacterActionHand(true);
 
             player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RB_Action, player.playerInventoryManager.currentRightHandWeapon);
+        }
+    }
+
+    private void HandleLBInput()
+    {
+        if (LB_Input)
+        {
+            LB_Input = false;
+
+            player.playerNetworkManager.SetCharacterActionHand(true);
+
+            //Not using both hands, but using the main hand weapon attack for left bumper. In this case, magic.
+            player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_LB_Action, player.playerInventoryManager.currentRightHandWeapon);
+        }
+    }
+
+    private void HandleRTInput()
+    {
+        if (RT_Input)
+        {
+            RT_Input = false;
+
+            player.playerNetworkManager.SetCharacterActionHand(true);
+
+            player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RT_Action, player.playerInventoryManager.currentRightHandWeapon);
+        }
+    }
+
+    private void HandleHoldRTInput()
+    {
+        //we only want to check for a holding action if we are already performing an action (charging up)
+        if (player.isPerformingAction)
+        {
+            if (player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                player.playerNetworkManager.isChargingAttack.Value = Hold_RT_Input;
+            }
         }
     }
 }

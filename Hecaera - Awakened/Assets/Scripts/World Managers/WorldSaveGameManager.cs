@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -36,6 +37,8 @@ public class WorldSaveGameManager : MonoBehaviour
     public CharacterSaveData characterSlot08;
     public CharacterSaveData characterSlot09;
     public CharacterSaveData characterSlot10;
+
+    [SerializeField] private GameObject dummySpawner;
 
     private void Awake()
     {
@@ -313,6 +316,14 @@ public class WorldSaveGameManager : MonoBehaviour
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
 
         player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            var spawner = Instantiate(dummySpawner, Vector3.zero, Quaternion.identity);
+
+            NetworkObject netComponent = spawner.GetComponent<NetworkObject>();
+            netComponent.Spawn();
+        }
 
         yield return null;
     }

@@ -36,4 +36,12 @@ public class CharacterCombatManager : NetworkBehaviour
             }
         }
     }
+
+    public virtual void SpawnProjectile(int type)
+    {
+        if (!character.IsOwner)
+            return;
+
+        WorldProjectilesManager.Instance.SpawnProjectile(type);
+    }
 }

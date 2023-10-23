@@ -22,6 +22,8 @@ public class WeaponItem : Item
 
     [Header("Attack Modifiers")]
     public float light_Attack_01_Modifier = 1;
+    public float heavy_Attack_01_Modifier = 1.4f;
+    public float charged_Heavy_Attack_01_Modifier = 2f;
 
     [Header("Stamina Cost Modifiers")]
     public int baseStaminaCost = 20;
@@ -29,4 +31,7 @@ public class WeaponItem : Item
 
     [Header("Actions")]
     public WeaponItemAction oh_RB_Action; //one hand, right bumper action
+    public WeaponItemAction oh_RT_Action; //One handed right trigger action (bottom bumper)
+
+    public WeaponItemAction oh_LB_Action; //one hand, left bumper action
 }
