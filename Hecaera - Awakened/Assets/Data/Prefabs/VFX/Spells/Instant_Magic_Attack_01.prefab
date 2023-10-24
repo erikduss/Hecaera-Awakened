@@ -4676,6 +4676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 896901808602367220}
   - component: {fileID: -4913274482852991004}
+  - component: {fileID: 7855680355188921654}
   m_Layer: 0
   m_Name: Instant_Magic_Attack_01
   m_TagString: Untagged
@@ -4713,6 +4714,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53c1519ceaf2c54c96c77704f9bd91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileType: 0
+  startingPoint: {fileID: 0}
+--- !u!114 &7855680355188921654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893862663710687328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1001 &53811663373889368
 PrefabInstance:
   m_ObjectHideFlags: 0

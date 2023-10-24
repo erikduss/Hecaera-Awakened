@@ -21,6 +21,11 @@ public class WorldGameSessionManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void AddPlayerToActivePlayersList(PlayerManager player)
     {
         if(!players.Contains(player))

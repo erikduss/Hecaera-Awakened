@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TitleScreenManager : MonoBehaviour
 {
@@ -86,6 +87,26 @@ public class TitleScreenManager : MonoBehaviour
     public void StartNewGame()
     {
         WorldSaveGameManager.instance.AttemptToCreateNewGame();
+    }
+
+    public void JoinGame()
+    {
+        //we restart as client
+        StartCoroutine(JoiningGame());
+    }
+
+    private IEnumerator JoiningGame()
+    {
+        //we must first shut down becaus we started as a host during the title screen.
+        NetworkManager.Singleton.Shutdown();
+
+        while (NetworkManager.Singleton.ShutdownInProgress)
+        {
+            yield return null;
+        }
+
+        NetworkManager.Singleton.StartClient();
+        yield return null;
     }
 
     public void OpenLoadGameMenu()

@@ -39,6 +39,8 @@ public class WorldSaveGameManager : MonoBehaviour
     public CharacterSaveData characterSlot10;
 
     [SerializeField] private GameObject dummySpawner;
+    [SerializeField] private GameObject worldNetworkObjectPoolManagerPrefab;
+    private GameObject worldNetworkObjectPoolManager;
 
     private void Awake()
     {
@@ -313,7 +315,7 @@ public class WorldSaveGameManager : MonoBehaviour
     public IEnumerator LoadWorldScene()
     {
         //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
+        NetworkManager.Singleton.SceneManager.LoadScene("Scene_World_01", LoadSceneMode.Single);
 
         player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
 
@@ -323,6 +325,22 @@ public class WorldSaveGameManager : MonoBehaviour
 
             NetworkObject netComponent = spawner.GetComponent<NetworkObject>();
             netComponent.Spawn();
+        }
+
+        while (SceneManager.GetActiveScene().buildIndex != currentCharacterData.sceneIndex)
+        {
+            yield return null;
+        }
+
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            Debug.Log("SETTING UP!");
+            if (worldNetworkObjectPoolManager == null) worldNetworkObjectPoolManager = Instantiate(worldNetworkObjectPoolManagerPrefab);
+
+            if (!WorldNetworkObjectPoolManager.Instance.IsSpawned) WorldNetworkObjectPoolManager.Instance.NetworkObject.Spawn();
+
+            WorldNetworkObjectPoolManager.Instance.SetUpObjectPool();
         }
 
         yield return null;

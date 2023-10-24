@@ -20,7 +20,7 @@ public class DummySpawner : NetworkBehaviour
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
     {
-        if (!IsServer)
+        if (!NetworkManager.Singleton.IsServer)
             return;
 
         base.OnNetworkSpawn();
