@@ -22,6 +22,7 @@ public class PlayerCombatManager : CharacterCombatManager
         {
             weaponAction.AttemptToPerformAction(player, weaponPerformingAction);
 
+            Debug.Log("object type is:: " + weaponAction.pooledObjectType);
             if (weaponAction.pooledObjectType != PooledObjectType.NONE)
             {
                 WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkManager.Singleton.LocalClientId, (int)weaponAction.pooledObjectType);

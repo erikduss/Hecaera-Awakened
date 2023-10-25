@@ -83,6 +83,7 @@ public class WorldProjectilesManager : MonoBehaviour
     [ServerRpc]
     public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int projectileObjectTypeID)
     {
+        Debug.Log("We should spawn a projectile");
         //can only be called by the server.
         if (NetworkManager.Singleton.IsServer)
         {
