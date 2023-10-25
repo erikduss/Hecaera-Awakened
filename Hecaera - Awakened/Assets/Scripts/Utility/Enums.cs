@@ -54,3 +54,9 @@ public enum ProjectileType
 {
     Instant_Magic
 }
+
+public enum PooledObjectType
+{
+    NONE,
+    Instant_Magic_Spell
+}

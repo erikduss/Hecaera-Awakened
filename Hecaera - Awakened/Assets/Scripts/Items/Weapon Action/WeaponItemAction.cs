@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponItemAction : ScriptableObject
 {
     public int actionID;
+    public PooledObjectType pooledObjectType = PooledObjectType.NONE;
 
     public virtual void AttemptToPerformAction(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
     {

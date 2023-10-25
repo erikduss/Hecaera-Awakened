@@ -1,6 +1,8 @@
+using FIMSpace;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
@@ -76,7 +78,7 @@ public class WorldNetworkObjectPoolManager : NetworkBehaviour
             Debug.Log("Spawning spells!");
             //Add prefab to cache
             //RegisterPrefabInternal(configObject.Prefab, configObject.PrewarmCount, objectPoolParentObject.transform);
-            RegisterPrefabInternal(configObject.Prefab, configObject.PrewarmCount);
+            RegisterPrefabInternal(configObject.Prefab, configObject.PrewarmCount, configObject.pooledObjectType);
         }
     }
 
@@ -136,6 +138,11 @@ public class WorldNetworkObjectPoolManager : NetworkBehaviour
         return networkObject;
     }
 
+    public GameObject GetGameObjectWithPoolType(PooledObjectType type)
+    {
+        return PooledPrefabsList.Where(a => a.pooledObjectType == type).FirstOrDefault().Prefab;
+    }
+
     /// <summary>
     /// Return an object to the pool (reset objects before returning).
     /// </summary>
@@ -147,7 +154,7 @@ public class WorldNetworkObjectPoolManager : NetworkBehaviour
     /// <summary>
     /// Builds up the cache for a prefab.
     /// </summary>
-    void RegisterPrefabInternal(GameObject prefab, int prewarmCount)
+    void RegisterPrefabInternal(GameObject prefab, int prewarmCount, PooledObjectType prefabType)
     {
         //This is called once!
         //This creates the pool (ObjectPool), which requires:
@@ -174,7 +181,6 @@ public class WorldNetworkObjectPoolManager : NetworkBehaviour
 
         void ActionOnDestroy(NetworkObject networkObject)
         {
-            Debug.Log("DESTROYING!!!!");
             Destroy(networkObject.gameObject);
         }
 
@@ -192,6 +198,16 @@ public class WorldNetworkObjectPoolManager : NetworkBehaviour
         foreach (var networkObject in prewarmNetworkObjects)
         {
             networkObject.Spawn();
+
+            if (prefabType == PooledObjectType.Instant_Magic_Spell)
+            {
+                Projectile projectileComp = networkObject.GetComponent<Projectile>();
+                projectileComp.objectEnabled.Value = false;
+                projectileComp.networkPosition.Value = networkObject.transform.position;
+                projectileComp.networkRotation.Value = networkObject.transform.rotation;
+                projectileComp.networkPositionVelocity = Vector3.zero;
+            }
+
             //networkObject.gameObject.transform.parent = prefabPoolParent;
             //Make sure the objects start as inactive.
             m_PooledObjects[prefab].Release(networkObject);
@@ -208,6 +224,7 @@ struct PoolConfigObject
 {
     public GameObject Prefab;
     public int PrewarmCount;
+    public PooledObjectType pooledObjectType;
 }
 
 class PooledPrefabInstanceHandler : INetworkPrefabInstanceHandler
@@ -226,7 +243,6 @@ class PooledPrefabInstanceHandler : INetworkPrefabInstanceHandler
 
     void INetworkPrefabInstanceHandler.Destroy(NetworkObject networkObject)
     {
-        Debug.Log("POOLEDPREFABINSTANCEHANDLER DESTROY CALL");
         WorldNetworkObjectPoolManager.Instance.ReturnNetworkObject(networkObject, m_Prefab);
     }
 }
