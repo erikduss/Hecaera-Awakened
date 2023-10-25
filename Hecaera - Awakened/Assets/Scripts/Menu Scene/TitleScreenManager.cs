@@ -4,6 +4,9 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+using Unity.Netcode.Transports.UTP;
+using System;
 
 public class TitleScreenManager : MonoBehaviour
 {
@@ -15,12 +18,14 @@ public class TitleScreenManager : MonoBehaviour
     [Header("Menus")]
     [SerializeField] GameObject titleScreenMainMenu;
     [SerializeField] GameObject titleScreenLoadMenu;
+    [SerializeField] GameObject titleScreenJoinMenu;
     [SerializeField] GameObject titleScreenSettingsMenu;
 
     [Header("Buttons")]
     [SerializeField] Button pressToStartButton;
     [SerializeField] Button mainMenuNewGameButton;
     [SerializeField] Button loadMenureturnButton;
+    [SerializeField] Button joinMenureturnButton;
     [SerializeField] Button mainMenuLoadGameButton;
     [SerializeField] Button noCharacterSlotsOkayButton;
     [SerializeField] Button deleteCharacterPopUpConfirmButton;
@@ -32,11 +37,19 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] GameObject deleteCharacterSlotPopUp;
     [SerializeField] GameObject abandonChangedSettingsPopUp;
 
+    [Header("Server Info")]
+    [SerializeField] TMP_InputField joinGameServerIPText;
+    [SerializeField] TMP_InputField joinGameServerPortText;
+
     [Header("Character Slots")]
     public CharacterSlot currentSeletedSlot = CharacterSlot.NO_SLOT;
 
     public bool continuedPastSplashScreen = false;
     [SerializeField] private TitleScreenSettingsMenuManager settingsMenuManager;
+
+    private UnityTransport networkTransport;
+
+    public bool connectedToServer = false;
 
     private void Awake()
     {
@@ -65,6 +78,9 @@ public class TitleScreenManager : MonoBehaviour
     private void Start()
     {
         SetAudioFromSoundManager();
+
+        networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        networkTransport.OnTransportEvent += OnTransportEvent;
     }
 
     public void ExitGame()
@@ -81,6 +97,11 @@ public class TitleScreenManager : MonoBehaviour
     public void StartNetworkAsHost()
     {
         continuedPastSplashScreen = true;
+
+        UnityTransport networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        networkTransport.ConnectionData.Address = "192.168.2.1";
+        networkTransport.ConnectionData.Port = 9000;
+
         NetworkManager.Singleton.StartHost();
     }
 
@@ -105,8 +126,54 @@ public class TitleScreenManager : MonoBehaviour
             yield return null;
         }
 
-        NetworkManager.Singleton.StartClient();
+        //If alternate IP has been assigned.
+        if (joinGameServerIPText.text.Length > 0)
+        {
+            networkTransport.ConnectionData.Address = joinGameServerIPText.text;
+            
+            if(joinGameServerPortText.text.Length > 0)
+            {
+                networkTransport.ConnectionData.Port = ushort.Parse(joinGameServerPortText.text);
+            }
+
+            Debug.Log(networkTransport.ConnectionData.Address + " _: " + networkTransport.ConnectionData.Port);
+        }
+        else
+        {
+            networkTransport.ConnectionData.Address = "127.0.0.1";
+            networkTransport.ConnectionData.Port = 7777;
+        }
+
+        bool success = NetworkManager.Singleton.StartClient();
+
+        yield return new WaitForSeconds(1);
+        if (!connectedToServer)
+        {
+            Debug.Log("FAILED TO CONNECT TO: " + networkTransport.ConnectionData.Address + ":" + networkTransport.ConnectionData.Port);
+        }
+        
         yield return null;
+    }
+
+    private void OnTransportEvent(Unity.Netcode.NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
+    {
+        if(eventType == NetworkEvent.Connect) connectedToServer = true;
+    }
+
+    public void OpenJoinGameMenu()
+    {
+        titleScreenMainMenu.SetActive(false);
+        titleScreenJoinMenu.SetActive(true);
+
+        joinMenureturnButton.Select();
+    }
+
+    public void CloseJoinGameMenu()
+    {
+        titleScreenJoinMenu.SetActive(false);
+        titleScreenMainMenu.SetActive(true);
+
+        mainMenuLoadGameButton.Select();
     }
 
     public void OpenLoadGameMenu()
@@ -122,7 +189,7 @@ public class TitleScreenManager : MonoBehaviour
         titleScreenLoadMenu.SetActive(false);
         titleScreenMainMenu.SetActive(true);
 
-        mainMenuLoadGameButton.Select();
+        mainMenuNewGameButton.Select();
     }
 
     public void OpenSettingsMenu()
@@ -138,7 +205,7 @@ public class TitleScreenManager : MonoBehaviour
         titleScreenSettingsMenu.SetActive(false);
         titleScreenMainMenu.SetActive(true);
 
-        mainMenuLoadGameButton.Select();
+        mainMenuNewGameButton.Select();
     }
 
     public void DisplayNoFreeCharacterSlotsPopUp()

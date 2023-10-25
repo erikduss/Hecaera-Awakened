@@ -20,7 +20,7 @@ public class CharacterSaveData
     public float zPosition;
 
     [Header("Resources")]
-    public int currentHealth;
+    public int currentHealth = 100;
     public float currentStamina;
 
     [Header("Stats")]
