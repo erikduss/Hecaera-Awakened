@@ -28,6 +28,8 @@ public class WeaponItem : Item
     [Header("Stamina Cost Modifiers")]
     public int baseStaminaCost = 20;
     public float lightAttackStaminaCostMultiplier = 1;
+    public float heavyAttackStaminaCostMultiplier = 1.4f;
+    public float instantMagicAttackStaminaCostMultiplier = 1;
 
     [Header("Actions")]
     public WeaponItemAction oh_RB_Action; //one hand, right bumper action
