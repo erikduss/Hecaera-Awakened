@@ -9,6 +9,7 @@ public class CharacterSoundFXManager : MonoBehaviour
     protected virtual void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        WorldAudioVolumesManager.Instance.AddAudioSource(audioSource, AudioSourceType.SFX);
     }
 
     public void PlaySoundFX(AudioClip soundFX, float volume = 1, bool randomizePitch = true, float pitchRandom = 0.1f)
@@ -22,6 +23,11 @@ public class CharacterSoundFXManager : MonoBehaviour
         {
             audioSource.pitch += Random.Range(-pitchRandom, pitchRandom);
         }
+    }
+
+    public void PlayFootstepSoundFX()
+    {
+        audioSource.PlayOneShot(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.footstepSFX));
     }
 
     public void PlayRollSoundFX()

@@ -15,6 +15,9 @@ public class WorldSoundFXManager : MonoBehaviour
     [Header("Action Sounds")]
     public AudioClip rollSFX;
 
+    [Header("Footstep Sounds")]
+    public AudioClip[] footstepSFX;
+
     private void Awake()
     {
         if(instance == null)

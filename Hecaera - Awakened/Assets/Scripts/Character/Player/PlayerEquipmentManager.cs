@@ -64,6 +64,11 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
             rightHandSlot.LoadWeapon(rightHandWeaponModel);
             rightWeaponManager = rightHandWeaponModel.GetComponent<WeaponManager>();
             rightWeaponManager.SetWeaponDamage(player, player.playerInventoryManager.currentRightHandWeapon);
+
+            if (player.IsOwner)
+            {
+                player.playerNetworkManager.currentRightHandWeaponID.Value = player.playerInventoryManager.currentRightHandWeapon.itemID;
+            }
         }
     }
 

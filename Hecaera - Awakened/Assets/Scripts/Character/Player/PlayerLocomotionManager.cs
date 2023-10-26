@@ -31,6 +31,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private Vector3 rollDirection;
     [SerializeField] float dodgeStaminaCost = 25f;
 
+    [Header("Footsteps")]
+    [SerializeField] float groundCheckForFeet = .5f;
+    [SerializeField] GameObject leftFoot;
+    [SerializeField] GameObject rightFoot;
+    [SerializeField] private bool leftFootOnFloor = true;
+    [SerializeField] private bool rightFootOnFloor = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -41,6 +48,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     protected override void Update()
     {
         base.Update();
+
+        DetectFootOnGroundCollision();
 
         if (player.IsOwner)
         {
@@ -62,6 +71,33 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             {
                 player.playerAnimatorManager.UpdateAnimatorMovementParameters(horizontalMovement, verticalMovement, player.playerNetworkManager.isSprinting.Value);
             }
+        }
+    }
+
+    private void DetectFootOnGroundCollision()
+    {
+        RaycastHit leftHit;
+        if(Physics.Raycast(leftFoot.transform.position, leftFoot.transform.TransformDirection(Vector3.up), out leftHit, groundCheckForFeet, groundLayer))
+        {
+            if (!leftFootOnFloor) player.playerSoundFXManager.PlayFootstepSoundFX();
+
+            leftFootOnFloor = true;
+        }
+        else
+        {
+            leftFootOnFloor = false;
+        }
+
+        RaycastHit rightHit;
+        if (Physics.Raycast(rightFoot.transform.position, rightFoot.transform.TransformDirection(Vector3.down), out rightHit, groundCheckForFeet, groundLayer))
+        {
+            if (!rightFootOnFloor) player.playerSoundFXManager.PlayFootstepSoundFX();
+
+            rightFootOnFloor = true;
+        }
+        else
+        {
+            rightFootOnFloor = false;
         }
     }
 

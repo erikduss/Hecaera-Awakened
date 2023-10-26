@@ -18,6 +18,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerInventoryManager playerInventoryManager;
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
+    [HideInInspector] public PlayerSoundFXManager playerSoundFXManager;
 
     protected override void Awake()
     {
@@ -30,6 +31,7 @@ public class PlayerManager : CharacterManager
         playerInventoryManager = GetComponent<PlayerInventoryManager>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
+        playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
     }
 
     protected override void Update()
@@ -102,6 +104,7 @@ public class PlayerManager : CharacterManager
         //Server doesnt need to reload due to the character not being deleted.
         if (IsOwner && !IsServer)
         {
+            WorldSaveGameManager.instance.currentCharacterData.currentHealth = playerStatsManager.CalculateHealthBasedOnVitalityLevel(WorldSaveGameManager.instance.currentCharacterData.vitality);
             LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.instance.currentCharacterData);
             
             //Possibly fixes issue of client starting without stats.
@@ -224,6 +227,8 @@ public class PlayerManager : CharacterManager
         //sync weapons
         playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
         playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+
+        Debug.Log("Player's Weapon: " + playerNetworkManager.currentRightHandWeaponID.Value);
 
         //Set lock on target if locked on.
         if (playerNetworkManager.isLockedOn.Value)

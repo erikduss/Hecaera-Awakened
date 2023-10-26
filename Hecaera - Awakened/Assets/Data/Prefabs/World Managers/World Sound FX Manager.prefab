@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7831977136421243741}
   - component: {fileID: 858767271521760858}
+  - component: {fileID: 1591414050}
   m_Layer: 0
   m_Name: World Sound FX Manager
   m_TagString: Untagged
@@ -44,4 +45,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 000eb300c6d46124db86375957cfe845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollSFX: {fileID: 0}
+  menuMusicTrack: {fileID: 8300000, guid: 8048c3a469e9df1489ef5e54f1953a42, type: 3}
+  physicalDamageSFX:
+  - {fileID: 8300000, guid: ff212ee26bb962742b293d0d3fd9bdac, type: 3}
+  - {fileID: 8300000, guid: 5a1326fa530bf644a84018223dd177f1, type: 3}
+  rollSFX: {fileID: 8300000, guid: 2dab1f5bf55bc2943a8f99fa72a658eb, type: 3}
+  footstepSFX:
+  - {fileID: 8300000, guid: 2d474803f086f0b4cbc0ab94efd3453e, type: 3}
+  - {fileID: 8300000, guid: 4d59be5c2ee416144a432073ad94d726, type: 3}
+  - {fileID: 8300000, guid: 8cd2d1b725219dc4fb8c21138ba69fe4, type: 3}
+  - {fileID: 8300000, guid: 4ef0a7a30c92538449dd4f6348c1bcd6, type: 3}
+  - {fileID: 8300000, guid: 2da86df47a4d9564dba9b0e476c3ddbb, type: 3}
+  - {fileID: 8300000, guid: 4f839c1b62de11046b71924c6aa98cad, type: 3}
+  - {fileID: 8300000, guid: 8f93b136993876540b338f3cab8ca486, type: 3}
+  - {fileID: 8300000, guid: dd9cffad4ae65864ca9954fb697c8c5e, type: 3}
+  - {fileID: 8300000, guid: 8df852d9fd81bfd44a7b320dba1daa32, type: 3}
+  - {fileID: 8300000, guid: 979c01017a93ed846aee2c17347a1b19, type: 3}
+  - {fileID: 8300000, guid: d375a605e5328c74092a0b45283f00fc, type: 3}
+  - {fileID: 8300000, guid: dc2a9026719df5a4c9e48cb8144f8760, type: 3}
+  - {fileID: 8300000, guid: 9755e5639b2ee4248b4a5fd522ecbf1f, type: 3}
+  - {fileID: 8300000, guid: 2696c9db28f5bd649a89e867570db21e, type: 3}
+  - {fileID: 8300000, guid: e4526b5e30217ca47bc8cf975e9cebda, type: 3}
+  - {fileID: 8300000, guid: 38facd8983118ab4ebf1b02d2e56e409, type: 3}
+  - {fileID: 8300000, guid: bce3097e7669b6d42933d14a7ed9b296, type: 3}
+  - {fileID: 8300000, guid: fdb059b700e0f9542a4f4908c5daf74f, type: 3}
+  - {fileID: 8300000, guid: f68a1eb33cc2bfb45bccbb89d1318953, type: 3}
+--- !u!114 &1591414050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6337586843143360647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d79443f4c71274aa96328ea703e310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicAudioSources:
+  - {fileID: 0}
+  SFXAudioSources: []
+  dialogAudioSources: []

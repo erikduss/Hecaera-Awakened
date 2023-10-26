@@ -48820,6 +48820,7 @@ MonoBehaviour:
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -48854,6 +48855,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYvelocity: -5
+  isRolling: 0
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
@@ -48867,6 +48869,8 @@ MonoBehaviour:
   jumpForwardSpeed: 5
   freeFallSpeed: 2
   dodgeStaminaCost: 25
+  leftFoot: {fileID: 7630826948493593068}
+  rightFoot: {fileID: 2623809516548852796}
 --- !u!114 &-2178375840483864606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48892,6 +48896,8 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
   isDead:
     m_InternalValue: 0
   isSprinting:
@@ -48899,6 +48905,10 @@ MonoBehaviour:
   isJumping:
     m_InternalValue: 0
   isLockedOn:
+    m_InternalValue: 0
+  isChargingAttack:
+    m_InternalValue: 0
+  isInvincible:
     m_InternalValue: 0
   endurance:
     m_InternalValue: 10
@@ -49118,7 +49128,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 1062926850571278753}
-  currentWeaponBeingUsed: {fileID: 0}
+  currentWeaponBeingUsed: {fileID: 11400000, guid: 3f830249c0ecfd34db892ae3b7af3bd9, type: 2}
 --- !u!82 &7135133068949086043
 AudioSource:
   m_ObjectHideFlags: 0
@@ -49140,9 +49150,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 50
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

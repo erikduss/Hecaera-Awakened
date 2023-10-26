@@ -324,6 +324,8 @@ public class PlayerInputManager : MonoBehaviour
         {
             RB_Input = false;
 
+            if (player.isPerformingAction) return;
+
             player.playerNetworkManager.SetCharacterActionHand(true);
 
             player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.oh_RB_Action, player.playerInventoryManager.currentRightHandWeapon);
@@ -335,6 +337,8 @@ public class PlayerInputManager : MonoBehaviour
         if (LB_Input)
         {
             LB_Input = false;
+
+            if (player.isPerformingAction) return;
 
             player.playerNetworkManager.SetCharacterActionHand(true);
 
@@ -348,6 +352,8 @@ public class PlayerInputManager : MonoBehaviour
         if (RT_Input)
         {
             RT_Input = false;
+
+            if (player.isPerformingAction) return;
 
             player.playerNetworkManager.SetCharacterActionHand(true);
 

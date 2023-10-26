@@ -10,10 +10,44 @@ public class Projectile : NetworkBehaviour
     public NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Quaternion> networkRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public Vector3 networkPositionVelocity;
+    public float networkPositionSmoothTime = 0.1f;
+    public float networkRotationSmoothTime = 0.1f;
 
     public ProjectileType projectileType;
 
     public Transform startingPoint;
+
+    private void Update()
+    {
+        //Projectiles are being handles by the server only!, assign its network position to the position of our transform.
+        if (NetworkManager.Singleton.IsServer)
+        {
+            networkPosition.Value = transform.position;
+            networkRotation.Value = transform.rotation;
+        }
+        //if the character is being controlled from elsewhere, then assign its position here locally.
+        else
+        {
+            //Instantly move the transform is its far away (happens while initiating from the object pool)
+            if(Vector3.Distance(transform.position, networkPosition.Value) > 1f)
+            {
+                transform.position = networkPosition.Value;
+            }
+            
+            //Position
+            transform.position = Vector3.SmoothDamp
+                (transform.position,
+                networkPosition.Value,
+                ref networkPositionVelocity,
+                networkPositionSmoothTime);
+
+            //Rotation
+            transform.rotation = Quaternion.Slerp
+                (transform.rotation,
+                networkRotation.Value,
+                networkPositionSmoothTime);
+        }
+    }
 
     public override void OnNetworkSpawn()
     {

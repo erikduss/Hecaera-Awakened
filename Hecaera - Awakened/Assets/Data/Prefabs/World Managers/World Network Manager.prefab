@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2626091406900663781}
   - component: {fileID: 2626091406900663780}
   - component: {fileID: 2626091406900663783}
+  - component: {fileID: 1907446760}
   m_Layer: 0
   m_Name: World Network Manager
   m_TagString: Untagged
@@ -51,7 +52,32 @@ MonoBehaviour:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 2626091406900663783}
     PlayerPrefab: {fileID: 7883420388067512447, guid: 14f23b3611a95494196a1495f5d12995, type: 3}
-    NetworkPrefabs: []
+    NetworkPrefabs:
+    - Override: 0
+      Prefab: {fileID: 3428074805070032650, guid: 37c88163a2e180c4ba3a15b8d755d58b, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 5471057164621568326, guid: 0fa1b9c6f94c56e44912a38289b8bdff, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 893862663710687328, guid: b6ac97362ce60274eb539cd003bbe335, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 3163915196024471394, guid: 5eea62b16b3a2214b8ce54807994179c, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 4485763326540337966, guid: 6d4fdfad28828554084a6eb9624c94ef, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -94,3 +120,16 @@ MonoBehaviour:
     PacketDelayMS: 0
     PacketJitterMS: 0
     PacketDropRate: 0
+--- !u!114 &1907446760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2626091406900663782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49361f241cd52bf4fb5f5a4924b509c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []

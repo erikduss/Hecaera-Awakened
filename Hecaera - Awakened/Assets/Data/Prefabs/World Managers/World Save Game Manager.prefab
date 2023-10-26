@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3438734407885278100}
   - component: {fileID: 3438734407885278101}
+  - component: {fileID: 562200980}
   m_Layer: 0
   m_Name: World Save Game Manager
   m_TagString: Untagged
@@ -44,4 +45,143 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd2ab0ffe2d4c942a62e7953925d1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldSceneIndex: 1
+  player: {fileID: 0}
+  saveGame: 0
+  loadGame: 0
+  worldSceneIndex: 6
+  currentCharacterSlotBeingUsed: 0
+  currentCharacterData:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 100
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot01:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot02:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot03:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot04:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot05:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot06:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot07:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot08:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot09:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  characterSlot10:
+    sceneIndex: 6
+    characterName: Character
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+    currentHealth: 0
+    currentStamina: 0
+    vitality: 15
+    endurance: 10
+  dummySpawner: {fileID: 3428074805070032650, guid: 37c88163a2e180c4ba3a15b8d755d58b, type: 3}
+  worldNetworkObjectPoolManagerPrefab: {fileID: 3163915196024471394, guid: 5eea62b16b3a2214b8ce54807994179c, type: 3}
+--- !u!114 &562200980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438734407885278106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f43987a31774d4e98471ccb225581b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

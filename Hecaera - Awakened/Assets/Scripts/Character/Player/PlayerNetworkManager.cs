@@ -58,6 +58,8 @@ public class PlayerNetworkManager : CharacterNetworkManager
         WeaponItem newWeapon = Instantiate(WorldItemDatabase.Instance.GetWeaponByID(newID));
         player.playerInventoryManager.currentRightHandWeapon = newWeapon;
         player.playerEquipmentManager.LoadRightWeapon();
+
+        Debug.Log("Player is using:: " + newWeapon.itemName);
     }
 
     public void OnCurrentLeftHandWeaponIDChange(int oldID, int newID)

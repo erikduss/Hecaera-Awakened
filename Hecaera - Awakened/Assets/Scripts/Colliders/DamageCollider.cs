@@ -29,7 +29,7 @@ public class DamageCollider : MonoBehaviour
     {
         CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
-        if(damageTarget != null)
+        if(damageTarget != null && !damageTarget.characterNetworkManager.isInvincible.Value)
         {
             contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 

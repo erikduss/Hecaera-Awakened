@@ -94,6 +94,24 @@ public class CharacterManager : NetworkBehaviour
 
     }
 
+    public void GrandInvincibility()
+    {
+        //Only the server is allowed to grand invincibility;
+        if (!IsOwner)
+            return;
+
+        characterNetworkManager.isInvincible.Value = true;
+    }
+
+    public void RevokeInvincibility()
+    {
+        //Only the server is allowed to grand invincibility;
+        if (!IsOwner)
+            return;
+
+        characterNetworkManager.isInvincible.Value = false;
+    }
+
     protected virtual void IgnoreMyOwnColliders()
     {
         Collider characterControllerCollider = GetComponent<Collider>();

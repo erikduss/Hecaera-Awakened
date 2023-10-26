@@ -29,7 +29,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
     {
         CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
-        if (damageTarget != null)
+        if (damageTarget != null && !damageTarget.characterNetworkManager.isInvincible.Value)
         {
             //dont damage yourself
             if (damageTarget == characterCausingDamage)

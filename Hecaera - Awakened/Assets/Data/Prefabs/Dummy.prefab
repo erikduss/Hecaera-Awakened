@@ -2270,6 +2270,7 @@ MonoBehaviour:
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -2295,6 +2296,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYvelocity: -5
+  isRolling: 0
 --- !u!114 &5471057166058172204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2320,6 +2322,8 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
   isDead:
     m_InternalValue: 0
   isSprinting:
@@ -2327,6 +2331,10 @@ MonoBehaviour:
   isJumping:
     m_InternalValue: 0
   isLockedOn:
+    m_InternalValue: 0
+  isChargingAttack:
+    m_InternalValue: 0
+  isInvincible:
     m_InternalValue: 0
   endurance:
     m_InternalValue: 10
@@ -38363,7 +38371,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.8485321, g: 0.37647066, b: 0.99607843, a: 1}
+  m_Color: {r: 0.7529412, g: 0.22352941, b: 0.21568628, a: 1}
   m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
