@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUIPopUpManager : MonoBehaviour
 {
@@ -11,6 +13,28 @@ public class PlayerUIPopUpManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI youDiedPopUpBackgroundText;
     [SerializeField] TextMeshProUGUI youDiedPopUpText;
     [SerializeField] CanvasGroup youDiedPopUpCanvasGroup;
+
+    [Header("Menu Buttons Pop Up")]
+    public bool buttonsMenuIsOpen = false;
+    [SerializeField] GameObject menuButtonsPopUpGameObject;
+    [SerializeField] Button returnToGameButton;
+    [SerializeField] GameObject buttonsLayoutGroupGameObject;
+
+    [Header("Settings Ingame Menu")]
+    [SerializeField] TitleScreenSettingsMenuManager settingsMenuManager;
+    [SerializeField] GameObject settingsPopUpGameObject;
+    [SerializeField] GameObject abandonChangedSettingsPopUp;
+    [SerializeField] Button abandonChangedSettingsConfirmButton;
+    [SerializeField] Button returnToButtonsMenuButton;
+
+    private void Start()
+    {
+        if (menuButtonsPopUpGameObject.activeSelf)
+        {
+            menuButtonsPopUpGameObject.SetActive(false);
+            buttonsMenuIsOpen = false;
+        }
+    }
 
     public void SendYouDiedPopUp()
     {
@@ -86,5 +110,79 @@ public class PlayerUIPopUpManager : MonoBehaviour
         canvas.alpha = 0;
 
         yield return null;
+    }
+
+    public void MenuButtonsActiveToggle()
+    {
+        if (menuButtonsPopUpGameObject.activeSelf)
+        {
+            //First check if options menu is open
+            if (settingsPopUpGameObject.activeSelf)
+            {
+                //Make sure to revert changed settings
+                RevertSettingsChanges();
+            }
+
+            menuButtonsPopUpGameObject.SetActive(false);
+            buttonsMenuIsOpen = false;
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            menuButtonsPopUpGameObject.SetActive(true);
+            buttonsMenuIsOpen = true;
+            returnToGameButton.Select(); //Always start at the select button.
+        }
+    }
+
+    public void OpenSettingsIngameMenu()
+    {
+        buttonsLayoutGroupGameObject.SetActive(false);
+        settingsPopUpGameObject.SetActive(true);
+        returnToButtonsMenuButton.Select();
+    }
+
+    public void CloseSettingsIngameMenu()
+    {
+        buttonsLayoutGroupGameObject.SetActive(true);
+        settingsPopUpGameObject.SetActive(false);
+        returnToGameButton.Select();
+    }
+
+    public void DisplayAbandonChangedSettingsPopUp()
+    {
+        abandonChangedSettingsPopUp.SetActive(true);
+        abandonChangedSettingsConfirmButton.Select();
+    }
+
+    public void CloseAbandonChangedSettingsPopUp()
+    {
+        abandonChangedSettingsPopUp.SetActive(false);
+        returnToButtonsMenuButton.Select();
+    }
+
+    public void RevertSettingsChanges()
+    {
+        abandonChangedSettingsPopUp.SetActive(false);
+        //reset settings!
+        settingsMenuManager.SetAllSettingsFromLoadedSettingsData();
+
+        CloseSettingsIngameMenu();
+    }
+
+    public void ReturnToLobby()
+    {
+        ExitGame(); //dont have a way to reset things yet.
+    }
+
+    public void ExitGame()
+    {
+        NetworkManager.Singleton.Shutdown();
+        Application.Quit();
     }
 }

@@ -39,6 +39,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool RT_Input = false;
     [SerializeField] bool Hold_RT_Input = false;
 
+    [Header("Menu Input")]
+    [SerializeField] bool openMenuButton_Input = false;
 
     private void Awake()
     {
@@ -76,6 +78,8 @@ public class PlayerInputManager : MonoBehaviour
             if (playerControls != null)
             {
                 playerControls.Enable();
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
         //otherwise we must be in the main menu, disable player controls.
@@ -87,6 +91,8 @@ public class PlayerInputManager : MonoBehaviour
             if (playerControls != null)
             {
                 playerControls.Disable();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
     }
@@ -119,6 +125,9 @@ public class PlayerInputManager : MonoBehaviour
             //Holding the input sets the bool to true. Releasing it sets it to false.
             playerControls.PlayerActions.Sprint.performed += i => sprint_Input = true;
             playerControls.PlayerActions.Sprint.canceled += i => sprint_Input = false;
+
+            //Menu Input
+            playerControls.PlayerActions.OpenButtonsMenu.performed += i => openMenuButton_Input = true;
         }
 
         playerControls.Enable();
@@ -152,6 +161,17 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleAllInputs()
     {
+        HandleOpenMenuButtonInput();
+
+        //If the menu is open, we do not want to be able to move around.
+        if (PlayerUIManager.instance.playerUIPopUpManager.buttonsMenuIsOpen)
+            return;
+        else if(Cursor.lockState != CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         HandleLockOnInput();
         HandleLockOnSwitchTargetInput();
         HandlePlayerMovementInput();
@@ -163,6 +183,37 @@ public class PlayerInputManager : MonoBehaviour
         HandleRTInput();
         HandleHoldRTInput();
         HandleLBInput();
+    }
+
+    private void ResetInputBoolsWhileMenuIsOpen()
+    {
+        dodge_Input = false;
+        jump_Input = false;
+
+        RB_Input = false;
+        LB_Input = false;
+
+        RT_Input = false;
+        Hold_RT_Input = false;
+
+        lockOn_Input = false;
+        lockOn_Left_Input = false;
+        lockOn_Right_Input = false;
+
+        sprint_Input = false;
+    }
+
+    private void HandleOpenMenuButtonInput()
+    {
+        if (openMenuButton_Input)
+        {
+            openMenuButton_Input = false;
+
+            ResetInputBoolsWhileMenuIsOpen();
+
+            //This is a toggle, meaning that if its on it will deactivate, if its off it will activate.
+            PlayerUIManager.instance.playerUIPopUpManager.MenuButtonsActiveToggle();
+        }
     }
 
     private void HandleLockOnInput()

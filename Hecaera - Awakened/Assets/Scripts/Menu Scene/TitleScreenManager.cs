@@ -99,8 +99,9 @@ public class TitleScreenManager : MonoBehaviour
         continuedPastSplashScreen = true;
 
         UnityTransport networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        networkTransport.ConnectionData.Address = "192.168.2.1";
-        networkTransport.ConnectionData.Port = 9000;
+        networkTransport.SetConnectionData("192.168.2.1", 9000, "0.0.0.0");
+
+        //Available ports: 9000, 1511, 12567
 
         NetworkManager.Singleton.StartHost();
     }
@@ -126,6 +127,8 @@ public class TitleScreenManager : MonoBehaviour
             yield return null;
         }
 
+        Debug.Log("Are we a server? " + NetworkManager.Singleton.IsServer);
+
         //If alternate IP has been assigned.
         if (joinGameServerIPText.text.Length > 0)
         {
@@ -140,8 +143,10 @@ public class TitleScreenManager : MonoBehaviour
         }
         else
         {
-            networkTransport.ConnectionData.Address = "127.0.0.1";
-            networkTransport.ConnectionData.Port = 7777;
+            //networkTransport.ConnectionData.Address = "127.0.0.1";
+            //networkTransport.ConnectionData.Port = 7777;
+
+            networkTransport.SetConnectionData("86.84.11.223", 9000);
         }
 
         bool success = NetworkManager.Singleton.StartClient();

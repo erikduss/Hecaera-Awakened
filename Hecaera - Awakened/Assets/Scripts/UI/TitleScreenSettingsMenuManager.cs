@@ -99,6 +99,21 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
             TitleScreenManager.Instance.CloseSettingsMenu();
     }
 
+    public void ReturnToButtonPanelInGame()
+    {
+        //check if settings are changed (different from save file)
+        if (
+            tempSettingsData.mainVolume != SavedSettingsManager.instance.LoadedSettingsData.mainVolume
+            || tempSettingsData.musicVolume != SavedSettingsManager.instance.LoadedSettingsData.musicVolume
+            || tempSettingsData.SFXVolume != SavedSettingsManager.instance.LoadedSettingsData.SFXVolume
+            || tempSettingsData.dialogVolume != SavedSettingsManager.instance.LoadedSettingsData.dialogVolume)
+        {
+            PlayerUIManager.instance.playerUIPopUpManager.DisplayAbandonChangedSettingsPopUp();
+        }
+        else
+            PlayerUIManager.instance.playerUIPopUpManager.CloseSettingsIngameMenu();
+    }
+
     public void UpdateMainVolumeText()
     {
         mainVolumePercentageText.text = mainVolumeSlider.value + "%";
