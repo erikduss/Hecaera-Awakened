@@ -169,8 +169,19 @@ public class PlayerManager : CharacterManager
         {
             PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
         }
+        else
+        {
+            //we killed the other player, to keep it fair. Heal other player too.
+            WorldGameSessionManager.Instance.HealLocalPlayerToFull();
+        }
 
-        return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+        yield return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+
+        if (IsOwner)
+        {
+            //automatically revive
+            ReviveCharacter();
+        }
     }
 
     public override void ReviveCharacter()
@@ -227,8 +238,6 @@ public class PlayerManager : CharacterManager
         //sync weapons
         playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
         playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
-
-        Debug.Log("Player's Weapon: " + playerNetworkManager.currentRightHandWeaponID.Value);
 
         //Set lock on target if locked on.
         if (playerNetworkManager.isLockedOn.Value)

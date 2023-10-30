@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerUIPopUpManager : MonoBehaviour
@@ -177,7 +178,14 @@ public class PlayerUIPopUpManager : MonoBehaviour
 
     public void ReturnToLobby()
     {
-        ExitGame(); //dont have a way to reset things yet.
+        //Close menu, otherwise it can still be interacted with when loading back to lobby scene.
+        MenuButtonsActiveToggle();
+
+        NetworkManager.Singleton.Shutdown();
+
+        SceneManager.LoadScene(5);
+
+        //ExitGame(); //dont have a way to reset things yet.
     }
 
     public void ExitGame()

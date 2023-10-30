@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WorldGameSessionManager : MonoBehaviour
@@ -58,5 +59,12 @@ public class WorldGameSessionManager : MonoBehaviour
                 players.RemoveAt(i);
             }
         }
+    }
+
+    public void HealLocalPlayerToFull()
+    {
+        PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
+        localPlayer.playerNetworkManager.currentHealth.Value = localPlayer.playerNetworkManager.maxHealth.Value;
+        localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxHealth.Value;
     }
 }

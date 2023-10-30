@@ -86,7 +86,7 @@ public class CharacterManager : NetworkBehaviour
             }
         }
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(5f);
     }
 
     public virtual void ReviveCharacter()
