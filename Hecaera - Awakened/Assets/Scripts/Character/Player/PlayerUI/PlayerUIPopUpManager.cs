@@ -183,7 +183,7 @@ public class PlayerUIPopUpManager : MonoBehaviour
 
         NetworkManager.Singleton.Shutdown();
 
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene("Scene_Main_Menu_01");
 
         //ExitGame(); //dont have a way to reset things yet.
     }

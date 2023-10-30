@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterSoundFXManager : MonoBehaviour
 {
     private AudioSource audioSource;
+    private bool startedGame = false;
 
     protected virtual void Awake()
     {
@@ -27,6 +30,10 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     public void PlayFootstepSoundFX()
     {
+        if(!startedGame)
+            if (SceneManager.GetActiveScene().buildIndex == 0) return;
+
+        startedGame = true;
         audioSource.PlayOneShot(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.footstepSFX));
     }
 

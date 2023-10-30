@@ -648,7 +648,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &70664133
 RectTransform:
@@ -50496,6 +50496,14 @@ PrefabInstance:
     - target: {fileID: 3438734407885278100, guid: d8c21c4bed30de642a0b16a45d29dbb6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438734407885278101, guid: d8c21c4bed30de642a0b16a45d29dbb6, type: 3}
+      propertyPath: worldSceneIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438734407885278101, guid: d8c21c4bed30de642a0b16a45d29dbb6, type: 3}
+      propertyPath: currentCharacterData.sceneIndex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3438734407885278106, guid: d8c21c4bed30de642a0b16a45d29dbb6, type: 3}
       propertyPath: m_Name
