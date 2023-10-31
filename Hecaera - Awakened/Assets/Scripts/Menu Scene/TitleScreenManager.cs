@@ -102,7 +102,7 @@ public class TitleScreenManager : MonoBehaviour
 
         UnityTransport networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         networkTransport.SetConnectionData("192.168.2.1", 9000, "0.0.0.0");
-
+        //192.168.2.1
         //Available ports: 9000, 1511, 12567
 
         NetworkManager.Singleton.StartHost();
