@@ -85,6 +85,7 @@ public class TitleScreenManager : MonoBehaviour
 
     public void ExitGame()
     {
+        NetworkManager.Singleton.Shutdown();
         Application.Quit();
     }
 

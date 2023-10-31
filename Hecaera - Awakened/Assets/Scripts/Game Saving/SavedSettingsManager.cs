@@ -37,6 +37,8 @@ public class SavedSettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat("MusicVolume", saveData.musicVolume);
         PlayerPrefs.SetFloat("SFXVolume", saveData.SFXVolume);
         PlayerPrefs.SetFloat("DialogVolume", saveData.dialogVolume);
+        PlayerPrefs.SetFloat("HorizontalSensitivity", saveData.horizontalSensitivity);
+        PlayerPrefs.SetFloat("VerticalSensitivity", saveData.verticalSensitivity);
 
         PlayerPrefs.Save();
 
@@ -44,6 +46,8 @@ public class SavedSettingsManager : MonoBehaviour
         LoadedSettingsData.musicVolume = saveData.musicVolume;
         LoadedSettingsData.SFXVolume = saveData.SFXVolume;
         LoadedSettingsData.dialogVolume = saveData.dialogVolume;
+        loadedSettingsData.horizontalSensitivity = saveData.horizontalSensitivity;
+        loadedSettingsData.verticalSensitivity = saveData.verticalSensitivity;
     }
 
     public SettingsSaveData LoadSaveSettings()
@@ -69,6 +73,16 @@ public class SavedSettingsManager : MonoBehaviour
         if (PlayerPrefs.HasKey("DialogVolume"))
         {
             loadedSettingsData.dialogVolume = PlayerPrefs.GetFloat("DialogVolume");
+        }
+
+        if (PlayerPrefs.HasKey("HorizontalSensitivity"))
+        {
+            loadedSettingsData.horizontalSensitivity = PlayerPrefs.GetFloat("HorizontalSensitivity");
+        }
+
+        if (PlayerPrefs.HasKey("VerticalSensitivity"))
+        {
+            loadedSettingsData.verticalSensitivity = PlayerPrefs.GetFloat("VerticalSensitivity");
         }
 
         return loadedSettingsData;

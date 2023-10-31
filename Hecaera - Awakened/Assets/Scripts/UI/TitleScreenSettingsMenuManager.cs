@@ -11,6 +11,14 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
     [Header("Title Screen Inputs")]
     [SerializeField] bool saveSettings = false;
 
+    [Header("Horizontal Sensitivity Components")]
+    [SerializeField] private Slider horizontalSensitivitySlider;
+    [SerializeField] private TextMeshProUGUI horizontalSensitivityText;
+
+    [Header("Vertical Sensitivity Components")]
+    [SerializeField] private Slider verticalSensitivitySlider;
+    [SerializeField] private TextMeshProUGUI verticalSensitivityText;
+
     [Header("Main Volume Components")]
     [SerializeField] private Slider mainVolumeSlider;
     [SerializeField] private TextMeshProUGUI mainVolumePercentageText;
@@ -66,17 +74,23 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
             mainVolume = SavedSettingsManager.instance.LoadedSettingsData.mainVolume,
             musicVolume = SavedSettingsManager.instance.LoadedSettingsData.musicVolume,
             SFXVolume = SavedSettingsManager.instance.LoadedSettingsData.SFXVolume,
-            dialogVolume = SavedSettingsManager.instance.LoadedSettingsData.dialogVolume
+            dialogVolume = SavedSettingsManager.instance.LoadedSettingsData.dialogVolume,
+            horizontalSensitivity = SavedSettingsManager.instance.LoadedSettingsData.horizontalSensitivity,
+            verticalSensitivity = SavedSettingsManager.instance.LoadedSettingsData.verticalSensitivity
         };
 
         mainVolumeSlider.value = tempSettingsData.mainVolume;
         musicVolumeSlider.value = tempSettingsData.musicVolume;
         SFXVolumeSlider.value = tempSettingsData.SFXVolume;
         dialogVolumeSlider.value = tempSettingsData.dialogVolume;
+        horizontalSensitivitySlider.value = tempSettingsData.horizontalSensitivity;
+        verticalSensitivitySlider.value = tempSettingsData.verticalSensitivity;
 
         WorldAudioVolumesManager.Instance.SetMusicAudioSourcesVolumes(musicVolumeSlider.value, mainVolumeSlider.value);
         WorldAudioVolumesManager.Instance.SetSFXAudioSourcesVolumes(SFXVolumeSlider.value, mainVolumeSlider.value);
         WorldAudioVolumesManager.Instance.SetDialogAudioSourcesVolumes(dialogVolumeSlider.value, mainVolumeSlider.value);
+
+        PlayerCamera.instance.SetNewSensitivityFromSaveValues(horizontalSensitivitySlider.value, verticalSensitivitySlider.value);
     }
 
     public void SaveSettings()
@@ -91,7 +105,9 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
             tempSettingsData.mainVolume != SavedSettingsManager.instance.LoadedSettingsData.mainVolume
             || tempSettingsData.musicVolume != SavedSettingsManager.instance.LoadedSettingsData.musicVolume
             || tempSettingsData.SFXVolume != SavedSettingsManager.instance.LoadedSettingsData.SFXVolume
-            || tempSettingsData.dialogVolume != SavedSettingsManager.instance.LoadedSettingsData.dialogVolume)
+            || tempSettingsData.dialogVolume != SavedSettingsManager.instance.LoadedSettingsData.dialogVolume
+            || tempSettingsData.horizontalSensitivity != SavedSettingsManager.instance.LoadedSettingsData.horizontalSensitivity
+            || tempSettingsData.verticalSensitivity != SavedSettingsManager.instance.LoadedSettingsData.verticalSensitivity)
         {
             TitleScreenManager.Instance.DisplayAbandonChangedSettingsPopUp();
         }
@@ -106,7 +122,9 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
             tempSettingsData.mainVolume != SavedSettingsManager.instance.LoadedSettingsData.mainVolume
             || tempSettingsData.musicVolume != SavedSettingsManager.instance.LoadedSettingsData.musicVolume
             || tempSettingsData.SFXVolume != SavedSettingsManager.instance.LoadedSettingsData.SFXVolume
-            || tempSettingsData.dialogVolume != SavedSettingsManager.instance.LoadedSettingsData.dialogVolume)
+            || tempSettingsData.dialogVolume != SavedSettingsManager.instance.LoadedSettingsData.dialogVolume
+            || tempSettingsData.horizontalSensitivity != SavedSettingsManager.instance.LoadedSettingsData.horizontalSensitivity
+            || tempSettingsData.verticalSensitivity != SavedSettingsManager.instance.LoadedSettingsData.verticalSensitivity)
         {
             PlayerUIManager.instance.playerUIPopUpManager.DisplayAbandonChangedSettingsPopUp();
         }
@@ -143,5 +161,27 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
         tempSettingsData.dialogVolume = dialogVolumeSlider.value;
 
         WorldAudioVolumesManager.Instance.SetDialogAudioSourcesVolumes(dialogVolumeSlider.value, mainVolumeSlider.value);
+    }
+
+    public void UpdateHorizontalSensitivityText()
+    {
+        if (horizontalSensitivitySlider.value == 0) horizontalSensitivityText.text = "Default";
+        else
+            horizontalSensitivityText.text = horizontalSensitivitySlider.value.ToString();
+
+        tempSettingsData.horizontalSensitivity = horizontalSensitivitySlider.value;
+
+        PlayerCamera.instance.SetNewSensitivityFromSaveValues(horizontalSensitivitySlider.value, verticalSensitivitySlider.value);
+    }
+
+    public void UpdateVerticalSensitivityText()
+    {
+        if (verticalSensitivitySlider.value == 0) verticalSensitivityText.text = "Default";
+        else
+            verticalSensitivityText.text = verticalSensitivitySlider.value.ToString();
+
+        tempSettingsData.verticalSensitivity = verticalSensitivitySlider.value;
+
+        PlayerCamera.instance.SetNewSensitivityFromSaveValues(horizontalSensitivitySlider.value, verticalSensitivitySlider.value);
     }
 }

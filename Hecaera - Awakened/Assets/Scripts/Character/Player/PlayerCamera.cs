@@ -320,4 +320,20 @@ public class PlayerCamera : MonoBehaviour
 
         yield return null;
     }
+
+    public void SetNewSensitivityFromSaveValues(float newValueHorizontal, float newValueVertical)
+    {
+        // Values go between - 100 and 100, -100 meaning half the sensitivity of the default. 100 meaning default + half
+        //Horizontal Default: 400
+        //Vertical Default: 220
+
+        //Formula: default + a calculation of the new value x 4 (cus the max is 100, 100x4 = 400 -> the default). thn x 0.5 to prevent it going to 0
+        float newHorizontal = 400 + ((newValueHorizontal * 4) * 0.5f);
+        //Horizontal value minimum becomes: 200, maximum becomes 600
+
+        float newVertical = 220 + ((newValueVertical * 2.2f) * 0.5f);
+
+        leftAndRightRotationSpeed = newHorizontal;
+        upAndDownRotationSpeed = newVertical;
+    }
 }

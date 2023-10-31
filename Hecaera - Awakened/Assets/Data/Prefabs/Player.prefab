@@ -48835,6 +48835,7 @@ MonoBehaviour:
   playerInventoryManager: {fileID: 0}
   playerEquipmentManager: {fileID: 0}
   playerCombatManager: {fileID: 0}
+  playerSoundFXManager: {fileID: 0}
 --- !u!114 &-2247516724813827955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48869,8 +48870,11 @@ MonoBehaviour:
   jumpForwardSpeed: 5
   freeFallSpeed: 2
   dodgeStaminaCost: 25
+  groundCheckForFeet: 0.5
   leftFoot: {fileID: 7630826948493593068}
   rightFoot: {fileID: 2623809516548852796}
+  leftFootOnFloor: 1
+  rightFootOnFloor: 1
 --- !u!114 &-2178375840483864606
 MonoBehaviour:
   m_ObjectHideFlags: 0

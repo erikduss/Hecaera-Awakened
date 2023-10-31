@@ -223,6 +223,26 @@ public class WorldSaveGameManager : MonoBehaviour
             return;
         }
 
+        //In This demo we dont really want to deal with character slots being full.
+        DeleteGame(CharacterSlot.CharacterSlot_10);
+
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_10);
+
+        if (!saveFileDataWriter.CheckToSeeIfFileExists())
+        {
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_10;
+            currentCharacterData = new CharacterSaveData();
+            NewGame();
+            return;
+        }
+        else
+        {
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_10;
+            currentCharacterData = new CharacterSaveData();
+            NewGame();
+            return;
+        }
+
         //If there are no slots left, notify the player
         TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopUp();
     }

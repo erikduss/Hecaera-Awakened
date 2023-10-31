@@ -50,7 +50,7 @@ public class PlayerCombatManager : CharacterCombatManager
                 staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.heavyAttackStaminaCostMultiplier;
                 break;
             case AttackType.ChargedAttack01:
-                staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.charged_Heavy_Attack_01_Modifier;
+                staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.heavyAttackStaminaCostMultiplier;
                 break;
             case AttackType.InstantMagicAttack01:
                 staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.instantMagicAttackStaminaCostMultiplier;
