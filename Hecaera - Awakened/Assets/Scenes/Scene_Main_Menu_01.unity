@@ -700,6 +700,7 @@ MonoBehaviour:
   noCharacterSlotsPopUp: {fileID: 509169367}
   deleteCharacterSlotPopUp: {fileID: 1099651782}
   abandonChangedSettingsPopUp: {fileID: 1839777616}
+  serverConnectStatusText: {fileID: 1116393181}
   joinGameServerIPText: {fileID: 111729397}
   joinGameServerPortText: {fileID: 438726848}
   currentSeletedSlot: 10
@@ -17819,7 +17820,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Joining Game
+  m_text: Press Join Game to start connecting to a server/host.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17846,8 +17847,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -51894,7 +51895,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2626091406900663780, guid: 2f8354d1f00799f40a985173129cf5e6, type: 3}
       propertyPath: LogLevel
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2626091406900663781, guid: 2f8354d1f00799f40a985173129cf5e6, type: 3}
       propertyPath: m_RootOrder

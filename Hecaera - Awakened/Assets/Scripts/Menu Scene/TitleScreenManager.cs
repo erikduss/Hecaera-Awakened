@@ -38,6 +38,7 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] GameObject abandonChangedSettingsPopUp;
 
     [Header("Server Info")]
+    [SerializeField] TextMeshProUGUI serverConnectStatusText;
     [SerializeField] TMP_InputField joinGameServerIPText;
     [SerializeField] TMP_InputField joinGameServerPortText;
 
@@ -120,6 +121,7 @@ public class TitleScreenManager : MonoBehaviour
 
     private IEnumerator JoiningGame()
     {
+        serverConnectStatusText.text = string.Empty;
         //we must first shut down becaus we started as a host during the title screen.
         NetworkManager.Singleton.Shutdown();
 
@@ -130,9 +132,12 @@ public class TitleScreenManager : MonoBehaviour
 
         Debug.Log("Are we a server? " + NetworkManager.Singleton.IsServer);
 
+        bool usingCustomServerData = false;
+
         //If alternate IP has been assigned.
         if (joinGameServerIPText.text.Length > 0)
         {
+            usingCustomServerData = true;
             networkTransport.ConnectionData.Address = joinGameServerIPText.text;
             
             if(joinGameServerPortText.text.Length > 0)
@@ -144,6 +149,7 @@ public class TitleScreenManager : MonoBehaviour
         }
         else
         {
+            usingCustomServerData = false;
             //networkTransport.ConnectionData.Address = "127.0.0.1";
             //networkTransport.ConnectionData.Port = 7777;
 
@@ -152,9 +158,16 @@ public class TitleScreenManager : MonoBehaviour
 
         bool success = NetworkManager.Singleton.StartClient();
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2.5f);
         if (!connectedToServer)
         {
+            if (usingCustomServerData)
+            {
+                serverConnectStatusText.text = "Failed To Connect to custom server";
+            }
+            else
+                serverConnectStatusText.text = "Failed To Connect to server";
+
             Debug.Log("FAILED TO CONNECT TO: " + networkTransport.ConnectionData.Address + ":" + networkTransport.ConnectionData.Port);
         }
         
@@ -163,6 +176,8 @@ public class TitleScreenManager : MonoBehaviour
 
     private void OnTransportEvent(Unity.Netcode.NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
     {
+        if (eventType == NetworkEvent.TransportFailure) serverConnectStatusText.text = "Network Transport Failure";
+        if (eventType == NetworkEvent.Disconnect) serverConnectStatusText.text = "Network Disconnected";
         if(eventType == NetworkEvent.Connect) connectedToServer = true;
     }
 
