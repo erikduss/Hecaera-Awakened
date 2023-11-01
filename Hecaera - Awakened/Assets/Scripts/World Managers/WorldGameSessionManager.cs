@@ -16,6 +16,8 @@ public class WorldGameSessionManager : MonoBehaviour
     [Header("Active Players In Session")]
     public List<PlayerManager> players = new List<PlayerManager>();
 
+    public static Allocation AllocationInstance;
+
     private void Awake()
     {
         if(Instance == null)
@@ -109,11 +111,11 @@ public class WorldGameSessionManager : MonoBehaviour
 
     public static async Task<RelayServerData> AllocateRelayServerAndGetJoinCode(int maxConnections, string region = null)
     {
-        Allocation allocation;
+        
         string createJoinCode;
         try
         {
-            allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections, region);
+            AllocationInstance = await RelayService.Instance.CreateAllocationAsync(maxConnections, region);
         }
         catch (Exception e)
         {
@@ -121,12 +123,12 @@ public class WorldGameSessionManager : MonoBehaviour
             throw;
         }
 
-        Debug.Log($"server: {allocation.ConnectionData[0]} {allocation.ConnectionData[1]}");
-        Debug.Log($"server: {allocation.AllocationId}");
+        Debug.Log($"server: {AllocationInstance.ConnectionData[0]} {AllocationInstance.ConnectionData[1]}");
+        Debug.Log($"server: {AllocationInstance.AllocationId}");
 
         try
         {
-            createJoinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            createJoinCode = await RelayService.Instance.GetJoinCodeAsync(AllocationInstance.AllocationId);
         }
         catch
         {
@@ -134,6 +136,6 @@ public class WorldGameSessionManager : MonoBehaviour
             throw;
         }
 
-        return new RelayServerData(allocation, "dtls");
+        return new RelayServerData(AllocationInstance, "dtls");
     }
 }

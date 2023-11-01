@@ -137,11 +137,17 @@ public class TitleScreenManager : MonoBehaviour
         var relayServerData = serverRelayUtilityTask.Result;
 
         // Display the joinCode to the user.
-        Debug.Log(relayServerData.HMACKey);
+        GetRelayRoomKey();
 
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
         NetworkManager.Singleton.StartHost();
         yield return null;
+    }
+
+    private async void GetRelayRoomKey()
+    {
+        string joinCode = await RelayService.Instance.GetJoinCodeAsync(WorldGameSessionManager.AllocationInstance.AllocationId);
+        Debug.Log("Join Code: " + joinCode);
     }
 
     public void StartNewGame()
@@ -227,50 +233,50 @@ public class TitleScreenManager : MonoBehaviour
         NetworkManager.Singleton.StartClient();
         yield return null;
 
-        bool usingCustomServerData = false;
+        //bool usingCustomServerData = false;
 
-        //If alternate IP has been assigned.
-        if (joinGameServerIPText.text.Length > 0)
-        {
-            usingCustomServerData = true;
-            networkTransport.ConnectionData.Address = joinGameServerIPText.text;
+        ////If alternate IP has been assigned.
+        //if (joinGameServerIPText.text.Length > 0)
+        //{
+        //    usingCustomServerData = true;
+        //    networkTransport.ConnectionData.Address = joinGameServerIPText.text;
 
-            if (joinGameServerPortText.text.Length > 0)
-            {
-                networkTransport.ConnectionData.Port = ushort.Parse(joinGameServerPortText.text);
-            }
+        //    if (joinGameServerPortText.text.Length > 0)
+        //    {
+        //        networkTransport.ConnectionData.Port = ushort.Parse(joinGameServerPortText.text);
+        //    }
 
-            Debug.Log(networkTransport.ConnectionData.Address + " _: " + networkTransport.ConnectionData.Port);
-        }
-        else
-        {
-            usingCustomServerData = false;
-            //networkTransport.ConnectionData.Address = "127.0.0.1";
-            //networkTransport.ConnectionData.Port = 7777;
+        //    Debug.Log(networkTransport.ConnectionData.Address + " _: " + networkTransport.ConnectionData.Port);
+        //}
+        //else
+        //{
+        //    usingCustomServerData = false;
+        //    //networkTransport.ConnectionData.Address = "127.0.0.1";
+        //    //networkTransport.ConnectionData.Port = 7777;
 
-            networkTransport.SetConnectionData("86.84.11.223", 12567);
-        }
+        //    networkTransport.SetConnectionData("86.84.11.223", 12567);
+        //}
 
-        //await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        ////await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-        bool success = NetworkManager.Singleton.StartClient();
+        //bool success = NetworkManager.Singleton.StartClient();
 
-        Debug.Log("Managed to start client? " + success);
+        //Debug.Log("Managed to start client? " + success);
 
-        yield return new WaitForSeconds(2.5f);
-        if (!connectedToServer)
-        {
-            if (usingCustomServerData)
-            {
-                serverConnectStatusText.text = "Failed To Connect to custom server";
-            }
-            else
-                serverConnectStatusText.text = "Failed To Connect to server";
+        //yield return new WaitForSeconds(2.5f);
+        //if (!connectedToServer)
+        //{
+        //    if (usingCustomServerData)
+        //    {
+        //        serverConnectStatusText.text = "Failed To Connect to custom server";
+        //    }
+        //    else
+        //        serverConnectStatusText.text = "Failed To Connect to server";
 
-            Debug.Log("FAILED TO CONNECT TO: " + networkTransport.ConnectionData.Address + ":" + networkTransport.ConnectionData.Port);
-        }
+        //    Debug.Log("FAILED TO CONNECT TO: " + networkTransport.ConnectionData.Address + ":" + networkTransport.ConnectionData.Port);
+        //}
 
-        yield return null;
+        //yield return null;
     }
 
     private void OnTransportEvent(Unity.Netcode.NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
