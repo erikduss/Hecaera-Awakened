@@ -1,7 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Unity.Netcode;
+using Unity.Networking.Transport.Relay;
+using Unity.Services.Relay.Models;
+using Unity.Services.Relay;
 using UnityEngine;
 
 public class WorldGameSessionManager : MonoBehaviour
@@ -100,5 +105,35 @@ public class WorldGameSessionManager : MonoBehaviour
         // If additional approval steps are needed, set this to true until the additional steps are complete
         // once it transitions from true to false the connection approval response will be processed.
         response.Pending = false;
+    }
+
+    public static async Task<RelayServerData> AllocateRelayServerAndGetJoinCode(int maxConnections, string region = null)
+    {
+        Allocation allocation;
+        string createJoinCode;
+        try
+        {
+            allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections, region);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Relay create allocation request failed {e.Message}");
+            throw;
+        }
+
+        Debug.Log($"server: {allocation.ConnectionData[0]} {allocation.ConnectionData[1]}");
+        Debug.Log($"server: {allocation.AllocationId}");
+
+        try
+        {
+            createJoinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+        }
+        catch
+        {
+            Debug.LogError("Relay create join code request failed");
+            throw;
+        }
+
+        return new RelayServerData(allocation, "dtls");
     }
 }

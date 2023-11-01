@@ -7,6 +7,12 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.Netcode.Transports.UTP;
 using System;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using System.Threading.Tasks;
+using Unity.Networking.Transport.Relay;
+using Unity.Services.Relay.Models;
+using Unity.Services.Relay;
 
 public class TitleScreenManager : MonoBehaviour
 {
@@ -52,6 +58,8 @@ public class TitleScreenManager : MonoBehaviour
 
     public bool connectedToServer = false;
 
+    private bool authenticationFinished = false;
+
     private void Awake()
     {
         if(Instance == null)
@@ -66,7 +74,7 @@ public class TitleScreenManager : MonoBehaviour
 
     private void Update()
     {
-        if (!continuedPastSplashScreen)
+        if (!continuedPastSplashScreen && authenticationFinished)
         {
             if (Input.anyKey)
             {
@@ -82,6 +90,8 @@ public class TitleScreenManager : MonoBehaviour
 
         networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         networkTransport.OnTransportEvent += OnTransportEvent;
+
+        AuthenticatePlayer();
     }
 
     public void ExitGame()
@@ -107,7 +117,31 @@ public class TitleScreenManager : MonoBehaviour
 
         WorldGameSessionManager.Instance.SetApprovalCheckCallback();
 
+        StartCoroutine(ConfigureTransportAndStartNgoAsHost());
+        //NetworkManager.Singleton.StartHost();
+    }
+
+    private IEnumerator ConfigureTransportAndStartNgoAsHost()
+    {
+        var serverRelayUtilityTask = WorldGameSessionManager.AllocateRelayServerAndGetJoinCode(10);
+        while (!serverRelayUtilityTask.IsCompleted)
+        {
+            yield return null;
+        }
+        if (serverRelayUtilityTask.IsFaulted)
+        {
+            Debug.LogError("Exception thrown when attempting to start Relay Server. Server not started. Exception: " + serverRelayUtilityTask.Exception.Message);
+            yield break;
+        }
+
+        var relayServerData = serverRelayUtilityTask.Result;
+
+        // Display the joinCode to the user.
+        Debug.Log(relayServerData.HMACKey);
+
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
         NetworkManager.Singleton.StartHost();
+        yield return null;
     }
 
     public void StartNewGame()
@@ -121,11 +155,47 @@ public class TitleScreenManager : MonoBehaviour
         StartCoroutine(JoiningGame());
     }
 
+    private async void AuthenticatePlayer()
+    {
+        try
+        {
+            await UnityServices.InitializeAsync();
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            var playerID = AuthenticationService.Instance.PlayerId;
+
+            authenticationFinished = true;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    public static async Task<RelayServerData> JoinRelayServerFromJoinCode(string joinCode)
+    {
+        JoinAllocation allocation;
+        try
+        {
+            allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+        }
+        catch
+        {
+            Debug.LogError("Relay create join code request failed");
+            throw;
+        }
+
+        Debug.Log($"client: {allocation.ConnectionData[0]} {allocation.ConnectionData[1]}");
+        Debug.Log($"host: {allocation.HostConnectionData[0]} {allocation.HostConnectionData[1]}");
+        Debug.Log($"client: {allocation.AllocationId}");
+
+        return new RelayServerData(allocation, "dtls");
+    }
+
     private IEnumerator JoiningGame()
     {
         serverConnectStatusText.text = string.Empty;
 
-        if(NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+        if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
         {
             //we must first shut down becaus we started as a host during the title screen.
             NetworkManager.Singleton.Shutdown();
@@ -136,6 +206,27 @@ public class TitleScreenManager : MonoBehaviour
             yield return null;
         }
 
+        // Populate RelayJoinCode beforehand through the UI
+        var clientRelayUtilityTask = JoinRelayServerFromJoinCode(joinGameServerIPText.text);
+
+        while (!clientRelayUtilityTask.IsCompleted)
+        {
+            yield return null;
+        }
+
+        if (clientRelayUtilityTask.IsFaulted)
+        {
+            Debug.LogError("Exception thrown when attempting to connect to Relay Server. Exception: " + clientRelayUtilityTask.Exception.Message);
+            yield break;
+        }
+
+        var relayServerData = clientRelayUtilityTask.Result;
+
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+
+        NetworkManager.Singleton.StartClient();
+        yield return null;
+
         bool usingCustomServerData = false;
 
         //If alternate IP has been assigned.
@@ -143,8 +234,8 @@ public class TitleScreenManager : MonoBehaviour
         {
             usingCustomServerData = true;
             networkTransport.ConnectionData.Address = joinGameServerIPText.text;
-            
-            if(joinGameServerPortText.text.Length > 0)
+
+            if (joinGameServerPortText.text.Length > 0)
             {
                 networkTransport.ConnectionData.Port = ushort.Parse(joinGameServerPortText.text);
             }
@@ -160,7 +251,11 @@ public class TitleScreenManager : MonoBehaviour
             networkTransport.SetConnectionData("86.84.11.223", 12567);
         }
 
+        //await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
         bool success = NetworkManager.Singleton.StartClient();
+
+        Debug.Log("Managed to start client? " + success);
 
         yield return new WaitForSeconds(2.5f);
         if (!connectedToServer)
@@ -174,7 +269,7 @@ public class TitleScreenManager : MonoBehaviour
 
             Debug.Log("FAILED TO CONNECT TO: " + networkTransport.ConnectionData.Address + ":" + networkTransport.ConnectionData.Port);
         }
-        
+
         yield return null;
     }
 
