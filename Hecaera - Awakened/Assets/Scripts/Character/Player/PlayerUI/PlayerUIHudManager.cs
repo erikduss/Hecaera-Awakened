@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerUIHudManager : MonoBehaviour
 {
     [SerializeField] UI_StatBar healthBar;
     [SerializeField] UI_StatBar staminaBar;
-
+    [SerializeField] public TextMeshProUGUI joinCodeText;
     public void RefreshHUD()
     {
         healthBar.gameObject.SetActive(false);

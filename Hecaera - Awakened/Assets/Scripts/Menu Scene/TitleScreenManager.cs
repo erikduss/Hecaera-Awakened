@@ -148,6 +148,7 @@ public class TitleScreenManager : MonoBehaviour
     {
         string joinCode = await RelayService.Instance.GetJoinCodeAsync(WorldGameSessionManager.AllocationInstance.AllocationId);
         Debug.Log("Join Code: " + joinCode);
+        PlayerUIManager.instance.playerUIHudManager.joinCodeText.text = "Join Code: " + joinCode;
     }
 
     public void StartNewGame()
