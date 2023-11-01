@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
 public class WorldGameSessionManager : MonoBehaviour
@@ -25,6 +26,11 @@ public class WorldGameSessionManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+
+        if(NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+        {
+            NetworkManager.Singleton.ConnectionApprovalCallback = ConnectionApprovalCheck;
+        }
     }
 
     public void AddPlayerToActivePlayersList(PlayerManager player)
@@ -66,5 +72,33 @@ public class WorldGameSessionManager : MonoBehaviour
         PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
         localPlayer.playerNetworkManager.currentHealth.Value = localPlayer.playerNetworkManager.maxHealth.Value;
         localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxHealth.Value;
+    }
+
+    private void ConnectionApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+    {
+        Debug.Log("Approving connection request!");
+
+        // The client identifier to be authenticated
+        var clientId = request.ClientNetworkId;
+
+        // Additional connection data defined by user code
+        var connectionData = request.Payload;
+
+        // Your approval logic determines the following values
+        response.Approved = true;
+        response.CreatePlayerObject = true;
+
+        // The Prefab hash value of the NetworkPrefab, if null the default NetworkManager player Prefab is used
+        response.PlayerPrefabHash = null;
+
+        // Position to spawn the player object (if null it uses default of Vector3.zero)
+        response.Position = Vector3.zero;
+
+        // Rotation to spawn the player object (if null it uses the default of Quaternion.identity)
+        response.Rotation = Quaternion.identity;
+
+        // If additional approval steps are needed, set this to true until the additional steps are complete
+        // once it transitions from true to false the connection approval response will be processed.
+        response.Pending = false;
     }
 }
