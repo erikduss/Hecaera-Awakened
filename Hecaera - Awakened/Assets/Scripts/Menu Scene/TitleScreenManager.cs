@@ -105,6 +105,8 @@ public class TitleScreenManager : MonoBehaviour
         //192.168.2.1
         //Available ports: 9000, 1511, 12567 (2456-2458, Valheim Server), (19132-19133, Minecraft bedrock), 25565 minecraft java
 
+        WorldGameSessionManager.Instance.SetApprovalCheckCallback();
+
         NetworkManager.Singleton.StartHost();
     }
 
@@ -157,6 +159,8 @@ public class TitleScreenManager : MonoBehaviour
 
             networkTransport.SetConnectionData("86.84.11.223", 12567);
         }
+
+        WorldGameSessionManager.Instance.SetApprovalCheckCallback();
 
         bool success = NetworkManager.Singleton.StartClient();
 

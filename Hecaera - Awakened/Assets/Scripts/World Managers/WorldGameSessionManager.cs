@@ -26,11 +26,11 @@ public class WorldGameSessionManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+    }
 
-        if(NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
-        {
-            NetworkManager.Singleton.ConnectionApprovalCallback = ConnectionApprovalCheck;
-        }
+    public void SetApprovalCheckCallback()
+    {
+        NetworkManager.Singleton.ConnectionApprovalCallback = ConnectionApprovalCheck;
     }
 
     public void AddPlayerToActivePlayersList(PlayerManager player)
