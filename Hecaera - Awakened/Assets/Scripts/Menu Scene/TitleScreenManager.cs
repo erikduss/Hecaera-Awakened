@@ -122,15 +122,17 @@ public class TitleScreenManager : MonoBehaviour
     private IEnumerator JoiningGame()
     {
         serverConnectStatusText.text = string.Empty;
-        //we must first shut down becaus we started as a host during the title screen.
-        NetworkManager.Singleton.Shutdown();
+
+        if(NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+        {
+            //we must first shut down becaus we started as a host during the title screen.
+            NetworkManager.Singleton.Shutdown();
+        }
 
         while (NetworkManager.Singleton.ShutdownInProgress)
         {
             yield return null;
         }
-
-        Debug.Log("Are we a server? " + NetworkManager.Singleton.IsServer);
 
         bool usingCustomServerData = false;
 
@@ -176,8 +178,16 @@ public class TitleScreenManager : MonoBehaviour
 
     private void OnTransportEvent(Unity.Netcode.NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
     {
-        if (eventType == NetworkEvent.TransportFailure) serverConnectStatusText.text = "Network Transport Failure";
-        if (eventType == NetworkEvent.Disconnect) serverConnectStatusText.text = "Network Disconnected";
+        if (eventType == NetworkEvent.TransportFailure) 
+        {
+            Debug.Log("Transport Failure!");
+            serverConnectStatusText.text = "Network Transport Failure"; 
+        }
+        if (eventType == NetworkEvent.Disconnect)
+        {
+            Debug.Log("DISCONNECT!");
+            serverConnectStatusText.text = "Network Disconnected";
+        }
         if(eventType == NetworkEvent.Connect) connectedToServer = true;
     }
 
