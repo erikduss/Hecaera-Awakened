@@ -39,10 +39,7 @@ public class PlayerUIManager : MonoBehaviour
         if (startGameAsClient)
         {
             startGameAsClient = false;
-            //we must first shut down becaus we started as a host during the title screen.
-            NetworkManager.Singleton.Shutdown();
-            //we restart as client
-            NetworkManager.Singleton.StartClient();
+            TitleScreenManager.Instance.JoinGame();
         }
     }
 }

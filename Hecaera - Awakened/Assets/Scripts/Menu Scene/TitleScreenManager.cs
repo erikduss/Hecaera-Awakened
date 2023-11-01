@@ -160,8 +160,6 @@ public class TitleScreenManager : MonoBehaviour
             networkTransport.SetConnectionData("86.84.11.223", 12567);
         }
 
-        WorldGameSessionManager.Instance.SetApprovalCheckCallback();
-
         bool success = NetworkManager.Singleton.StartClient();
 
         yield return new WaitForSeconds(2.5f);
