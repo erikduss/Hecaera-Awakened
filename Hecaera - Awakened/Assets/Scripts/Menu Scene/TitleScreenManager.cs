@@ -101,9 +101,9 @@ public class TitleScreenManager : MonoBehaviour
         continuedPastSplashScreen = true;
 
         UnityTransport networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        networkTransport.SetConnectionData("192.168.2.1", 9000, "0.0.0.0");
+        networkTransport.SetConnectionData("192.168.2.1", 12567, "0.0.0.0");
         //192.168.2.1
-        //Available ports: 9000, 1511, 12567
+        //Available ports: 9000, 1511, 12567 (2456-2458, Valheim Server), (19132-19133, Minecraft bedrock), 25565 minecraft java
 
         NetworkManager.Singleton.StartHost();
     }
@@ -155,7 +155,7 @@ public class TitleScreenManager : MonoBehaviour
             //networkTransport.ConnectionData.Address = "127.0.0.1";
             //networkTransport.ConnectionData.Port = 7777;
 
-            networkTransport.SetConnectionData("86.84.11.223", 9000);
+            networkTransport.SetConnectionData("86.84.11.223", 12567);
         }
 
         bool success = NetworkManager.Singleton.StartClient();
