@@ -48826,6 +48826,7 @@ MonoBehaviour:
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
+  UseTHAnimations: 0
   respawnCharacter: 0
   switchRightWeapon: 0
   playerAnimatorManager: {fileID: 0}
@@ -49129,10 +49130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87afbc92ec6bec34ea5467e7b8e75a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastAttackAnimationPerformed: 
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 1062926850571278753}
   currentWeaponBeingUsed: {fileID: 11400000, guid: 3f830249c0ecfd34db892ae3b7af3bd9, type: 2}
+  canComboWithMainHandWeapon: 0
 --- !u!82 &7135133068949086043
 AudioSource:
   m_ObjectHideFlags: 0

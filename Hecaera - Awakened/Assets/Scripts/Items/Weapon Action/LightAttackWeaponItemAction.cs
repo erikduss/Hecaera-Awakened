@@ -6,6 +6,13 @@ using UnityEngine;
 public class LightAttackWeaponItemAction : WeaponItemAction
 {
     [SerializeField] string light_Attack_01 = "Main_Light_Attack_01";
+    [SerializeField] string light_Attack_02 = "Main_Light_Attack_02";
+    [SerializeField] string light_Attack_03 = "Main_Light_Attack_03";
+
+    //Modified attack animations, 2 handed attacks, temp solution of implementing them.
+    [SerializeField] string light_Attack_01_M = "Main_Light_Attack_01_M";
+    [SerializeField] string light_Attack_02_M = "Main_Light_Attack_02_M";
+    [SerializeField] string light_Attack_03_M = "Main_Light_Attack_03_M";
 
     public override void AttemptToPerformAction(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
     {
@@ -25,13 +32,57 @@ public class LightAttackWeaponItemAction : WeaponItemAction
 
     private void PerformLightAttack(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
     {
-        if (playerPerformingAction.playerNetworkManager.isUsingRightHand.Value)
+        if (playerPerformingAction.UseTHAnimations)
         {
-            playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_Attack_01, true);
-        }
-        if (playerPerformingAction.playerNetworkManager.isUsingLeftHand.Value)
-        {
+            //if we are attacking and are able to perform a combo, perform the combo.
+            if (playerPerformingAction.playerCombatManager.canComboWithMainHandWeapon && playerPerformingAction.isPerformingAction)
+            {
+                playerPerformingAction.playerCombatManager.canComboWithMainHandWeapon = false;
 
+                //perform an attack based on the previous attack.
+                if (playerPerformingAction.characterCombatManager.lastAttackAnimationPerformed == light_Attack_01_M)
+                {
+                    playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack02, light_Attack_02_M, true);
+                }
+                else if (playerPerformingAction.characterCombatManager.lastAttackAnimationPerformed == light_Attack_02_M)
+                {
+                    playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack03, light_Attack_03_M, true);
+                }
+                else //if its null or at the end of the combo, start over.
+                {
+                    playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_Attack_01_M, true);
+                }
+            }
+            else if (!playerPerformingAction.isPerformingAction) //regular action
+            {
+                playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_Attack_01_M, true);
+            }
+        }
+        else
+        {
+            //if we are attacking and are able to perform a combo, perform the combo.
+            if (playerPerformingAction.playerCombatManager.canComboWithMainHandWeapon && playerPerformingAction.isPerformingAction)
+            {
+                playerPerformingAction.playerCombatManager.canComboWithMainHandWeapon = false;
+
+                //perform an attack based on the previous attack.
+                if (playerPerformingAction.characterCombatManager.lastAttackAnimationPerformed == light_Attack_01)
+                {
+                    playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack02, light_Attack_02, true);
+                }
+                else if (playerPerformingAction.characterCombatManager.lastAttackAnimationPerformed == light_Attack_02)
+                {
+                    playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack03, light_Attack_03, true);
+                }
+                else //if its null or at the end of the combo, start over.
+                {
+                    playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_Attack_01, true);
+                }
+            }
+            else if (!playerPerformingAction.isPerformingAction) //regular action
+            {
+                playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_Attack_01, true);
+            }
         }
     }
 }

@@ -375,7 +375,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             RB_Input = false;
 
-            if (player.isPerformingAction) return;
+            //if (player.isPerformingAction) return;
 
             player.playerNetworkManager.SetCharacterActionHand(true);
 

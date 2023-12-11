@@ -9,6 +9,9 @@ public class PlayerCombatManager : CharacterCombatManager
 
     public WeaponItem currentWeaponBeingUsed;
 
+    [Header("Flags")]
+    public bool canComboWithMainHandWeapon = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -44,6 +47,12 @@ public class PlayerCombatManager : CharacterCombatManager
         switch (currentAttackType)
         {
             case AttackType.LightAttack01:
+                staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.lightAttackStaminaCostMultiplier;
+                break;
+            case AttackType.LightAttack02:
+                staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.lightAttackStaminaCostMultiplier;
+                break;
+            case AttackType.LightAttack03:
                 staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.lightAttackStaminaCostMultiplier;
                 break;
             case AttackType.HeavyAttack01:

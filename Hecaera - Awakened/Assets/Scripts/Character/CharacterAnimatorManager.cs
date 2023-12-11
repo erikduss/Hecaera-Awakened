@@ -173,6 +173,7 @@ public class CharacterAnimatorManager : MonoBehaviour
         bool canMove = false)
     {
         character.characterCombatManager.currentAttackType = attackType;
+        character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;
         character.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(targetAnimation, 0.2f);
         character.isPerformingAction = isPerformingAction;
@@ -181,5 +182,15 @@ public class CharacterAnimatorManager : MonoBehaviour
 
         //Tell the server/host we played an animation and to play that animation.
         character.characterNetworkManager.NotifyTheServerOfAttackActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
+    }
+
+    public virtual void EnableCanDoCombo()
+    {
+       
+    }
+
+    public virtual void DisableCanDoCombo()
+    {
+        
     }
 }

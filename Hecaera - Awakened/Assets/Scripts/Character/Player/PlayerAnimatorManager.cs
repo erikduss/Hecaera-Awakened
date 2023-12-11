@@ -11,6 +11,7 @@ public class PlayerAnimatorManager : CharacterAnimatorManager
         base.Awake();
 
         player = GetComponent<PlayerManager>();
+        player.animator.SetBool("UseTHAnimations", player.UseTHAnimations);
     }
 
     private void OnAnimatorMove()
@@ -21,5 +22,19 @@ public class PlayerAnimatorManager : CharacterAnimatorManager
             player.characterController.Move(velocity);
             player.transform.rotation *= player.animator.deltaRotation;
         }
+    }
+
+    //animation event calls
+    public override void EnableCanDoCombo()
+    {
+        if (player.playerNetworkManager.isUsingRightHand.Value)
+        {
+            player.playerCombatManager.canComboWithMainHandWeapon = true;
+        }
+    }
+
+    public override void DisableCanDoCombo()
+    {
+        player.playerCombatManager.canComboWithMainHandWeapon = false;
     }
 }

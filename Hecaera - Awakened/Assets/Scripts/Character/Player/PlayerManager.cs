@@ -7,6 +7,8 @@ using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
+    public bool UseTHAnimations = false;
+
     [Header("DEBUG MENU")]
     [SerializeField] bool respawnCharacter = false;
     [SerializeField] bool switchRightWeapon = false;
