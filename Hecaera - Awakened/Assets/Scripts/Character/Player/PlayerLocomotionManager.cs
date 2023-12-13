@@ -264,6 +264,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.isPerformingAction)
             return;
 
+        if (!player.isGrounded)
+            return;
+
         if (player.playerNetworkManager.currentStamina.Value <= 0)
             return;
 

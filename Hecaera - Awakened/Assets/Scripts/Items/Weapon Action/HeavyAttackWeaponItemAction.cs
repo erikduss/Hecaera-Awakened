@@ -20,6 +20,12 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
         if (!playerPerformingAction.isGrounded)
             return;
 
+        //prevent the attack being used when not having enough stamina.
+        if (playerPerformingAction.playerNetworkManager.currentStamina.Value <= 0)
+            return;
+        //if (playerPerformingAction.playerNetworkManager.currentStamina.Value < (weaponPerformingAction.baseStaminaCost * weaponPerformingAction.heavyAttackStaminaCostMultiplier))
+        //    return;
+
         PerformHeavyAttack(playerPerformingAction, weaponPerformingAction);
     }
 

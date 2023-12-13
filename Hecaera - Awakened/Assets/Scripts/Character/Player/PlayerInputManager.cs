@@ -375,6 +375,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             RB_Input = false;
 
+            //if setting the isperforming action check, combos wont work.
             //if (player.isPerformingAction) return;
 
             player.playerNetworkManager.SetCharacterActionHand(true);

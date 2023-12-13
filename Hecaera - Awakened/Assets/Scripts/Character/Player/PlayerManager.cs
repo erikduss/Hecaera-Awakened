@@ -193,7 +193,7 @@ public class PlayerManager : CharacterManager
         if (IsOwner)
         {
             playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
-            playerNetworkManager.currentStamina.Value = playerNetworkManager.maxHealth.Value;
+            playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
             playerNetworkManager.isDead.Value = false;
 
             playerAnimatorManager.PlayTargetActionAnimation("Empty", false);

@@ -78,7 +78,7 @@ public class WorldGameSessionManager : MonoBehaviour
     {
         PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
         localPlayer.playerNetworkManager.currentHealth.Value = localPlayer.playerNetworkManager.maxHealth.Value;
-        localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxHealth.Value;
+        localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxStamina.Value;
     }
 
     private void ConnectionApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
