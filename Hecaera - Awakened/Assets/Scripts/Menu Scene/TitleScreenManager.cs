@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
+using ParrelSync;
 
 public class TitleScreenManager : MonoBehaviour
 {
@@ -164,6 +165,46 @@ public class TitleScreenManager : MonoBehaviour
 
     private async void AuthenticatePlayer()
     {
+        #if UNITY_EDITOR
+        //Is this unity editor instance opening a clone project?
+        if (ClonesManager.IsClone())
+        {
+            Debug.Log("This is a clone project.");
+            // Get the custom argument for this clone project.  
+            string customArgument = ClonesManager.GetArgument();
+            // Do what ever you need with the argument string.
+            Debug.Log("The custom argument of this clone project is: " + customArgument);
+
+            InitializationOptions options = new InitializationOptions();
+            options.SetProfile("Clone_" + customArgument + "_Profile");
+
+            await UnityServices.InitializeAsync(options);
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+            var playerID = AuthenticationService.Instance.PlayerId;
+
+            authenticationFinished = true;
+            //AuthenticationService.Instance.SwitchProfile("Clone_" + customArgument + "_Profile");
+        }
+        else
+        {
+            Debug.Log("This is the original project.");
+
+            InitializationOptions options = new InitializationOptions();
+            options.SetProfile("Main_Profile");
+
+            await UnityServices.InitializeAsync(options);
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            var playerID = AuthenticationService.Instance.PlayerId;
+
+            authenticationFinished = true;
+        }
+
+        Debug.Log(AuthenticationService.Instance.PlayerId);
+
+        if (authenticationFinished) return;
+        #endif
+
         try
         {
             await UnityServices.InitializeAsync();
@@ -171,6 +212,8 @@ public class TitleScreenManager : MonoBehaviour
             var playerID = AuthenticationService.Instance.PlayerId;
 
             authenticationFinished = true;
+
+            Debug.Log(playerID);
         }
         catch (Exception e)
         {
@@ -301,6 +344,8 @@ public class TitleScreenManager : MonoBehaviour
         titleScreenJoinMenu.SetActive(true);
 
         joinMenureturnButton.Select();
+
+        //CustomArgumentParrelsync.Instance.RetryProfileSwitch();
     }
 
     public void CloseJoinGameMenu()
