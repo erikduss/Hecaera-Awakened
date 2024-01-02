@@ -18,6 +18,9 @@ public class PlayerNetworkManager : CharacterNetworkManager
     public NetworkVariable<bool> isUsingRightHand = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isUsingLeftHand = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    public NetworkVariable<int> playerMaterialID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server); //Only the server assigns colors.
+    public NetworkVariable<Color> playerCustomMaterialColor = new NetworkVariable<Color>(Color.magenta, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
     protected override void Awake()
     {
         base.Awake();

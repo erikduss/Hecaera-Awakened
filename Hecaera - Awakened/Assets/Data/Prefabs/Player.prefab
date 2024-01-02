@@ -48738,6 +48738,7 @@ GameObject:
   - component: {fileID: 8693554422468628043}
   - component: {fileID: 3455564075168663540}
   - component: {fileID: 5596331543505562064}
+  - component: {fileID: 2820517516310273541}
   - component: {fileID: 7135133068949086043}
   - component: {fileID: -5776226094217108612}
   - component: {fileID: 7726279426374180486}
@@ -49006,6 +49007,10 @@ MonoBehaviour:
     m_InternalValue: 0
   isUsingLeftHand:
     m_InternalValue: 0
+  playerMaterialID:
+    m_InternalValue: 0
+  playerCustomMaterialColor:
+    m_InternalValue: {r: 1, g: 0, b: 1, a: 1}
 --- !u!114 &-9148108534826181151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49136,6 +49141,30 @@ MonoBehaviour:
   lockOnTransform: {fileID: 1062926850571278753}
   currentWeaponBeingUsed: {fileID: 11400000, guid: 3f830249c0ecfd34db892ae3b7af3bd9, type: 2}
   canComboWithMainHandWeapon: 0
+--- !u!114 &2820517516310273541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883420388067512447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68aaea91e27b5454b9cc6fef951b9099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  additionalPlayerMaterials:
+  - {fileID: 2100000, guid: 99aa634bc42f9e540be56ab91672b7df, type: 2}
+  - {fileID: 2100000, guid: 1d669259667996d46ba6c6e0730ccb0d, type: 2}
+  - {fileID: 2100000, guid: 45aa73ea087e8324ca6aa7f0d1df52e4, type: 2}
+  - {fileID: 2100000, guid: 3bc1efeed02a1b046af929b52d2721e5, type: 2}
+  - {fileID: 2100000, guid: 40773391edf0da34caca3a916902bb60, type: 2}
+  - {fileID: 2100000, guid: 2eed8b1b1c87ae6408ccfe9054a0d0b6, type: 2}
+  - {fileID: 2100000, guid: 006e1a89653913242b0b945b02e33a4f, type: 2}
+  - {fileID: 2100000, guid: 36c53c1037eb02d448fc7e92a89f6405, type: 2}
+  - {fileID: 2100000, guid: a7416e7b7477e8548abf15b6a179197c, type: 2}
+  - {fileID: 2100000, guid: ec04a7c9184b08445923c2d22d946a3d, type: 2}
+  lastSelectedMaterialIndex: -1
 --- !u!82 &7135133068949086043
 AudioSource:
   m_ObjectHideFlags: 0

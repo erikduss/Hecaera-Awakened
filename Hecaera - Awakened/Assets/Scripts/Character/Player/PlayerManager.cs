@@ -102,6 +102,25 @@ public class PlayerManager : CharacterManager
         //Flags
         playerNetworkManager.isChargingAttack.OnValueChanged += playerNetworkManager.OnIsChargingAttackChanged;
 
+        if (IsServer)
+        {
+            //Set the color of the additional player's model.
+            int nextIndex = PlayerMaterialManagement.Instance.lastSelectedMaterialIndex++;
+            Color backupColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+            bool useCustomColor = false;
+
+            if (nextIndex > PlayerMaterialManagement.Instance.additionalPlayerMaterials.Count)
+            {
+                useCustomColor = true;
+                playerNetworkManager.playerMaterialID.Value = -1;
+                playerNetworkManager.playerCustomMaterialColor.Value = backupColor;
+            }
+            else
+                playerNetworkManager.playerMaterialID.Value = nextIndex;
+
+            PlayerMaterialManagement.Instance.SetMaterial(this,nextIndex, backupColor, useCustomColor);
+        }
+
         //Upon connecting, if we are the owner of this character but not the server. Reload our character data
         //Server doesnt need to reload due to the character not being deleted.
         if (IsOwner && !IsServer)
@@ -240,6 +259,15 @@ public class PlayerManager : CharacterManager
         //sync weapons
         playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
         playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+
+        //SET THE CORRECT COLORS OF PLAYERS
+        if (!IsServer) //The server has default colors.
+        {
+            bool useCustomColor = false;
+            if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;
+
+            PlayerMaterialManagement.Instance.SetMaterial(this, playerNetworkManager.playerMaterialID.Value, playerNetworkManager.playerCustomMaterialColor.Value, useCustomColor);
+        }
 
         //Set lock on target if locked on.
         if (playerNetworkManager.isLockedOn.Value)
