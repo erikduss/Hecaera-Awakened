@@ -1831,7 +1831,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2377798684030673595}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 05b8985d3deff6147a383fccb3cebeea, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.17
@@ -48853,6 +48853,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  nonStandableSurfaceLayer:
+    serializedVersion: 2
+    m_Bits: 1536
+  nonStandableCheckRange: 0.5
   groundCheckSphereRadius: 0.2
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20

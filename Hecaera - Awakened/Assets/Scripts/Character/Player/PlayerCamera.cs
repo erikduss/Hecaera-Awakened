@@ -93,7 +93,12 @@ public class PlayerCamera : MonoBehaviour
             rotationDirection.Normalize();
 
             targetRotation = Quaternion.LookRotation(rotationDirection);
-            cameraPivotTransform.transform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
+
+            Quaternion finalRotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFollowSpeed);
+
+            finalRotation.x = Mathf.Clamp(finalRotation.x, minimumPivot, maximumPivot);
+
+            cameraPivotTransform.transform.rotation = finalRotation;
 
             //Save our rotations to our look angles, prevents snapping far away
             leftAndRightLookAngle = transform.eulerAngles.y;
