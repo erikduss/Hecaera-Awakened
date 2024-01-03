@@ -335,23 +335,26 @@ public class WorldSaveGameManager : MonoBehaviour
     public IEnumerator LoadWorldScene()
     {
         //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
-        NetworkManager.Singleton.SceneManager.LoadScene("Scene_World_01", LoadSceneMode.Single);
+        
 
         player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
 
         if (NetworkManager.Singleton.IsServer)
         {
+            NetworkManager.Singleton.SceneManager.LoadScene("Scene_World_01", LoadSceneMode.Single);
             var spawner = Instantiate(dummySpawner, Vector3.zero, Quaternion.identity);
 
             NetworkObject netComponent = spawner.GetComponent<NetworkObject>();
             netComponent.Spawn();
         }
 
-        while (SceneManager.GetActiveScene().buildIndex != currentCharacterData.sceneIndex)
+        if (NetworkManager.Singleton.IsServer)
         {
-            yield return null;
+            while (SceneManager.GetActiveScene().buildIndex != currentCharacterData.sceneIndex)
+            {
+                yield return null;
+            }
         }
-
 
         if (NetworkManager.Singleton.IsServer)
         {

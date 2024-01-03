@@ -13,7 +13,9 @@ using System.Threading.Tasks;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
+#if UNITY_EDITOR
 using ParrelSync;
+#endif
 
 public class TitleScreenManager : MonoBehaviour
 {
