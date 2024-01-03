@@ -261,6 +261,8 @@ public class TitleScreenManager : MonoBehaviour
         // Populate RelayJoinCode beforehand through the UI
         var clientRelayUtilityTask = JoinRelayServerFromJoinCode(joinGameServerIPText.text);
 
+        PlayerUIManager.instance.playerUIHudManager.joinCodeText.text = "Join Code: " + joinGameServerIPText.text;
+
         while (!clientRelayUtilityTask.IsCompleted)
         {
             yield return null;

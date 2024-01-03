@@ -102,6 +102,10 @@ public class PlayerManager : CharacterManager
         //Flags
         playerNetworkManager.isChargingAttack.OnValueChanged += playerNetworkManager.OnIsChargingAttackChanged;
 
+        //Player colors
+        playerNetworkManager.playerMaterialID.OnValueChanged += playerNetworkManager.OnMaterialIDChange;
+        playerNetworkManager.playerCustomMaterialColor.OnValueChanged += playerNetworkManager.OnMaterialColorChange;
+
         if (IsServer)
         {
             //Set the color of the additional player's model.
@@ -165,6 +169,10 @@ public class PlayerManager : CharacterManager
 
         //Flags
         playerNetworkManager.isChargingAttack.OnValueChanged -= playerNetworkManager.OnIsChargingAttackChanged;
+
+        //Player colors
+        playerNetworkManager.playerMaterialID.OnValueChanged -= playerNetworkManager.OnMaterialIDChange;
+        playerNetworkManager.playerCustomMaterialColor.OnValueChanged -= playerNetworkManager.OnMaterialColorChange;
     }
 
     private void OnClientConnectedCallback(ulong clientID)
@@ -179,6 +187,13 @@ public class PlayerManager : CharacterManager
                 if(player != this)
                 {
                     player.LoadOtherPlayerCharacterWhenJoiningServer();
+                }
+                else //We still need to set our own color
+                {
+                    bool useCustomColor = false;
+                    if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;
+
+                    PlayerMaterialManagement.Instance.SetMaterial(this, playerNetworkManager.playerMaterialID.Value, playerNetworkManager.playerCustomMaterialColor.Value, useCustomColor);
                 }
             }
         }
@@ -261,7 +276,7 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
 
         //SET THE CORRECT COLORS OF PLAYERS
-        if (!IsServer) //The server has default colors.
+        if (playerNetworkManager.IsOwnedByServer && !IsServer && !IsHost) //The server has default colors.
         {
             bool useCustomColor = false;
             if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;

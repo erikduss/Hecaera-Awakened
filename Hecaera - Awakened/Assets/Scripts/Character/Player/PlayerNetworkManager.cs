@@ -56,6 +56,16 @@ public class PlayerNetworkManager : CharacterNetworkManager
         currentStamina.Value = maxStamina.Value;
     }
 
+    public void OnMaterialIDChange(int oldID, int newID)
+    {
+        PlayerMaterialManagement.Instance.SetMaterial(player, newID, playerCustomMaterialColor.Value, false);
+    }
+
+    public void OnMaterialColorChange(Color oldColor, Color newColor)
+    {
+        PlayerMaterialManagement.Instance.SetMaterial(player, playerMaterialID.Value, newColor, true);
+    }
+
     public void OnCurrentRightHandWeaponIDChange(int oldID, int newID)
     {
         WeaponItem newWeapon = Instantiate(WorldItemDatabase.Instance.GetWeaponByID(newID));

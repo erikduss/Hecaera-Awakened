@@ -19,9 +19,15 @@ public class PlayerMaterialManagement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void SetMaterial(PlayerManager player, int materialIndex, Color materialColor, bool useSetColor = false)
     {
+        if (player.IsOwnedByServer) return;
+
         Debug.Log("Setting color!");
         GameObject bodyChild = null;
 
@@ -31,7 +37,9 @@ public class PlayerMaterialManagement : MonoBehaviour
 
             if (child.tag == "PlayerBody")
             {
-                bodyChild = child.gameObject;
+                //The get child is only the first chain of children. Meaning, it only finds 2 childs.
+                //The body gameobject is under the first child we find, as the only (first) gameobject under it.
+                bodyChild = child.gameObject.transform.GetChild(0).gameObject; 
                 i = player.transform.childCount; //Quit the loop
             }
         }
@@ -43,6 +51,7 @@ public class PlayerMaterialManagement : MonoBehaviour
             if (useSetColor == false && additionalPlayerMaterials.Count >= materialIndex)
             {
                 materialRenderer.material = additionalPlayerMaterials[materialIndex];
+                Debug.Log("Set the material at index: " + materialIndex);
             }
             else //if we set to a specific color, or if we ran out of preset materials. Create a new one.
             {
