@@ -26,7 +26,9 @@ public class PlayerMaterialManagement : MonoBehaviour
 
     public void SetMaterial(PlayerManager player, int materialIndex, Color materialColor, bool useSetColor = false)
     {
-        if (player.IsOwnedByServer) return;
+        Debug.Log(player.IsOwnedByServer + " _ " + materialIndex + " _ " + materialColor);
+
+        if (player.IsOwnedByServer && materialIndex == -1) return;
 
         Debug.Log("Setting color!");
         GameObject bodyChild = null;

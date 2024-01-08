@@ -124,6 +124,10 @@ public class PlayerManager : CharacterManager
 
             PlayerMaterialManagement.Instance.SetMaterial(this,nextIndex, backupColor, useCustomColor);
         }
+        else
+        {
+            playerNetworkManager.OnMaterialIDChange(0, playerNetworkManager.playerMaterialID.Value);
+        }
 
         //Upon connecting, if we are the owner of this character but not the server. Reload our character data
         //Server doesnt need to reload due to the character not being deleted.
@@ -191,7 +195,7 @@ public class PlayerManager : CharacterManager
                 else //We still need to set our own color
                 {
                     bool useCustomColor = false;
-                    if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;
+                    //if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;
 
                     PlayerMaterialManagement.Instance.SetMaterial(this, playerNetworkManager.playerMaterialID.Value, playerNetworkManager.playerCustomMaterialColor.Value, useCustomColor);
                 }
@@ -276,12 +280,14 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
 
         //SET THE CORRECT COLORS OF PLAYERS
-        if (playerNetworkManager.IsOwnedByServer && !IsServer && !IsHost) //The server has default colors.
+        if (!IsServer && !IsHost) //The server has default colors.
         {
             bool useCustomColor = false;
-            if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;
+            //if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;
 
-            PlayerMaterialManagement.Instance.SetMaterial(this, playerNetworkManager.playerMaterialID.Value, playerNetworkManager.playerCustomMaterialColor.Value, useCustomColor);
+            playerNetworkManager.OnMaterialIDChange(0, playerNetworkManager.playerMaterialID.Value);
+
+            //PlayerMaterialManagement.Instance.SetMaterial(this, playerNetworkManager.playerMaterialID.Value, playerNetworkManager.playerCustomMaterialColor.Value, useCustomColor);
         }
 
         //Set lock on target if locked on.
