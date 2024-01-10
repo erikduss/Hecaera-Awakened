@@ -58,7 +58,6 @@ public class PlayerNetworkManager : CharacterNetworkManager
 
     public void OnMaterialIDChange(int oldID, int newID)
     {
-        Debug.Log("MY COLOR HAS BEEN CHANGED!");
         PlayerMaterialManagement.Instance.SetMaterial(player, newID, playerCustomMaterialColor.Value, false);
     }
 

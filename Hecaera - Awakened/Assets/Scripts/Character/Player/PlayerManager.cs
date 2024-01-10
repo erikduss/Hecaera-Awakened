@@ -51,6 +51,7 @@ public class PlayerManager : CharacterManager
 
         playerStatsManager.RegenerateStamina();
 
+
         DebugMenu();
     }
 
