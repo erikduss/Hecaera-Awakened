@@ -11,7 +11,7 @@ public class PlayerUIHudManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI joinCodeText;
 
     public bool fadingAlphaOfStaminaPanel = false;
-    [SerializeField] GameObject stamina_Low_Panel;
+    [SerializeField] public GameObject stamina_Low_Panel;
     [SerializeField] Image stamina_Low_Panel_Image;
 
     private void Start()
@@ -19,24 +19,26 @@ public class PlayerUIHudManager : MonoBehaviour
         stamina_Low_Panel.SetActive(false);
     }
 
-    public IEnumerator FadeAlphaOfStaminaPanel()
+    public IEnumerator FadeAlphaOfStaminaPanel(bool fadeIn)
     {
         //If the toggle returns true, fade in the Image
-        if (fadingAlphaOfStaminaPanel == true)
+        if (fadeIn == true)
         {
-            stamina_Low_Panel.SetActive(true);
+            if(!stamina_Low_Panel.activeInHierarchy) stamina_Low_Panel.SetActive(true);
 
             //Fully fade in Image with the duration of 1 second
-            stamina_Low_Panel_Image.CrossFadeAlpha(0.25f, 1.0f, false);
+            stamina_Low_Panel_Image.CrossFadeAlpha(0.5f, 1.0f, false);
         }
         //If the toggle is false, fade out to nothing (0) the Image with a duration of 2
-        if (fadingAlphaOfStaminaPanel == false)
+        if (fadeIn == false)
         {
+            fadingAlphaOfStaminaPanel = true;
             stamina_Low_Panel_Image.CrossFadeAlpha(0, 1.0f, false);
 
             yield return new WaitForSeconds(1.0f);
 
             stamina_Low_Panel.SetActive(false);
+            fadingAlphaOfStaminaPanel = false;
         }
     }
 

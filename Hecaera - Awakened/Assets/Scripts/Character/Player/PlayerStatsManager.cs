@@ -6,6 +6,7 @@ using UnityEngine.TextCore.Text;
 public class PlayerStatsManager : CharacterStatsManager
 {
     PlayerManager player;
+    private float staminaLowWarningThreshold = 30;
 
     protected override void Awake()
     {
@@ -30,11 +31,23 @@ public class PlayerStatsManager : CharacterStatsManager
             return;
 
         //TODO: Show stamina low indicator in Player UI
-        //Enable if stamina is low (can only do 1 action, this should be a set number that can be changed if needed.)
-        //PlayerUIManager.instance.playerUIHudManager.
-        //Disable if player can do 2 actions
 
-        //WE DO NOT WANT TO REGENERATE STAMINA WHILE USING IT.
+        if(player.playerNetworkManager.currentStamina.Value <= staminaLowWarningThreshold)
+        {
+            //Enable if stamina is low (can only do 1 action, this should be a set number that can be changed if needed.)
+            StartCoroutine(PlayerUIManager.instance.playerUIHudManager.FadeAlphaOfStaminaPanel(true));
+        }
+        else
+        {
+            if (PlayerUIManager.instance.playerUIHudManager.stamina_Low_Panel.activeInHierarchy)
+            {
+                if (!PlayerUIManager.instance.playerUIHudManager.fadingAlphaOfStaminaPanel)
+                {
+                    //Disable if player can do 2 actions
+                    StartCoroutine(PlayerUIManager.instance.playerUIHudManager.FadeAlphaOfStaminaPanel(false));
+                }
+            }
+        }
 
         base.RegenerateStamina();
     }
