@@ -2178,7 +2178,7 @@ GameObject:
   - component: {fileID: 5471057166058172244}
   - component: {fileID: 1899936673373821835}
   - component: {fileID: 194286282054499154}
-  - component: {fileID: 5471057166058172206}
+  - component: {fileID: -6876064064976726273}
   - component: {fileID: 5471057166058172205}
   - component: {fileID: 5471057166058172204}
   - component: {fileID: 5471057166058172243}
@@ -2187,7 +2187,7 @@ GameObject:
   - component: {fileID: 5471057166058172240}
   - component: {fileID: 5471057166058172247}
   - component: {fileID: 5471057166058172246}
-  - component: {fileID: 5471057166058172245}
+  - component: {fileID: 8942580516228026409}
   - component: {fileID: 5012371328961058402}
   - component: {fileID: 674458482766850629}
   - component: {fileID: 5599050354352773055}
@@ -2251,7 +2251,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &5471057166058172206
+--- !u!114 &-6876064064976726273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2260,7 +2260,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5471057164621568326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc1062b281629ed4aad8ae20abf50dc6, type: 3}
+  m_Script: {fileID: 11500000, guid: 55a0edbe94756dd45a088e03c29aedc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
@@ -2271,11 +2271,14 @@ MonoBehaviour:
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
   characterLocomotionManager: {fileID: 0}
+  characterGroup: 1
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
+  aICharacterCombatManager: {fileID: 0}
+  currentState: {fileID: 11400000, guid: 6ef4328f16827634b9fbd7b5322ab49f, type: 2}
 --- !u!114 &5471057166058172205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2292,6 +2295,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  nonStandableSurfaceLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  nonStandableCheckRange: 0.5
   groundCheckSphereRadius: 0.2
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
@@ -2440,7 +2447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42806c6a942aaaf468e6650b0243fead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5471057166058172245
+--- !u!114 &8942580516228026409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2449,13 +2456,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5471057164621568326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2d9e7cf00823847a4dc8d1e75af67b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ada21b08aeb52e49bd20c41c6587522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lastAttackAnimationPerformed: 
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 2903369051261587608}
+  detectionRadius: 15
+  minimumDetectionAngle: -35
+  maximumDetectionAngle: 35
 --- !u!82 &5012371328961058402
 AudioSource:
   m_ObjectHideFlags: 0

@@ -14,6 +14,9 @@ public class CharacterManager : NetworkBehaviour
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
     [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
 
+    [Header("Character Group")]
+    public CharacterGroup characterGroup;
+
     [Header("Flags")]
     public bool isPerformingAction = false;
     public bool isGrounded = true;
@@ -66,6 +69,11 @@ public class CharacterManager : NetworkBehaviour
                 characterNetworkManager.networkRotation.Value, 
                 characterNetworkManager.networkPositionSmoothTime);
         }
+    }
+
+    protected virtual void FixedUpdate()
+    {
+
     }
 
     protected virtual void LateUpdate()

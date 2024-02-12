@@ -22,6 +22,13 @@ public enum CharacterSlot
     NO_SLOT
 }
 
+//The specific groups, used to detect who can attack who. You cannot attack someone in your own team.
+public enum CharacterGroup
+{
+    Team01,
+    Team02,
+}
+
 public enum AudioSourceType
 {
     DEFAULT,
