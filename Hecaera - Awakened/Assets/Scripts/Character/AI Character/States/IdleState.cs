@@ -9,9 +9,7 @@ public class IdleState : AIState
     {
         if(aiCharacter.characterCombatManager.currentTarget != null)
         {
-            //return the persue target state
-            Debug.Log("We have a target");
-            return this;
+            return SwitchState(aiCharacter, aiCharacter.pursueTarget);
         }
         else
         {
