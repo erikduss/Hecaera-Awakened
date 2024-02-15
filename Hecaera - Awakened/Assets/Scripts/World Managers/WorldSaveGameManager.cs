@@ -342,10 +342,10 @@ public class WorldSaveGameManager : MonoBehaviour
         if (NetworkManager.Singleton.IsServer)
         {
             NetworkManager.Singleton.SceneManager.LoadScene("Scene_World_01", LoadSceneMode.Single);
-            var spawner = Instantiate(dummySpawner, Vector3.zero, Quaternion.identity);
+            /*var spawner = Instantiate(dummySpawner, Vector3.zero, Quaternion.identity);
 
             NetworkObject netComponent = spawner.GetComponent<NetworkObject>();
-            netComponent.Spawn();
+            netComponent.Spawn();*/
         }
 
         if (NetworkManager.Singleton.IsServer)

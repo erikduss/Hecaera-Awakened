@@ -29,6 +29,12 @@ public enum CharacterGroup
     Team02,
 }
 
+public enum EnemySpawnType
+{
+    BASIC_DUMMY,
+    BOSS
+}
+
 public enum AudioSourceType
 {
     DEFAULT,

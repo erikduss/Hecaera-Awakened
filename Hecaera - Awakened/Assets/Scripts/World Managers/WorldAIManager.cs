@@ -13,8 +13,13 @@ public class WorldAIManager : MonoBehaviour
     [SerializeField] bool respawnCharacters = false;
 
     [Header("Characters")]
-    [SerializeField] GameObject[] aiCharacters;
+    [SerializeField] EntitySpawnInformation[] aiCharacters;
     [SerializeField] List<GameObject> spawnedInCharacter;
+
+    [Header("EntityTypesPrefabs")]
+    [SerializeField] GameObject basicDummyPrefab;
+    [SerializeField] GameObject bossPrefab;
+
     private void Awake()
     {
         if (Instance == null)
@@ -63,9 +68,37 @@ public class WorldAIManager : MonoBehaviour
 
     private void SpawnAllCharacters()
     {
-        foreach (GameObject character in aiCharacters)
+        foreach (EntitySpawnInformation entity in aiCharacters)
         {
-            GameObject instantiatedCharacter = Instantiate(character);
+            GameObject instantiatedCharacter;
+
+            if (entity.OverrideSpawnGameObject != null)
+            {
+                instantiatedCharacter = Instantiate(entity.OverrideSpawnGameObject, Vector3.zero, Quaternion.identity);
+            }
+            else
+            {
+                GameObject entityToSpawn = null;
+
+                switch (entity.EntityType)
+                {
+                    case EnemySpawnType.BASIC_DUMMY:
+                            entityToSpawn = basicDummyPrefab;
+                        break;
+                    case EnemySpawnType.BOSS:
+                            entityToSpawn = bossPrefab;
+                        break;
+                    default:
+                            entityToSpawn = basicDummyPrefab;
+                        break;
+                }
+
+                instantiatedCharacter = Instantiate(entityToSpawn, Vector3.zero, Quaternion.identity);
+            }
+
+            instantiatedCharacter.transform.position = entity.SpawnPosition;
+            instantiatedCharacter.transform.localRotation = entity.SpawnRotation;
+
             instantiatedCharacter.GetComponent<NetworkObject>().Spawn();
             spawnedInCharacter.Add(instantiatedCharacter);
         }
