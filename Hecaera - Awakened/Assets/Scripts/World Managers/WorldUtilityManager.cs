@@ -56,4 +56,17 @@ public class WorldUtilityManager : MonoBehaviour
 
         return false;
     }
+
+    public float GetAngleOfTarget(Transform characterTransform, Vector3 targetsDirection)
+    {
+        targetsDirection.y = 0;
+        float viewableAngle = Vector3.Angle(characterTransform.forward, targetsDirection);
+
+        //Cross is used to determine if the angle is negative or positive due to Vector3.Angle being an absolute value.
+        Vector3 cross = Vector3.Cross(characterTransform.forward, targetsDirection);
+
+        if (cross.y < 0) viewableAngle = -viewableAngle;
+
+        return viewableAngle;
+    }
 }

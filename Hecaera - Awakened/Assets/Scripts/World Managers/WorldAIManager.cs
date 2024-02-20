@@ -20,6 +20,9 @@ public class WorldAIManager : MonoBehaviour
     [SerializeField] GameObject basicDummyPrefab;
     [SerializeField] GameObject bossPrefab;
 
+    [Header("SpawningObjects")]
+    public GameObject bossHolder;
+
     private void Awake()
     {
         if (Instance == null)
@@ -68,9 +71,20 @@ public class WorldAIManager : MonoBehaviour
 
     private void SpawnAllCharacters()
     {
+        if (bossHolder == null) 
+        {
+            //Animations keep teleporting the boss back to 0,0,0. Using a boss holder as parent to move the boss to the correct position.
+            //Sync this boss holder object's position with the boss's position.
+            bossHolder = Instantiate(new GameObject());
+            bossHolder.name = "Boss Holder";
+            NetworkObject bossHolderNetObj = bossHolder.AddComponent<NetworkObject>();
+            bossHolderNetObj.Spawn();
+        }
+
         foreach (EntitySpawnInformation entity in aiCharacters)
         {
             GameObject instantiatedCharacter;
+            bool isBoss = false;
 
             if (entity.OverrideSpawnGameObject != null)
             {
@@ -87,11 +101,14 @@ public class WorldAIManager : MonoBehaviour
                         break;
                     case EnemySpawnType.BOSS:
                             entityToSpawn = bossPrefab;
+                            isBoss = true;
                         break;
                     default:
                             entityToSpawn = basicDummyPrefab;
                         break;
                 }
+
+                if (isBoss) bossHolder.transform.position = entity.SpawnPosition;
 
                 instantiatedCharacter = Instantiate(entityToSpawn, Vector3.zero, Quaternion.identity);
             }
@@ -100,6 +117,10 @@ public class WorldAIManager : MonoBehaviour
             instantiatedCharacter.transform.localRotation = entity.SpawnRotation;
 
             instantiatedCharacter.GetComponent<NetworkObject>().Spawn();
+            if (isBoss)
+            {
+                instantiatedCharacter.transform.parent = bossHolder.transform;
+            }
             spawnedInCharacter.Add(instantiatedCharacter);
         }
     }

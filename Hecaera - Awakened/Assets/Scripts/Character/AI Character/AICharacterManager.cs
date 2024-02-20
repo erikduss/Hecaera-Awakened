@@ -39,7 +39,10 @@ public class AICharacterManager : CharacterManager
     {
         base.FixedUpdate();
 
-        ProcessStateMachine();
+        if (IsOwner)
+        {
+            ProcessStateMachine();
+        }
     }
 
     private void ProcessStateMachine()
@@ -55,6 +58,13 @@ public class AICharacterManager : CharacterManager
         //reset the position and rotation after every state machine tick. (so it doesnt double apply the rotation)
         navMeshAgent.transform.localPosition = Vector3.zero;
         navMeshAgent.transform.localRotation = Quaternion.identity;
+
+        if(aICharacterCombatManager.currentTarget != null)
+        {
+            aICharacterCombatManager.targetsDirection = aICharacterCombatManager.currentTarget.transform.position - transform.position;
+            aICharacterCombatManager.viewableAngle = WorldUtilityManager.Instance.GetAngleOfTarget(transform, aICharacterCombatManager.targetsDirection);
+            aICharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aICharacterCombatManager.currentTarget.transform.position);
+        }
 
         if (navMeshAgent.enabled)
         {
