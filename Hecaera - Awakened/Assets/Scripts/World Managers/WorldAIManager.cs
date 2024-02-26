@@ -75,10 +75,11 @@ public class WorldAIManager : MonoBehaviour
         {
             //Animations keep teleporting the boss back to 0,0,0. Using a boss holder as parent to move the boss to the correct position.
             //Sync this boss holder object's position with the boss's position.
-            bossHolder = Instantiate(new GameObject());
+            /*bossHolder = Instantiate(new GameObject());
             bossHolder.name = "Boss Holder";
             NetworkObject bossHolderNetObj = bossHolder.AddComponent<NetworkObject>();
-            bossHolderNetObj.Spawn();
+            bossHolderNetObj.Spawn();*/
+            bossHolder = this.gameObject;
         }
 
         foreach (EntitySpawnInformation entity in aiCharacters)
