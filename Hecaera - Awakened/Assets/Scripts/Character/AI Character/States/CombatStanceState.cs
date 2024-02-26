@@ -24,7 +24,7 @@ public class CombatStanceState : AIState
     protected bool hasRolledForComboChance = false;
 
     [Header("Engagement Distance")]
-    [SerializeField] protected float maximumEngagementDistance = 5; //The distance we have to be away to enter pursue target state.
+    [SerializeField] public float maximumEngagementDistance = 5; //The distance we have to be away to enter pursue target state.
 
     public override AIState Tick(AICharacterManager aiCharacter)
     {
@@ -43,6 +43,8 @@ public class CombatStanceState : AIState
             }
         }
 
+        aiCharacter.aICharacterCombatManager.RotateTowardsAgent(aiCharacter);
+
         //if we dont have a target anymore, return to idle.
         if (aiCharacter.aICharacterCombatManager.currentTarget == null)
             return SwitchState(aiCharacter, aiCharacter.idle);
@@ -53,10 +55,11 @@ public class CombatStanceState : AIState
         }
         else
         {
-            //check recovery timer
-            //pass chosen attack to attack state
+            aiCharacter.attack.currentAttack = chosenAttack;
+
             //roll for combo chance
-            //switch state
+
+            return SwitchState(aiCharacter, aiCharacter.attack);
         }
 
         if (aiCharacter.aICharacterCombatManager.distanceFromTarget > maximumEngagementDistance)
@@ -74,7 +77,7 @@ public class CombatStanceState : AIState
     {
         potentialAttacks = new List<AICharacterAttackAction>();
 
-        foreach(var potentialAttack in potentialAttacks)
+        foreach(var potentialAttack in aiCharacterAttacks)
         {
             //if we're too close, skip this attack.
             if (potentialAttack.minimimAttackDistance > aiCharacter.aICharacterCombatManager.distanceFromTarget)
@@ -127,6 +130,7 @@ public class CombatStanceState : AIState
                 chosenAttack = attack;
                 previousAttack = chosenAttack;
                 hasAttack = true;
+                return;
             }
         }
     }
