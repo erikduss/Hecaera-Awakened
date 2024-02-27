@@ -20,6 +20,9 @@ public class CharacterLocomotionManager : MonoBehaviour
 
     [Header("Flags")]
     public bool isRolling = false;
+    public bool canRotate = true;
+    public bool canMove = true;
+    public bool isGrounded = true;
 
     protected virtual void Awake()
     {
@@ -30,7 +33,7 @@ public class CharacterLocomotionManager : MonoBehaviour
     {
         HandleGroundCheck();
 
-        if (character.isGrounded)
+        if (character.characterLocomotionManager.isGrounded)
         {
             //prevent sliding after landing.
             if(yVelocity.x > 0 || yVelocity.z > 0)
@@ -79,8 +82,6 @@ public class CharacterLocomotionManager : MonoBehaviour
             character.animator.SetFloat("InAirTimer", inAirTimer);
 
             yVelocity.y += gravityForce * Time.deltaTime;
-
-            Debug.Log(yVelocity);
         }
 
         //There should always be some force applied to the character!
@@ -89,12 +90,22 @@ public class CharacterLocomotionManager : MonoBehaviour
 
     protected void HandleGroundCheck()
     {
-        character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
+        character.characterLocomotionManager.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
     }
 
     //Debug to check the ground check sphere
     protected void OnDrawGizmosSelected()
     {
         //Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
+    }
+
+    public void EnableCanRotate()
+    {
+        canRotate = true;
+    }
+
+    public void DisableCanRotate()
+    {
+        canRotate = false;
     }
 }

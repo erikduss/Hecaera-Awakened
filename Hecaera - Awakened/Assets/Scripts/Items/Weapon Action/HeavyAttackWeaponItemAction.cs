@@ -17,7 +17,7 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
         if (playerPerformingAction.playerNetworkManager.currentHealth.Value <= 0)
             return;
 
-        if (!playerPerformingAction.isGrounded)
+        if (!playerPerformingAction.characterLocomotionManager.isGrounded)
             return;
 
         //prevent the attack being used when not having enough stamina.

@@ -17,7 +17,7 @@ public class InstantMagicAttackWeaponItemAction : WeaponItemAction
         if (playerPerformingAction.playerNetworkManager.currentHealth.Value <= 0)
             return;
 
-        if (!playerPerformingAction.isGrounded)
+        if (!playerPerformingAction.characterLocomotionManager.isGrounded)
             return;
 
         PerformInstantMagicAttack(playerPerformingAction, weaponPerformingAction);

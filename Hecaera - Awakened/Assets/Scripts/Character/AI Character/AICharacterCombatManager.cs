@@ -21,6 +21,13 @@ public class AICharacterCombatManager : CharacterCombatManager
     [Header("Attack Rotation")]
     public float attackRotationSpeed = 25;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        lockOnTransform = GetComponentInChildren<LockOnTransform>().transform;
+    }
+
     public void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
     {
         if (currentTarget != null)
@@ -138,7 +145,7 @@ public class AICharacterCombatManager : CharacterCombatManager
             return;
         }
 
-        if (!aICharacter.canRotate)
+        if (!aICharacter.characterLocomotionManager.canRotate)
         {
             return;
         }

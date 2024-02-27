@@ -121,7 +121,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private void HandleGroundedMovement()
     {
-        if (!player.canMove)
+        if (!player.characterLocomotionManager.canMove)
             return;
 
         //our movement direction is based on our cameras facing perspective and our movement inputs.
@@ -159,7 +159,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private void HandleFreeFallMovement()
     {
-        if (!player.isGrounded)
+        if (!player.characterLocomotionManager.isGrounded)
         {
             Vector3 freeFallDirection;
 
@@ -176,7 +176,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.characterNetworkManager.isDead.Value)
             return;
 
-        if (!player.canRotate)
+        if (!player.characterLocomotionManager.canRotate)
             return;
 
         if (player.playerNetworkManager.isLockedOn.Value)
@@ -264,7 +264,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.isPerformingAction)
             return;
 
-        if (!player.isGrounded)
+        if (!player.characterLocomotionManager.isGrounded)
             return;
 
         if (player.playerNetworkManager.currentStamina.Value <= 0)
@@ -306,7 +306,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.characterNetworkManager.isJumping.Value)
             return;
 
-        if (!player.isGrounded)
+        if (!player.characterLocomotionManager.isGrounded)
             return;
 
         player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_Start_01", false, true, true);
