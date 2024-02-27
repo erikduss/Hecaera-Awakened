@@ -57,12 +57,6 @@ public class TitleScreenManager : MonoBehaviour
     public bool continuedPastSplashScreen = false;
     [SerializeField] private TitleScreenSettingsMenuManager settingsMenuManager;
 
-    private UnityTransport networkTransport;
-
-    public bool connectedToServer = false;
-
-    private bool authenticationFinished = false;
-
     private void Awake()
     {
         if(Instance == null)
@@ -77,7 +71,7 @@ public class TitleScreenManager : MonoBehaviour
 
     private void Update()
     {
-        if (!continuedPastSplashScreen && authenticationFinished)
+        if (!continuedPastSplashScreen && ConnectionManager.Instance.authenticationFinished)
         {
             if (Input.anyKey)
             {
@@ -90,11 +84,6 @@ public class TitleScreenManager : MonoBehaviour
     private void Start()
     {
         SetAudioFromSoundManager();
-
-        networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        networkTransport.OnTransportEvent += OnTransportEvent;
-
-        AuthenticatePlayer();
     }
 
     public void ExitGame()
@@ -109,237 +98,15 @@ public class TitleScreenManager : MonoBehaviour
         menuMusicAudio.Play();
     }
 
-    public void StartNetworkAsHost()
-    {
-        continuedPastSplashScreen = true;
-
-        UnityTransport networkTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        networkTransport.SetConnectionData("192.168.2.1", 12567, "0.0.0.0");
-        //192.168.2.1
-        //Available ports: 9000, 1511, 12567 (2456-2458, Valheim Server), (19132-19133, Minecraft bedrock), 25565 minecraft java
-
-        WorldGameSessionManager.Instance.SetApprovalCheckCallback();
-
-        StartCoroutine(ConfigureTransportAndStartNgoAsHost());
-        //NetworkManager.Singleton.StartHost();
-    }
-
-    private IEnumerator ConfigureTransportAndStartNgoAsHost()
-    {
-        var serverRelayUtilityTask = WorldGameSessionManager.AllocateRelayServerAndGetJoinCode(10);
-        while (!serverRelayUtilityTask.IsCompleted)
-        {
-            yield return null;
-        }
-        if (serverRelayUtilityTask.IsFaulted)
-        {
-            Debug.LogError("Exception thrown when attempting to start Relay Server. Server not started. Exception: " + serverRelayUtilityTask.Exception.Message);
-            yield break;
-        }
-
-        var relayServerData = serverRelayUtilityTask.Result;
-
-        // Display the joinCode to the user.
-        GetRelayRoomKey();
-
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-        NetworkManager.Singleton.StartHost();
-        yield return null;
-    }
-
-    private async void GetRelayRoomKey()
-    {
-        string joinCode = await RelayService.Instance.GetJoinCodeAsync(WorldGameSessionManager.AllocationInstance.AllocationId);
-        Debug.Log("Join Code: " + joinCode);
-        PlayerUIManager.instance.playerUIHudManager.joinCodeText.text = "Join Code: " + joinCode;
-    }
-
     public void StartNewGame()
     {
-        WorldSaveGameManager.instance.AttemptToCreateNewGame();
+        ConnectionManager.Instance.StartLoadingIntoGameAsHost();
     }
 
     public void JoinGame()
     {
         //we restart as client
-        StartCoroutine(JoiningGame());
-    }
-
-    private async void AuthenticatePlayer()
-    {
-        #if UNITY_EDITOR
-        //Is this unity editor instance opening a clone project?
-        if (ClonesManager.IsClone())
-        {
-            Debug.Log("This is a clone project.");
-            // Get the custom argument for this clone project.  
-            string customArgument = ClonesManager.GetArgument();
-            // Do what ever you need with the argument string.
-            Debug.Log("The custom argument of this clone project is: " + customArgument);
-
-            InitializationOptions options = new InitializationOptions();
-            options.SetProfile("Clone_" + customArgument + "_Profile");
-
-            await UnityServices.InitializeAsync(options);
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-
-            var playerID = AuthenticationService.Instance.PlayerId;
-
-            authenticationFinished = true;
-            //AuthenticationService.Instance.SwitchProfile("Clone_" + customArgument + "_Profile");
-        }
-        else
-        {
-            Debug.Log("This is the original project.");
-
-            InitializationOptions options = new InitializationOptions();
-            options.SetProfile("Main_Profile");
-
-            await UnityServices.InitializeAsync(options);
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            var playerID = AuthenticationService.Instance.PlayerId;
-
-            authenticationFinished = true;
-        }
-
-        Debug.Log(AuthenticationService.Instance.PlayerId);
-
-        if (authenticationFinished) return;
-        #endif
-
-        try
-        {
-            await UnityServices.InitializeAsync();
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            var playerID = AuthenticationService.Instance.PlayerId;
-
-            authenticationFinished = true;
-
-            Debug.Log(playerID);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
-    }
-
-    public static async Task<RelayServerData> JoinRelayServerFromJoinCode(string joinCode)
-    {
-        JoinAllocation allocation;
-        try
-        {
-            allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
-        }
-        catch
-        {
-            Debug.LogError("Relay create join code request failed");
-            throw;
-        }
-
-        Debug.Log($"client: {allocation.ConnectionData[0]} {allocation.ConnectionData[1]}");
-        Debug.Log($"host: {allocation.HostConnectionData[0]} {allocation.HostConnectionData[1]}");
-        Debug.Log($"client: {allocation.AllocationId}");
-
-        return new RelayServerData(allocation, "dtls");
-    }
-
-    private IEnumerator JoiningGame()
-    {
-        serverConnectStatusText.text = string.Empty;
-
-        if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
-        {
-            //we must first shut down becaus we started as a host during the title screen.
-            NetworkManager.Singleton.Shutdown();
-        }
-
-        while (NetworkManager.Singleton.ShutdownInProgress)
-        {
-            yield return null;
-        }
-
-        // Populate RelayJoinCode beforehand through the UI
-        var clientRelayUtilityTask = JoinRelayServerFromJoinCode(joinGameServerIPText.text);
-
-        PlayerUIManager.instance.playerUIHudManager.joinCodeText.text = "Join Code: " + joinGameServerIPText.text;
-
-        while (!clientRelayUtilityTask.IsCompleted)
-        {
-            yield return null;
-        }
-
-        if (clientRelayUtilityTask.IsFaulted)
-        {
-            Debug.LogError("Exception thrown when attempting to connect to Relay Server. Exception: " + clientRelayUtilityTask.Exception.Message);
-            yield break;
-        }
-
-        var relayServerData = clientRelayUtilityTask.Result;
-
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
-
-        NetworkManager.Singleton.StartClient();
-        yield return null;
-
-        //bool usingCustomServerData = false;
-
-        ////If alternate IP has been assigned.
-        //if (joinGameServerIPText.text.Length > 0)
-        //{
-        //    usingCustomServerData = true;
-        //    networkTransport.ConnectionData.Address = joinGameServerIPText.text;
-
-        //    if (joinGameServerPortText.text.Length > 0)
-        //    {
-        //        networkTransport.ConnectionData.Port = ushort.Parse(joinGameServerPortText.text);
-        //    }
-
-        //    Debug.Log(networkTransport.ConnectionData.Address + " _: " + networkTransport.ConnectionData.Port);
-        //}
-        //else
-        //{
-        //    usingCustomServerData = false;
-        //    //networkTransport.ConnectionData.Address = "127.0.0.1";
-        //    //networkTransport.ConnectionData.Port = 7777;
-
-        //    networkTransport.SetConnectionData("86.84.11.223", 12567);
-        //}
-
-        ////await AuthenticationService.Instance.SignInAnonymouslyAsync();
-
-        //bool success = NetworkManager.Singleton.StartClient();
-
-        //Debug.Log("Managed to start client? " + success);
-
-        //yield return new WaitForSeconds(2.5f);
-        //if (!connectedToServer)
-        //{
-        //    if (usingCustomServerData)
-        //    {
-        //        serverConnectStatusText.text = "Failed To Connect to custom server";
-        //    }
-        //    else
-        //        serverConnectStatusText.text = "Failed To Connect to server";
-
-        //    Debug.Log("FAILED TO CONNECT TO: " + networkTransport.ConnectionData.Address + ":" + networkTransport.ConnectionData.Port);
-        //}
-
-        //yield return null;
-    }
-
-    private void OnTransportEvent(Unity.Netcode.NetworkEvent eventType, ulong clientId, ArraySegment<byte> payload, float receiveTime)
-    {
-        if (eventType == NetworkEvent.TransportFailure) 
-        {
-            Debug.Log("Transport Failure!");
-            serverConnectStatusText.text = "Network Transport Failure"; 
-        }
-        if (eventType == NetworkEvent.Disconnect)
-        {
-            Debug.Log("DISCONNECT!");
-            serverConnectStatusText.text = "Network Disconnected";
-        }
-        if(eventType == NetworkEvent.Connect) connectedToServer = true;
+        ConnectionManager.Instance.StartLoadingIntoGameAsClient(joinGameServerIPText.text);
     }
 
     public void OpenJoinGameMenu()

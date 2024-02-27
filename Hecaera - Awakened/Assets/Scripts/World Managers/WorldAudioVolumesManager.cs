@@ -29,33 +29,37 @@ public class WorldAudioVolumesManager : MonoBehaviour
         {
             case AudioSourceType.MUSIC:
                 musicAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.LoadedSettingsData.musicVolume);
+                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue);
                 break;
             case AudioSourceType.SFX: 
                 SFXAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.LoadedSettingsData.SFXVolume);
+                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
                 break;
             case AudioSourceType.DIALOG: 
                 dialogAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.LoadedSettingsData.dialogVolume);
+                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue);
                 break;
             default:
                 SFXAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.LoadedSettingsData.SFXVolume);
+                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
                 break;
         }
     }
 
     public void LoadAudioFromSavedSettingsData()
     {
-        SetMusicAudioSourcesVolumes(SavedSettingsManager.instance.LoadedSettingsData.musicVolume, SavedSettingsManager.instance.LoadedSettingsData.mainVolume);
-        SetSFXAudioSourcesVolumes(SavedSettingsManager.instance.LoadedSettingsData.SFXVolume, SavedSettingsManager.instance.LoadedSettingsData.mainVolume);
-        SetDialogAudioSourcesVolumes(SavedSettingsManager.instance.LoadedSettingsData.dialogVolume, SavedSettingsManager.instance.LoadedSettingsData.mainVolume);
+        Debug.Log("Using Values (1)");
+        SetMusicAudioSourcesVolumes(SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue, 
+            SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue);
+        SetSFXAudioSourcesVolumes(SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue, 
+            SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
+        SetDialogAudioSourcesVolumes(SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue, 
+            SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue);
     }
 
     private void SetAudioSourceVolume(AudioSource source, float volume)
     {
-        float calculatedVolume = volume * (SavedSettingsManager.instance.LoadedSettingsData.mainVolume / 100);
+        float calculatedVolume = volume * (SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue / 100);
         float fixedVolume = calculatedVolume / 100;
 
         source.volume = fixedVolume;

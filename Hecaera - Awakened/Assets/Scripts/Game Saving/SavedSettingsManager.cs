@@ -1,3 +1,4 @@
+using AkshayDhotre.GraphicSettingsMenu;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,10 @@ public class SavedSettingsManager : MonoBehaviour
 {
     public static SavedSettingsManager instance;
 
-    public SettingsSaveData LoadedSettingsData { private set { loadedSettingsData = value; } get { return loadedSettingsData; } }
-    private SettingsSaveData loadedSettingsData;
+    //public SettingsSaveData LoadedSettingsData { private set { loadedSettingsData = value; } get { return loadedSettingsData; } }
+    //private SettingsSaveData loadedSettingsData;
+
+    public GraphicMenuManager settingsGraphicsMenu;
 
     private void Awake()
     {
@@ -15,7 +18,7 @@ public class SavedSettingsManager : MonoBehaviour
         {
             instance = this;
             //Always make sure to load in the settings
-            LoadSaveSettings();
+            //LoadSaveSettings();
         }
         else
         {
@@ -25,7 +28,12 @@ public class SavedSettingsManager : MonoBehaviour
 
     private void Start()
     {
-        if(LoadedSettingsData != null)
+        if(settingsGraphicsMenu == null)
+        {
+            settingsGraphicsMenu = GameObject.FindGameObjectWithTag("GraphicMenuManager").GetComponent<GraphicMenuManager>();
+        }
+
+        if(settingsGraphicsMenu != null)
         {
             WorldAudioVolumesManager.Instance.LoadAudioFromSavedSettingsData();
         }
@@ -33,24 +41,24 @@ public class SavedSettingsManager : MonoBehaviour
 
     public void SaveSettings(SettingsSaveData saveData)
     {
-        PlayerPrefs.SetFloat("MainVolume", saveData.mainVolume);
-        PlayerPrefs.SetFloat("MusicVolume", saveData.musicVolume);
-        PlayerPrefs.SetFloat("SFXVolume", saveData.SFXVolume);
-        PlayerPrefs.SetFloat("DialogVolume", saveData.dialogVolume);
-        PlayerPrefs.SetFloat("HorizontalSensitivity", saveData.horizontalSensitivity);
-        PlayerPrefs.SetFloat("VerticalSensitivity", saveData.verticalSensitivity);
+        //PlayerPrefs.SetFloat("MainVolume", saveData.mainVolume);
+        //PlayerPrefs.SetFloat("MusicVolume", saveData.musicVolume);
+        //PlayerPrefs.SetFloat("SFXVolume", saveData.SFXVolume);
+        //PlayerPrefs.SetFloat("DialogVolume", saveData.dialogVolume);
+        //PlayerPrefs.SetFloat("HorizontalSensitivity", saveData.horizontalSensitivity);
+        //PlayerPrefs.SetFloat("VerticalSensitivity", saveData.verticalSensitivity);
 
-        PlayerPrefs.Save();
+        //PlayerPrefs.Save();
 
-        LoadedSettingsData.mainVolume = saveData.mainVolume;
-        LoadedSettingsData.musicVolume = saveData.musicVolume;
-        LoadedSettingsData.SFXVolume = saveData.SFXVolume;
-        LoadedSettingsData.dialogVolume = saveData.dialogVolume;
-        loadedSettingsData.horizontalSensitivity = saveData.horizontalSensitivity;
-        loadedSettingsData.verticalSensitivity = saveData.verticalSensitivity;
+        //LoadedSettingsData.mainVolume = saveData.mainVolume;
+        //LoadedSettingsData.musicVolume = saveData.musicVolume;
+        //LoadedSettingsData.SFXVolume = saveData.SFXVolume;
+        //LoadedSettingsData.dialogVolume = saveData.dialogVolume;
+        //loadedSettingsData.horizontalSensitivity = saveData.horizontalSensitivity;
+        //loadedSettingsData.verticalSensitivity = saveData.verticalSensitivity;
     }
 
-    public SettingsSaveData LoadSaveSettings()
+    /*public SettingsSaveData LoadSaveSettings()
     {
         //Create a new save data with values that are saved in the playerprefs (or the default in settinsSaveData)
         loadedSettingsData = new SettingsSaveData();
@@ -86,5 +94,5 @@ public class SavedSettingsManager : MonoBehaviour
         }
 
         return loadedSettingsData;
-    }
+    }*/
 }

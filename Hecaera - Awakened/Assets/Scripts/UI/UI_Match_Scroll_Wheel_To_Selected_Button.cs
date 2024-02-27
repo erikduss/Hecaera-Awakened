@@ -16,7 +16,7 @@ public class UI_Match_Scroll_Wheel_To_Selected_Button : MonoBehaviour
     private void Update()
     {
         currentSelected = EventSystem.current.currentSelectedGameObject;
-
+        /*
         if(currentSelected != null)
         {
             if(currentSelected !=  previouslySelected)
@@ -25,7 +25,7 @@ public class UI_Match_Scroll_Wheel_To_Selected_Button : MonoBehaviour
                 currentSelectedTransform = currentSelected.GetComponent<RectTransform>();
                 SnapTo(currentSelectedTransform);
             }
-        }
+        }*/
     }
 
     private void SnapTo(RectTransform target)

@@ -16,7 +16,7 @@ public class WorldSaveGameManager : MonoBehaviour
     [SerializeField] bool loadGame;
 
     [Header("World Scene Index")]
-    [SerializeField] int worldSceneIndex = 1;
+    [SerializeField] int worldSceneIndex = 2;
 
     [Header("Save Data Writer")]
     private SaveFileDataWriter saveFileDataWriter;

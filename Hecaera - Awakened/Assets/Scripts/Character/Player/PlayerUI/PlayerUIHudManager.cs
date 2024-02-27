@@ -17,6 +17,7 @@ public class PlayerUIHudManager : MonoBehaviour
     private void Start()
     {
         stamina_Low_Panel.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 
     public IEnumerator FadeAlphaOfStaminaPanel(bool fadeIn)
@@ -48,6 +49,11 @@ public class PlayerUIHudManager : MonoBehaviour
         healthBar.gameObject.SetActive(true);
         staminaBar.gameObject.SetActive(false);
         staminaBar.gameObject.SetActive(true);
+    }
+
+    public void SetHUDPanelStatus(bool status)
+    {
+        gameObject.SetActive(status);
     }
 
     public void SetNewHealthValue(int oldValue, int newValue)

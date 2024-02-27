@@ -75,6 +75,8 @@ public class PlayerInputManager : MonoBehaviour
         {
             instance.enabled = true;
 
+            PlayerUIManager.instance.playerUIHudManager.SetHUDPanelStatus(true);
+
             if (playerControls != null)
             {
                 playerControls.Enable();
@@ -87,6 +89,8 @@ public class PlayerInputManager : MonoBehaviour
         else
         {
             instance.enabled = false;
+
+            PlayerUIManager.instance.playerUIHudManager.SetHUDPanelStatus(false);
 
             if (playerControls != null)
             {
