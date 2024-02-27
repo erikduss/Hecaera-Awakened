@@ -81,6 +81,7 @@ public class CharacterManager : NetworkBehaviour
     {
         base.OnNetworkSpawn();
 
+        characterNetworkManager.OnIsMovingChanged(false, characterNetworkManager.isMoving.Value);
         characterNetworkManager.isMoving.OnValueChanged += characterNetworkManager.OnIsMovingChanged;
     }
 
