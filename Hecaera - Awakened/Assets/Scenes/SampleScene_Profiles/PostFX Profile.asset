@@ -74,19 +74,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   gradingMode:
-    overrideState: 0
+    overrideState: 1
     value: 1
   externalLut:
     overrideState: 0
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
+    overrideState: 1
     value: 0
   toneCurveToeStrength:
     overrideState: 0
@@ -123,8 +123,8 @@ MonoBehaviour:
     overrideState: 1
     value: {r: 1, g: 0.32549024, b: 0.84813726, a: 1}
   hueShift:
-    overrideState: 1
-    value: 27
+    overrideState: 0
+    value: -9
   saturation:
     overrideState: 1
     value: 26
@@ -165,10 +165,10 @@ MonoBehaviour:
     overrideState: 0
     value: 100
   lift:
-    overrideState: 1
+    overrideState: 0
     value: {x: 0.7390032, y: 1, z: 0.7448407, w: 0}
   gamma:
-    overrideState: 1
+    overrideState: 0
     value: {x: 0.28993386, y: 1, z: 0.8580861, w: -0.14180939}
   gain:
     overrideState: 1
@@ -1468,7 +1468,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 16.92
+    value: 0.5
   threshold:
     overrideState: 1
     value: 1.5
@@ -1485,7 +1485,7 @@ MonoBehaviour:
     overrideState: 1
     value: -1
   color:
-    overrideState: 1
+    overrideState: 0
     value: {r: 0.67314744, g: 1, b: 0, a: 1}
   fastMode:
     overrideState: 0
@@ -1496,4 +1496,4 @@ MonoBehaviour:
     defaultState: 1
   dirtIntensity:
     overrideState: 1
-    value: 1.08
+    value: 0.25
