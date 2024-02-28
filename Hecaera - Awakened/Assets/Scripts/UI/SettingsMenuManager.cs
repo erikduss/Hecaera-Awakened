@@ -1,8 +1,10 @@
 using AkshayDhotre.GraphicSettingsMenu;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsMenuManager : MonoBehaviour
@@ -125,7 +127,7 @@ public class SettingsMenuManager : MonoBehaviour
         //SavedSettingsManager.instance.SaveSettings(tempSettingsData);
     }
 
-    public void ReturnToMainMenu()
+    public void CloseSettingsMenu()
     {
         //check if settings are changed (different from save file)
         if(
@@ -136,10 +138,15 @@ public class SettingsMenuManager : MonoBehaviour
             || tempSettingsData.horizontalSensitivity != settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue
             || tempSettingsData.verticalSensitivity != settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue)    
         {
-            TitleScreenManager.Instance.DisplayAbandonChangedSettingsPopUp();
+            PlayerUIManager.instance.playerUIPopUpManager.DisplayAbandonChangedSettingsPopUp();
         }
         else
-            TitleScreenManager.Instance.CloseSettingsMenu();
+        {
+            if(SceneManager.GetActiveScene().buildIndex == 0)
+                PlayerUIManager.instance.playerUIPopUpManager.CloseSettingsMenu(false);
+            else
+                PlayerUIManager.instance.playerUIPopUpManager.CloseSettingsMenu(true);
+        }
     }
 
     public void ReturnToButtonPanelInGame()
@@ -156,7 +163,7 @@ public class SettingsMenuManager : MonoBehaviour
             PlayerUIManager.instance.playerUIPopUpManager.DisplayAbandonChangedSettingsPopUp();
         }
         else
-            PlayerUIManager.instance.playerUIPopUpManager.CloseSettingsIngameMenu();
+            PlayerUIManager.instance.playerUIPopUpManager.CloseSettingsMenu(true);
     }
 
     public void UpdateMainVolumeText()

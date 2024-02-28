@@ -25,26 +25,22 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] AudioSource menuMusicAudio;
 
     [Header("Menus")]
-    [SerializeField] GameObject titleScreenMainMenu;
+    [SerializeField] public GameObject titleScreenMainMenu;
     [SerializeField] GameObject titleScreenLoadMenu;
     [SerializeField] GameObject titleScreenJoinMenu;
-    [SerializeField] GameObject titleScreenSettingsMenu;
 
     [Header("Buttons")]
     [SerializeField] public Button pressToStartButton;
-    [SerializeField] Button mainMenuNewGameButton;
+    [SerializeField] public Button mainMenuNewGameButton;
     [SerializeField] Button loadMenureturnButton;
     [SerializeField] Button joinMenureturnButton;
     [SerializeField] Button mainMenuLoadGameButton;
     [SerializeField] Button noCharacterSlotsOkayButton;
     [SerializeField] Button deleteCharacterPopUpConfirmButton;
-    [SerializeField] Button returnFromSettingsButton;
-    [SerializeField] Button abandonChangedSettingsConfirmButton;
 
     [Header("Pop Ups")]
     [SerializeField] GameObject noCharacterSlotsPopUp;
     [SerializeField] GameObject deleteCharacterSlotPopUp;
-    [SerializeField] GameObject abandonChangedSettingsPopUp;
 
     [Header("Server Info")]
     [SerializeField] TextMeshProUGUI serverConnectStatusText;
@@ -143,22 +139,6 @@ public class TitleScreenManager : MonoBehaviour
         mainMenuNewGameButton.Select();
     }
 
-    public void OpenSettingsMenu()
-    {
-        titleScreenMainMenu.SetActive(false);
-        titleScreenSettingsMenu.SetActive(true);
-
-        returnFromSettingsButton.Select();
-    }
-
-    public void CloseSettingsMenu()
-    {
-        titleScreenSettingsMenu.SetActive(false);
-        titleScreenMainMenu.SetActive(true);
-
-        mainMenuNewGameButton.Select();
-    }
-
     public void DisplayNoFreeCharacterSlotsPopUp()
     {
         noCharacterSlotsPopUp.SetActive(true);
@@ -205,26 +185,5 @@ public class TitleScreenManager : MonoBehaviour
     {
         deleteCharacterSlotPopUp.SetActive(false);
         loadMenureturnButton.Select();
-    }
-
-    public void RevertSettingsChanges()
-    {
-        abandonChangedSettingsPopUp.SetActive(false);
-        //reset settings!
-        settingsMenuManager.SetAllSettingsFromLoadedSettingsData();
-
-        CloseSettingsMenu();
-    }
-
-    public void DisplayAbandonChangedSettingsPopUp()
-    {
-        abandonChangedSettingsPopUp.SetActive(true);
-        abandonChangedSettingsConfirmButton.Select();
-    }
-
-    public void CloseAbandonChangedSettingsPopUp()
-    {
-        abandonChangedSettingsPopUp.SetActive(false);
-        returnFromSettingsButton.Select();
     }
 }

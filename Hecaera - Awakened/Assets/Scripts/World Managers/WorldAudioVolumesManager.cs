@@ -50,18 +50,19 @@ public class WorldAudioVolumesManager : MonoBehaviour
     {
         //NOTE IF EDITING THIS: Make sure main volume settings are applied to all the audio. DONT APPLY THE SAME VOLUME SETTING TWICE.
         //Main volume affects all the audio, it needs to be taking into concideration while setting audio volumes.
-        Debug.Log("Value is: " + SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
         SetMusicAudioSourcesVolumes(SettingsMenuManager.Instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue, 
             SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
+
         SetSFXAudioSourcesVolumes(SettingsMenuManager.Instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue, 
             SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
+
         SetDialogAudioSourcesVolumes(SettingsMenuManager.Instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue, 
             SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
     }
 
     private void SetAudioSourceVolume(AudioSource source, float volume)
     {
-        float calculatedVolume = volume * (SettingsMenuManager.Instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue / 100);
+        float calculatedVolume = volume * ((float)SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue / 100);
         float fixedVolume = calculatedVolume / 100;
 
         source.volume = fixedVolume;

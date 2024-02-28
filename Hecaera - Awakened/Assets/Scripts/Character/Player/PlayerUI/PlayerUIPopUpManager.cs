@@ -21,12 +21,11 @@ public class PlayerUIPopUpManager : MonoBehaviour
     [SerializeField] Button returnToGameButton;
     [SerializeField] GameObject buttonsLayoutGroupGameObject;
 
-    [Header("Settings Ingame Menu")]
-    [SerializeField] SettingsMenuManager settingsMenuManager;
-    [SerializeField] GameObject settingsPopUpGameObject;
+    [Header("Settings")]
+    [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject abandonChangedSettingsPopUp;
+    [SerializeField] Button returnFromSettingsButton;
     [SerializeField] Button abandonChangedSettingsConfirmButton;
-    [SerializeField] Button returnToButtonsMenuButton;
 
     private void Start()
     {
@@ -118,7 +117,7 @@ public class PlayerUIPopUpManager : MonoBehaviour
         if (menuButtonsPopUpGameObject.activeSelf)
         {
             //First check if options menu is open
-            if (settingsPopUpGameObject.activeSelf)
+            if (settingsMenu.activeSelf)
             {
                 //Make sure to revert changed settings
                 RevertSettingsChanges();
@@ -141,18 +140,47 @@ public class PlayerUIPopUpManager : MonoBehaviour
         }
     }
 
-    public void OpenSettingsIngameMenu()
+    public void OpenSettingsMenu(bool ingame)
     {
-        buttonsLayoutGroupGameObject.SetActive(false);
-        settingsPopUpGameObject.SetActive(true);
-        returnToButtonsMenuButton.Select();
+        if (!ingame)
+        {
+            TitleScreenManager.Instance.titleScreenMainMenu.SetActive(false);
+            settingsMenu.SetActive(true);
+
+            returnFromSettingsButton.Select();
+        }
+        else
+        {
+            buttonsLayoutGroupGameObject.SetActive(false);
+            settingsMenu.SetActive(true);
+            returnFromSettingsButton.Select();
+        }
     }
 
-    public void CloseSettingsIngameMenu()
+    public void CloseSettingsMenu(bool ingame)
     {
-        buttonsLayoutGroupGameObject.SetActive(true);
-        settingsPopUpGameObject.SetActive(false);
-        returnToGameButton.Select();
+        if (!ingame)
+        {
+            settingsMenu.SetActive(false);
+            TitleScreenManager.Instance.titleScreenMainMenu.SetActive(true);
+
+            TitleScreenManager.Instance.mainMenuNewGameButton.Select();
+        }
+        else
+        {
+            buttonsLayoutGroupGameObject.SetActive(true);
+            settingsMenu.SetActive(false);
+            returnToGameButton.Select();
+        }
+    }
+
+    public void RevertSettingsChanges()
+    {
+        abandonChangedSettingsPopUp.SetActive(false);
+        //reset settings!
+        SettingsMenuManager.Instance.SetAllSettingsFromLoadedSettingsData();
+
+        CloseSettingsMenu(false);
     }
 
     public void DisplayAbandonChangedSettingsPopUp()
@@ -164,16 +192,7 @@ public class PlayerUIPopUpManager : MonoBehaviour
     public void CloseAbandonChangedSettingsPopUp()
     {
         abandonChangedSettingsPopUp.SetActive(false);
-        returnToButtonsMenuButton.Select();
-    }
-
-    public void RevertSettingsChanges()
-    {
-        abandonChangedSettingsPopUp.SetActive(false);
-        //reset settings!
-        settingsMenuManager.SetAllSettingsFromLoadedSettingsData();
-
-        CloseSettingsIngameMenu();
+        returnFromSettingsButton.Select();
     }
 
     public void ReturnToLobby()
