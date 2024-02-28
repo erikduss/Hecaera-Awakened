@@ -56,6 +56,19 @@ public class ConnectionManager : MonoBehaviour
 
     private async void AuthenticatePlayer()
     {
+        //in case we go back to the menu, we want to instantly continue since we are already authenticated.
+        if(UnityServices.State == ServicesInitializationState.Initialized)
+        {
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                TitleScreenManager.Instance.continuedPastSplashScreen = true;
+                authenticationFinished = true;
+                TitleScreenManager.Instance.pressToStartButton.onClick.Invoke();
+
+                return;
+            }
+        }
+
 #if UNITY_EDITOR
         //Is this unity editor instance opening a clone project?
         if (ClonesManager.IsClone())
@@ -120,7 +133,7 @@ public class ConnectionManager : MonoBehaviour
 
     public void StartLoadingIntoGameAsClient(string roomCode)
     {
-        NetworkManager.Singleton.SceneManager.LoadScene("LoadingToGameScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("LoadingToGameScene", LoadSceneMode.Single);
         StartCoroutine(JoiningGame(roomCode));
     }
 
@@ -203,32 +216,44 @@ public class ConnectionManager : MonoBehaviour
     {
         //serverConnectStatusText.text = string.Empty;
 
+        Debug.Log("1");
+
         if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
         {
             //we must first shut down becaus we started as a host during the title screen.
             NetworkManager.Singleton.Shutdown();
         }
 
+        Debug.Log("2");
+
         while (NetworkManager.Singleton.ShutdownInProgress)
         {
             yield return null;
         }
+
+        Debug.Log("3");
 
         // Populate RelayJoinCode beforehand through the UI
         var clientRelayUtilityTask = JoinRelayServerFromJoinCode(joinCode);
 
         PlayerUIManager.instance.playerUIHudManager.joinCodeText.text = "Join Code: " + joinCode;
 
+        Debug.Log("4");
+
         while (!clientRelayUtilityTask.IsCompleted)
         {
             yield return null;
         }
+
+        Debug.Log("5");
 
         if (clientRelayUtilityTask.IsFaulted)
         {
             Debug.LogError("Exception thrown when attempting to connect to Relay Server. Exception: " + clientRelayUtilityTask.Exception.Message);
             yield break;
         }
+
+        Debug.Log("6");
 
         var relayServerData = clientRelayUtilityTask.Result;
 

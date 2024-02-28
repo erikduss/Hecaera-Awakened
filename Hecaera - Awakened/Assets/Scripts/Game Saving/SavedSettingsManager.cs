@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class SavedSettingsManager : MonoBehaviour
 {
+    //THIS SCRIPT IS NO LONGER USED
+
     public static SavedSettingsManager instance;
 
     //public SettingsSaveData LoadedSettingsData { private set { loadedSettingsData = value; } get { return loadedSettingsData; } }
     //private SettingsSaveData loadedSettingsData;
 
-    public GraphicMenuManager settingsGraphicsMenu;
+    //public GraphicMenuManager settingsGraphicsMenu;
 
     private void Awake()
     {
@@ -28,15 +30,15 @@ public class SavedSettingsManager : MonoBehaviour
 
     private void Start()
     {
-        if(settingsGraphicsMenu == null)
-        {
-            settingsGraphicsMenu = GameObject.FindGameObjectWithTag("GraphicMenuManager").GetComponent<GraphicMenuManager>();
-        }
+        //if(settingsGraphicsMenu == null)
+        //{
+        //    settingsGraphicsMenu = GameObject.FindGameObjectWithTag("GraphicMenuManager").GetComponent<GraphicMenuManager>();
+        //}
 
-        if(settingsGraphicsMenu != null)
-        {
-            WorldAudioVolumesManager.Instance.LoadAudioFromSavedSettingsData();
-        }
+        //if(settingsGraphicsMenu != null)
+        //{
+        //    WorldAudioVolumesManager.Instance.LoadAudioFromSavedSettingsData();
+        //}
     }
 
     public void SaveSettings(SettingsSaveData saveData)

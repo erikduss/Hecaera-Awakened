@@ -29,37 +29,39 @@ public class WorldAudioVolumesManager : MonoBehaviour
         {
             case AudioSourceType.MUSIC:
                 musicAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue);
+                SetAudioSourceVolume(audio, SettingsMenuManager.Instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue);
                 break;
             case AudioSourceType.SFX: 
                 SFXAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
+                SetAudioSourceVolume(audio, SettingsMenuManager.Instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
                 break;
             case AudioSourceType.DIALOG: 
                 dialogAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue);
+                SetAudioSourceVolume(audio, SettingsMenuManager.Instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue);
                 break;
             default:
                 SFXAudioSources.Add(audio);
-                SetAudioSourceVolume(audio, SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
+                SetAudioSourceVolume(audio, SettingsMenuManager.Instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
                 break;
         }
     }
 
     public void LoadAudioFromSavedSettingsData()
     {
-        Debug.Log("Using Values (1)");
-        SetMusicAudioSourcesVolumes(SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue, 
-            SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue);
-        SetSFXAudioSourcesVolumes(SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue, 
-            SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue);
-        SetDialogAudioSourcesVolumes(SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue, 
-            SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue);
+        //NOTE IF EDITING THIS: Make sure main volume settings are applied to all the audio. DONT APPLY THE SAME VOLUME SETTING TWICE.
+        //Main volume affects all the audio, it needs to be taking into concideration while setting audio volumes.
+        Debug.Log("Value is: " + SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
+        SetMusicAudioSourcesVolumes(SettingsMenuManager.Instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue, 
+            SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
+        SetSFXAudioSourcesVolumes(SettingsMenuManager.Instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue, 
+            SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
+        SetDialogAudioSourcesVolumes(SettingsMenuManager.Instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue, 
+            SettingsMenuManager.Instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue);
     }
 
     private void SetAudioSourceVolume(AudioSource source, float volume)
     {
-        float calculatedVolume = volume * (SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue / 100);
+        float calculatedVolume = volume * (SettingsMenuManager.Instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue / 100);
         float fixedVolume = calculatedVolume / 100;
 
         source.volume = fixedVolume;

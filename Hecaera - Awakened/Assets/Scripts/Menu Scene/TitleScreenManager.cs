@@ -31,7 +31,7 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] GameObject titleScreenSettingsMenu;
 
     [Header("Buttons")]
-    [SerializeField] Button pressToStartButton;
+    [SerializeField] public Button pressToStartButton;
     [SerializeField] Button mainMenuNewGameButton;
     [SerializeField] Button loadMenureturnButton;
     [SerializeField] Button joinMenureturnButton;
@@ -55,7 +55,7 @@ public class TitleScreenManager : MonoBehaviour
     public CharacterSlot currentSeletedSlot = CharacterSlot.NO_SLOT;
 
     public bool continuedPastSplashScreen = false;
-    [SerializeField] private TitleScreenSettingsMenuManager settingsMenuManager;
+    [SerializeField] private SettingsMenuManager settingsMenuManager;
 
     private void Awake()
     {

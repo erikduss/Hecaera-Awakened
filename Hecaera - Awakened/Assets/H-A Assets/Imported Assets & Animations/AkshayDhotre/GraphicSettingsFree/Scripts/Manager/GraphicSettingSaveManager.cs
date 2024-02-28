@@ -17,7 +17,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         public string fileName;
 
         //Use this when there is error in loading the saved data
-        private GraphicSettingDataContainer defaultDataContainer = new GraphicSettingDataContainer();
+        public GraphicSettingDataContainer defaultDataContainer = new GraphicSettingDataContainer();
 
         private void Awake()
         {
@@ -50,6 +50,8 @@ namespace AkshayDhotre.GraphicSettingsMenu
 
             defaultDataContainer.horizontalSensitivity = 0;
             defaultDataContainer.verticalSensitivity = 0;
+
+            //SettingsMenuManager.Instance.settingsGraphicsMenu.SetUpAllSettings();
         }
 
         /// <summary>

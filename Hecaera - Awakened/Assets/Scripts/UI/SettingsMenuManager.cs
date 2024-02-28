@@ -1,12 +1,19 @@
+using AkshayDhotre.GraphicSettingsMenu;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleScreenSettingsMenuManager : MonoBehaviour
+public class SettingsMenuManager : MonoBehaviour
 {
+    public static SettingsMenuManager Instance;
+
     PlayerControls playerControls;
+
+    public GraphicMenuManager settingsGraphicsMenu;
+
+    public GameObject settingsMenuGameObject;
 
     [Header("Title Screen Inputs")]
     [SerializeField] bool saveSettings = false;
@@ -39,11 +46,25 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
     {
+        if (settingsGraphicsMenu == null)
+        {
+            settingsGraphicsMenu = GameObject.FindGameObjectWithTag("GraphicMenuManager").GetComponent<GraphicMenuManager>();
+        }
+
         SetAllSettingsFromLoadedSettingsData();
     }
 
@@ -76,12 +97,12 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
     {
         tempSettingsData = new SettingsSaveData
         {
-            mainVolume = SavedSettingsManager.instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue,
-            musicVolume = SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue,
-            SFXVolume = SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue,
-            dialogVolume = SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue,
-            horizontalSensitivity = SavedSettingsManager.instance.settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue,
-            verticalSensitivity = SavedSettingsManager.instance.settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue
+            mainVolume = settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue,
+            musicVolume = settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue,
+            SFXVolume = settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue,
+            dialogVolume = settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue,
+            horizontalSensitivity = settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue,
+            verticalSensitivity = settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue
         };
 
         mainVolumeSlider.value = tempSettingsData.mainVolume;
@@ -100,19 +121,20 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        SavedSettingsManager.instance.SaveSettings(tempSettingsData);
+        settingsGraphicsMenu.Save();
+        //SavedSettingsManager.instance.SaveSettings(tempSettingsData);
     }
 
     public void ReturnToMainMenu()
     {
         //check if settings are changed (different from save file)
         if(
-            tempSettingsData.mainVolume != SavedSettingsManager.instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.musicVolume != SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.SFXVolume != SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.dialogVolume != SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.horizontalSensitivity != SavedSettingsManager.instance.settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue
-            || tempSettingsData.verticalSensitivity != SavedSettingsManager.instance.settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue)    
+            tempSettingsData.mainVolume != settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.musicVolume != settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.SFXVolume != settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.dialogVolume != settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.horizontalSensitivity != settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue
+            || tempSettingsData.verticalSensitivity != settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue)    
         {
             TitleScreenManager.Instance.DisplayAbandonChangedSettingsPopUp();
         }
@@ -124,12 +146,12 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
     {
         //check if settings are changed (different from save file)
         if (
-            tempSettingsData.mainVolume != SavedSettingsManager.instance.settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.musicVolume != SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.SFXVolume != SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.dialogVolume != SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue
-            || tempSettingsData.horizontalSensitivity != SavedSettingsManager.instance.settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue
-            || tempSettingsData.verticalSensitivity != SavedSettingsManager.instance.settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue)
+            tempSettingsData.mainVolume != settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.musicVolume != settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.SFXVolume != settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.dialogVolume != settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue
+            || tempSettingsData.horizontalSensitivity != settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue
+            || tempSettingsData.verticalSensitivity != settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue)
         {
             PlayerUIManager.instance.playerUIPopUpManager.DisplayAbandonChangedSettingsPopUp();
         }
@@ -142,7 +164,7 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
         mainVolumePercentageText.text = mainVolumeSlider.value + "%";
         tempSettingsData.mainVolume = (int)mainVolumeSlider.value;
 
-        SavedSettingsManager.instance.settingsGraphicsMenu.mainVolumeOption.SetCurrentsuboptionByValue(((int)mainVolumeSlider.value));
+        settingsGraphicsMenu.mainVolumeOption.SetCurrentsuboptionByValue(((int)mainVolumeSlider.value));
 
         WorldAudioVolumesManager.Instance.SetMusicAudioSourcesVolumes(musicVolumeSlider.value, mainVolumeSlider.value);
         WorldAudioVolumesManager.Instance.SetSFXAudioSourcesVolumes(SFXVolumeSlider.value, mainVolumeSlider.value);
@@ -153,7 +175,7 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
         musicVolumePercentageText.text = musicVolumeSlider.value + "%";
         tempSettingsData.musicVolume = (int)musicVolumeSlider.value;
 
-        SavedSettingsManager.instance.settingsGraphicsMenu.musicVolumeOption.SetCurrentsuboptionByValue(((int)musicVolumeSlider.value));
+        settingsGraphicsMenu.musicVolumeOption.SetCurrentsuboptionByValue(((int)musicVolumeSlider.value));
 
         WorldAudioVolumesManager.Instance.SetMusicAudioSourcesVolumes(musicVolumeSlider.value, mainVolumeSlider.value);
     }
@@ -162,7 +184,7 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
         SFXVolumePercentageText.text = SFXVolumeSlider.value + "%";
         tempSettingsData.SFXVolume = (int)SFXVolumeSlider.value;
 
-        SavedSettingsManager.instance.settingsGraphicsMenu.sfxVolumeOption.SetCurrentsuboptionByValue(((int)SFXVolumeSlider.value));
+        settingsGraphicsMenu.sfxVolumeOption.SetCurrentsuboptionByValue(((int)SFXVolumeSlider.value));
 
         WorldAudioVolumesManager.Instance.SetSFXAudioSourcesVolumes(SFXVolumeSlider.value, mainVolumeSlider.value);
     }
@@ -171,7 +193,7 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
         dialogVolumePercentageText.text = dialogVolumeSlider.value + "%";
         tempSettingsData.dialogVolume = (int)dialogVolumeSlider.value;
 
-        SavedSettingsManager.instance.settingsGraphicsMenu.dialogVolumeOption.SetCurrentsuboptionByValue(((int)dialogVolumeSlider.value));
+        settingsGraphicsMenu.dialogVolumeOption.SetCurrentsuboptionByValue(((int)dialogVolumeSlider.value));
 
         WorldAudioVolumesManager.Instance.SetDialogAudioSourcesVolumes(dialogVolumeSlider.value, mainVolumeSlider.value);
     }
@@ -184,7 +206,7 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
 
         tempSettingsData.horizontalSensitivity = (int)horizontalSensitivitySlider.value;
 
-        SavedSettingsManager.instance.settingsGraphicsMenu.horizontalSensitivityOption.SetCurrentsuboptionByValue(((int)horizontalSensitivitySlider.value));
+        settingsGraphicsMenu.horizontalSensitivityOption.SetCurrentsuboptionByValue(((int)horizontalSensitivitySlider.value));
 
         PlayerCamera.instance.SetNewSensitivityFromSaveValues(horizontalSensitivitySlider.value, verticalSensitivitySlider.value);
     }
@@ -197,7 +219,7 @@ public class TitleScreenSettingsMenuManager : MonoBehaviour
 
         tempSettingsData.verticalSensitivity = (int)verticalSensitivitySlider.value;
 
-        SavedSettingsManager.instance.settingsGraphicsMenu.verticalSensitivityOption.SetCurrentsuboptionByValue(((int)verticalSensitivitySlider.value));
+        settingsGraphicsMenu.verticalSensitivityOption.SetCurrentsuboptionByValue(((int)verticalSensitivitySlider.value));
 
         PlayerCamera.instance.SetNewSensitivityFromSaveValues(horizontalSensitivitySlider.value, verticalSensitivitySlider.value);
     }

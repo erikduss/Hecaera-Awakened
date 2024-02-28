@@ -33,7 +33,22 @@ namespace AkshayDhotre.GraphicSettingsMenu
         private GraphicSettingDataContainer dataToLoad = new GraphicSettingDataContainer();//Data will be loaded into this 
 
         private GraphicSettingSaveManager graphicSettingSaveManager;
-        
+
+        private void Awake()
+        {
+            resolutionOption.Initialize();
+            screenmodeOption.Initialize();
+            qualityLevelOption.Initialize();
+
+            mainVolumeOption.Initialize();
+            musicVolumeOption.Initialize();
+            sfxVolumeOption.Initialize();
+            dialogVolumeOption.Initialize();
+
+            horizontalSensitivityOption.Initialize();
+            verticalSensitivityOption.Initialize();
+        }
+
         private void Start()
         {
             graphicSettingSaveManager = GetComponent<GraphicSettingSaveManager>();
@@ -42,18 +57,28 @@ namespace AkshayDhotre.GraphicSettingsMenu
             //and the quality level suboption list in the awake function. So if we call this function in awake and apply the settings
             //the fallback suboption settings will be applied.
 
-            if(graphicSettingSaveManager.FileExists())
+            SetUpAllSettings();
+        }
+
+        public void SetUpAllSettings()
+        {
+            if (graphicSettingSaveManager.FileExists())
             {
                 Load();
                 UpdateUIFromLoadedData();
                 ApplySettings();
+                WorldAudioVolumesManager.Instance.LoadAudioFromSavedSettingsData();
             }
             else
             {
                 Debug.Log("New Save file Created!");
+                SetDefaultSettings();
                 Save();
+
+                ForceLoadSaveFile();
             }
-            
+
+            SettingsMenuManager.Instance.SetAllSettingsFromLoadedSettingsData();
         }
 
         private void Update()
@@ -90,6 +115,31 @@ namespace AkshayDhotre.GraphicSettingsMenu
             verticalSensitivityOption.Apply();
 
             Save();
+        }
+
+        public void SetDefaultSettings()
+        {
+            //lets not mess with video settings to prevent weird issues.
+            //dataToSave.screenHeight = (int)resolutionOption.currentSubOption.vector2Value.y;
+            //dataToSave.screenWidth = (int)resolutionOption.currentSubOption.vector2Value.x;
+            //dataToSave.screenMode = screenmodeOption.currentSubOption.integerValue;
+            //dataToSave.qualityLevel = qualityLevelOption.currentSubOption.integerValue;
+
+            mainVolumeOption.SetCurrentsuboptionByValue(graphicSettingSaveManager.defaultDataContainer.mainVolume);
+            musicVolumeOption.SetCurrentsuboptionByValue(graphicSettingSaveManager.defaultDataContainer.musicVolume);
+            sfxVolumeOption.SetCurrentsuboptionByValue(graphicSettingSaveManager.defaultDataContainer.sfxVolume);
+            dialogVolumeOption.SetCurrentsuboptionByValue(graphicSettingSaveManager.defaultDataContainer.dialogVolume);
+
+            horizontalSensitivityOption.SetCurrentsuboptionByValue(graphicSettingSaveManager.defaultDataContainer.horizontalSensitivity);
+            verticalSensitivityOption.SetCurrentsuboptionByValue(graphicSettingSaveManager.defaultDataContainer.verticalSensitivity);
+        }
+
+        private void ForceLoadSaveFile()
+        {
+            Load();
+            UpdateUIFromLoadedData();
+            ApplySettings();
+            WorldAudioVolumesManager.Instance.LoadAudioFromSavedSettingsData();
         }
 
         /// <summary>

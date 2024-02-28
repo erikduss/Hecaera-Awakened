@@ -13,10 +13,10 @@ namespace AkshayDhotre.GraphicSettingsMenu
 
         private void Awake()
         {
-            Inititalize();
+            Initialize();
         }
 
-        private void Inititalize()
+        public void Initialize()
         {
             GenerateQualityLevelSuboptions();
 

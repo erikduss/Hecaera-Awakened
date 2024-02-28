@@ -8,9 +8,13 @@ namespace AkshayDhotre.GraphicSettingsMenu
     {
         private void Awake()
         {
+            Initialize();
+        }
+
+        public void Initialize()
+        {
             //The suboption list is created in the editor for this option
-            //We can also generate this list via code, but I felt that it is easier to do it in the editor
-            if(currentSubOption.name == "" && subOptionList.Count > 0)
+            if (currentSubOption.name == "" && subOptionList.Count > 0)
             {
                 currentSubOptionIndex = 0;
                 currentSubOption = subOptionList[currentSubOptionIndex];

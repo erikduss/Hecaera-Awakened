@@ -22,7 +22,7 @@ public class PlayerUIPopUpManager : MonoBehaviour
     [SerializeField] GameObject buttonsLayoutGroupGameObject;
 
     [Header("Settings Ingame Menu")]
-    [SerializeField] TitleScreenSettingsMenuManager settingsMenuManager;
+    [SerializeField] SettingsMenuManager settingsMenuManager;
     [SerializeField] GameObject settingsPopUpGameObject;
     [SerializeField] GameObject abandonChangedSettingsPopUp;
     [SerializeField] Button abandonChangedSettingsConfirmButton;
@@ -183,7 +183,8 @@ public class PlayerUIPopUpManager : MonoBehaviour
 
         NetworkManager.Singleton.Shutdown();
 
-        SceneManager.LoadScene("Scene_Main_Menu_01");
+        SceneManager.LoadScene("LoadingToMainMenu");
+        //SceneManager.LoadScene("Scene_Main_Menu_01");
 
         //ExitGame(); //dont have a way to reset things yet.
     }

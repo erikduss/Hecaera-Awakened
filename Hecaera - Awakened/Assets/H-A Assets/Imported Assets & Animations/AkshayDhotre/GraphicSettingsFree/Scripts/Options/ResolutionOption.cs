@@ -16,7 +16,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
             Initialize();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             GenerateResolutionSubOptions();
 
