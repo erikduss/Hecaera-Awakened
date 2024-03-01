@@ -16,8 +16,9 @@ public class CharacterCombatManager : NetworkBehaviour
     [Header("Attack Type")]
     public AttackType currentAttackType;
 
-    [Header("Lock On Transform")]
+    [Header("Transforms")]
     public Transform lockOnTransform;
+    public Transform magicHandTransform;
 
     protected virtual void Awake()
     {

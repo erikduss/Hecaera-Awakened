@@ -13,11 +13,26 @@ public class Projectile : NetworkBehaviour
     public float networkPositionSmoothTime = 0.1f;
     public float networkRotationSmoothTime = 0.1f;
 
-    public ProjectileType projectileType;
+    public PooledObjectType projectileType;
 
     public Transform startingPoint;
 
-    private void Update()
+    private float activeTime = 0f;
+    private bool startedTimer = false;
+    public float maxActiveTime = 5f;
+
+    private NetworkObject netObj;
+    protected Rigidbody rb;
+    public ProjectileDamageCollider projectileCollider;
+
+    private void Start()
+    {
+        netObj = GetComponent<NetworkObject>();
+        rb = GetComponent<Rigidbody>();
+        projectileCollider = GetComponent<ProjectileDamageCollider>();
+    }
+
+    protected virtual void Update()
     {
         //Projectiles are being handles by the server only!, assign its network position to the position of our transform.
         if (NetworkManager.Singleton.IsServer)
@@ -47,6 +62,40 @@ public class Projectile : NetworkBehaviour
                 networkRotation.Value,
                 networkPositionSmoothTime);
         }
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            if (objectEnabled.Value)
+            {
+                if(activeTime <= 0 && startedTimer)
+                {
+                    ReturnThisProjectileToPool();
+                }
+                else if (!startedTimer)
+                {
+                    StartReturnTimer();
+                }
+                else
+                {
+                    activeTime -= Time.deltaTime;
+                }
+            }
+        }
+    }
+
+    public void StartReturnTimer()
+    {
+        activeTime = maxActiveTime;
+        startedTimer = true;
+        projectileCollider.EnableDamageCollider();
+    }
+
+    public void ReturnThisProjectileToPool()
+    {
+        projectileCollider.DisableDamageCollider();
+        startedTimer = false;
+        objectEnabled.Value = false;
+        WorldNetworkObjectPoolManager.Instance.m_PooledObjects[WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(projectileType)].Release(netObj);
     }
 
     public override void OnNetworkSpawn()
@@ -98,5 +147,13 @@ public class Projectile : NetworkBehaviour
     public void OnObjectEnabledChange(bool oldID, bool newID)
     {
         gameObject.SetActive(newID);
+
+        if (newID)
+            projectileCollider.EnableDamageCollider();
+        else
+            projectileCollider.DisableDamageCollider();
+
+        if (!NetworkManager.Singleton.IsServer)
+            return;
     }
 }

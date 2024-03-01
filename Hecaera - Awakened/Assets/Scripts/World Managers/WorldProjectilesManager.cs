@@ -50,8 +50,8 @@ public class WorldProjectilesManager : MonoBehaviour
     private void SpawnProjectileFromObjectPool(ulong clientID, int projectileObjectTypeID)
     {
         PooledObjectType type = (PooledObjectType)projectileObjectTypeID;
-        GameObject projectileOwner = WorldGameSessionManager.Instance.players.Where(a => a.OwnerClientId == clientID).FirstOrDefault().gameObject;
-        Vector3 spawnLocation = projectileOwner.transform.position; //should probably be changed to player's hand location.
+        PlayerManager projectileOwner = WorldGameSessionManager.Instance.players.Where(a => a.OwnerClientId == clientID).FirstOrDefault();
+        Vector3 spawnLocation = projectileOwner.characterCombatManager.magicHandTransform.position;
         Quaternion spawnRotation = projectileOwner.transform.rotation;
 
         GameObject prefab = WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(type);
@@ -60,6 +60,9 @@ public class WorldProjectilesManager : MonoBehaviour
         Projectile spawnedProjectile = obj.GetComponent<Projectile>();
         if (spawnedProjectile != null)
         {
+            Debug.Log(projectileOwner);
+            Debug.Log(spawnedProjectile.projectileCollider);
+            spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;
             spawnedProjectile.objectEnabled.Value = true;
             spawnedProjectile.networkPosition.Value = spawnLocation;
             spawnedProjectile.networkRotation.Value = spawnRotation;
@@ -80,17 +83,23 @@ public class WorldProjectilesManager : MonoBehaviour
         //}
     }
 
-    [ServerRpc]
-    public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int projectileObjectTypeID)
+    private IEnumerator SpawnProjectileWithDelay(ulong clientID, int projectileObjectTypeID, float spawnDelay)
     {
-        Debug.Log("We should spawn a projectile");
+        //This is used to make sure the projectile spawns exactly when we want it to.
+        //Could change this into a synced animation event.
+        yield return new WaitForSeconds(spawnDelay);
+
+        SpawnProjectileFromObjectPool(clientID, projectileObjectTypeID);
+        NotifyTheServerOfSpawnActionClientRpc(clientID, projectileObjectTypeID);
+    }
+
+    [ServerRpc]
+    public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int projectileObjectTypeID, float spawnDelay)
+    {
         //can only be called by the server.
         if (NetworkManager.Singleton.IsServer)
         {
-            Debug.Log("Spawn projectile!");
-
-            SpawnProjectileFromObjectPool(clientID, projectileObjectTypeID);
-            NotifyTheServerOfSpawnActionClientRpc(clientID, projectileObjectTypeID);
+            StartCoroutine(SpawnProjectileWithDelay(clientID, projectileObjectTypeID, spawnDelay));
         }
     }
 

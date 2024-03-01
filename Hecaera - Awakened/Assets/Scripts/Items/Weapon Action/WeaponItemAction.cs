@@ -7,6 +7,7 @@ public class WeaponItemAction : ScriptableObject
 {
     public int actionID;
     public PooledObjectType pooledObjectType = PooledObjectType.NONE;
+    public float objectSpawnDelay = 0f;
 
     public virtual void AttemptToPerformAction(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
     {

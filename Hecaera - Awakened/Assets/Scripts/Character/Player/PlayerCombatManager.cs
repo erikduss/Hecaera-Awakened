@@ -27,7 +27,7 @@ public class PlayerCombatManager : CharacterCombatManager
 
             if (weaponAction.pooledObjectType != PooledObjectType.NONE)
             {
-                WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkManager.Singleton.LocalClientId, (int)weaponAction.pooledObjectType);
+                WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkManager.Singleton.LocalClientId, (int)weaponAction.pooledObjectType, weaponAction.objectSpawnDelay);
             }
 
             player.playerNetworkManager.NotifyTheServerOfWeaponActionServerRpc(NetworkManager.Singleton.LocalClientId, weaponAction.actionID, weaponPerformingAction.itemID);

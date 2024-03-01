@@ -63,11 +63,6 @@ public enum AttackType
     InstantMagicAttack01
 }
 
-public enum ProjectileType
-{
-    Instant_Magic
-}
-
 public enum PooledObjectType
 {
     NONE,

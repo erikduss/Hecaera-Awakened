@@ -48823,10 +48823,6 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterGroup: 0
   isPerformingAction: 0
-  isGrounded: 1
-  applyRootMotion: 0
-  canRotate: 1
-  canMove: 1
   UseTHAnimations: 0
   respawnCharacter: 0
   switchRightWeapon: 0
@@ -48863,6 +48859,9 @@ MonoBehaviour:
   groundedYVelocity: -20
   fallStartYvelocity: -5
   isRolling: 0
+  canRotate: 1
+  canMove: 1
+  isGrounded: 1
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
@@ -49029,6 +49028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4681e198bf1df78408e6dcffd9d1cfce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  applyRootMotion: 0
   lastDamageAnimationPlayed: 
   hit_Forward_Medium_01: Hit_Forward_Medium_01
   hit_Forward_Medium_02: Hit_Forward_Medium_02
@@ -49145,6 +49145,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 1062926850571278753}
+  magicHandTransform: {fileID: 2361070787777477226}
   currentWeaponBeingUsed: {fileID: 11400000, guid: 3f830249c0ecfd34db892ae3b7af3bd9, type: 2}
   canComboWithMainHandWeapon: 0
 --- !u!82 &7135133068949086043
