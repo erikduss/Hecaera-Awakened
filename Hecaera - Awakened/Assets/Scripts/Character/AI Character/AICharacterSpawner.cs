@@ -26,6 +26,8 @@ public class AICharacterSpawner : MonoBehaviour
     {
         if(characterGameObject != null)
         {
+            if (isBoss) return; //TODO FIX ISSUES WITH BOSS SPAWNING
+
             instantiatedGameObject = Instantiate(characterGameObject);
             instantiatedGameObject.transform.position = transform.position;
             instantiatedGameObject.transform.rotation = transform.rotation;

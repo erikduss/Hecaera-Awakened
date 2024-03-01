@@ -17,6 +17,7 @@ public class WorldSaveGameManager : MonoBehaviour
 
     [Header("World Scene Index")]
     [SerializeField] int worldSceneIndex = 2;
+    public string worldSceneName = "Scene_World_01";
 
     [Header("Save Data Writer")]
     private SaveFileDataWriter saveFileDataWriter;
@@ -341,7 +342,7 @@ public class WorldSaveGameManager : MonoBehaviour
 
         if (NetworkManager.Singleton.IsServer)
         {
-            NetworkManager.Singleton.SceneManager.LoadScene("Scene_World_01", LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene(worldSceneName, LoadSceneMode.Single);
             /*var spawner = Instantiate(dummySpawner, Vector3.zero, Quaternion.identity);
 
             NetworkObject netComponent = spawner.GetComponent<NetworkObject>();
@@ -350,7 +351,7 @@ public class WorldSaveGameManager : MonoBehaviour
 
         if (NetworkManager.Singleton.IsServer)
         {
-            while (SceneManager.GetActiveScene().buildIndex != currentCharacterData.sceneIndex)
+            while (SceneManager.GetActiveScene().name != worldSceneName)
             {
                 yield return null;
             }
@@ -358,7 +359,7 @@ public class WorldSaveGameManager : MonoBehaviour
 
         if (NetworkManager.Singleton.IsServer)
         {
-            Debug.Log("SETTING UP!");
+            Debug.Log("SETTING UP OBJECT POOL!");
             if (worldNetworkObjectPoolManager == null) worldNetworkObjectPoolManager = Instantiate(worldNetworkObjectPoolManagerPrefab);
 
             if (!WorldNetworkObjectPoolManager.Instance.IsSpawned) WorldNetworkObjectPoolManager.Instance.NetworkObject.Spawn();

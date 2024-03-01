@@ -20,9 +20,6 @@ public class WorldNetworkObjectPoolManager : NetworkBehaviour
 
     public Dictionary<GameObject, ObjectPool<NetworkObject>> m_PooledObjects = new Dictionary<GameObject, ObjectPool<NetworkObject>>();
 
-    [SerializeField] private GameObject ObjectPoolParentObjectPrefab;
-    private GameObject objectPoolParentObject;
-
     private void Awake()
     {
         if(Instance == null)
@@ -58,19 +55,6 @@ public class WorldNetworkObjectPoolManager : NetworkBehaviour
         {
             return;
         }
-
-        //if (objectPoolParentObject == null)
-        //{
-        //    objectPoolParentObject = GameObject.Instantiate(ObjectPoolParentObjectPrefab);
-        //    DontDestroyOnLoad(objectPoolParentObject);
-        //}
-
-        //var poolNetObj = objectPoolParentObject.GetComponent<NetworkObject>();
-        //if (poolNetObj != null)
-        //{
-        //    if (!poolNetObj.IsSpawned)
-        //        poolNetObj.Spawn();
-        //}
 
         // Registers all objects in PooledPrefabsList to the cache.
         foreach (var configObject in PooledPrefabsList)
