@@ -74,6 +74,13 @@ public class WorldGameSessionManager : MonoBehaviour
         }
     }
 
+    public PlayerManager GetPlayerWithNetworkID(ulong ID)
+    {
+        PlayerManager resultPlayer = players.Where(a => a.NetworkObjectId == ID).FirstOrDefault();
+
+        return resultPlayer;
+    }
+
     public void HealLocalPlayerToFull()
     {
         PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();

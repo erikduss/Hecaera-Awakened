@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3438734407885278100}
   - component: {fileID: 3438734407885278101}
-  - component: {fileID: 562200980}
   m_Layer: 0
   m_Name: World Save Game Manager
   m_TagString: Untagged
@@ -48,10 +47,11 @@ MonoBehaviour:
   player: {fileID: 0}
   saveGame: 0
   loadGame: 0
-  worldSceneIndex: 6
+  worldSceneIndex: 2
+  worldSceneName: Scene_World_01
   currentCharacterSlotBeingUsed: 0
   currentCharacterData:
-    sceneIndex: 6
+    sceneIndex: 1
     characterName: Character
     secondsPlayed: 0
     xPosition: 0
@@ -173,15 +173,3 @@ MonoBehaviour:
     endurance: 10
   dummySpawner: {fileID: 3428074805070032650, guid: 37c88163a2e180c4ba3a15b8d755d58b, type: 3}
   worldNetworkObjectPoolManagerPrefab: {fileID: 3163915196024471394, guid: 5eea62b16b3a2214b8ce54807994179c, type: 3}
---- !u!114 &562200980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3438734407885278106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1f43987a31774d4e98471ccb225581b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -9,6 +9,9 @@ public class Projectile : NetworkBehaviour
 
     public NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Quaternion> networkRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
+    public NetworkVariable<ulong> projectileOwnerNetworkID = new NetworkVariable<ulong>(ulong.MinValue, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     public Vector3 networkPositionVelocity;
     public float networkPositionSmoothTime = 0.1f;
     public float networkRotationSmoothTime = 0.1f;
@@ -93,6 +96,7 @@ public class Projectile : NetworkBehaviour
     public void ReturnThisProjectileToPool()
     {
         projectileCollider.DisableDamageCollider();
+        ResetProjectileOwner();
         startedTimer = false;
         objectEnabled.Value = false;
         WorldNetworkObjectPoolManager.Instance.m_PooledObjects[WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(projectileType)].Release(netObj);
@@ -124,8 +128,9 @@ public class Projectile : NetworkBehaviour
             }
 
             objectEnabled.OnValueChanged += OnObjectEnabledChange;
-
         }
+
+        projectileOwnerNetworkID.OnValueChanged += OnProjectileOwnerNetworkIDChange; //should be done on both the server and the client.
     }
 
     public override void OnNetworkDespawn()
@@ -146,14 +151,41 @@ public class Projectile : NetworkBehaviour
 
     public void OnObjectEnabledChange(bool oldID, bool newID)
     {
-        gameObject.SetActive(newID);
-
         if (newID)
             projectileCollider.EnableDamageCollider();
         else
+        {
             projectileCollider.DisableDamageCollider();
+            ResetProjectileOwner();
+        }
+
+        gameObject.SetActive(newID);
 
         if (!NetworkManager.Singleton.IsServer)
             return;
+    }
+
+    private void ResetProjectileOwner()
+    {
+        //We need to reset both the network variable and the owner assigned to this projectile when we return it to the pool.
+
+        //NOTE: We are using the NetworkObjectID instead of the NetworkBehaviourID because the networkbehaviourID can be 0
+        //When this is 0 it doesnt recognize the id change which gives an error due to it not setting the projectile owner this way.
+
+        projectileCollider.characterCausingDamage = null;
+
+        if (NetworkManager.Singleton.IsServer)
+            projectileOwnerNetworkID.Value = 0;
+    }
+
+    public void OnProjectileOwnerNetworkIDChange(ulong oldID, ulong newID)
+    {
+        PlayerManager projectileOwner = WorldGameSessionManager.Instance.GetPlayerWithNetworkID(newID);
+
+        //If the player is not found, the projectile must be fired by an NPC
+
+        if (projectileOwner == null) return;
+
+        projectileCollider.characterCausingDamage = projectileOwner;
     }
 }

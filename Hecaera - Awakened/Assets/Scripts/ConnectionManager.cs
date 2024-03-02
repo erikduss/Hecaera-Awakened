@@ -216,44 +216,32 @@ public class ConnectionManager : MonoBehaviour
     {
         //serverConnectStatusText.text = string.Empty;
 
-        Debug.Log("1");
-
         if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
         {
             //we must first shut down becaus we started as a host during the title screen.
             NetworkManager.Singleton.Shutdown();
         }
 
-        Debug.Log("2");
-
         while (NetworkManager.Singleton.ShutdownInProgress)
         {
             yield return null;
         }
-
-        Debug.Log("3");
 
         // Populate RelayJoinCode beforehand through the UI
         var clientRelayUtilityTask = JoinRelayServerFromJoinCode(joinCode);
 
         PlayerUIManager.instance.playerUIHudManager.joinCodeText.text = "Join Code: " + joinCode;
 
-        Debug.Log("4");
-
         while (!clientRelayUtilityTask.IsCompleted)
         {
             yield return null;
         }
-
-        Debug.Log("5");
 
         if (clientRelayUtilityTask.IsFaulted)
         {
             Debug.LogError("Exception thrown when attempting to connect to Relay Server. Exception: " + clientRelayUtilityTask.Exception.Message);
             yield break;
         }
-
-        Debug.Log("6");
 
         var relayServerData = clientRelayUtilityTask.Result;
 

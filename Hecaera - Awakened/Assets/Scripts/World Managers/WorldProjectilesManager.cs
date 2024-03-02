@@ -60,9 +60,8 @@ public class WorldProjectilesManager : MonoBehaviour
         Projectile spawnedProjectile = obj.GetComponent<Projectile>();
         if (spawnedProjectile != null)
         {
-            Debug.Log(projectileOwner);
-            Debug.Log(spawnedProjectile.projectileCollider);
-            spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;
+            spawnedProjectile.projectileOwnerNetworkID.Value = projectileOwner.NetworkObjectId; 
+            //spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;
             spawnedProjectile.objectEnabled.Value = true;
             spawnedProjectile.networkPosition.Value = spawnLocation;
             spawnedProjectile.networkRotation.Value = spawnRotation;

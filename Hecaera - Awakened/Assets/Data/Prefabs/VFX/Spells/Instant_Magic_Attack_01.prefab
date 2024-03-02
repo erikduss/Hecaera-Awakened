@@ -4676,10 +4676,10 @@ GameObject:
   m_Component:
   - component: {fileID: 896901808602367220}
   - component: {fileID: 5440226633751944460}
+  - component: {fileID: 9112919694721347721}
   - component: {fileID: 7855680355188921654}
   - component: {fileID: 1970279776093618270}
   - component: {fileID: 2523969635829379060}
-  - component: {fileID: 9112919694721347721}
   m_Layer: 13
   m_Name: Instant_Magic_Attack_01
   m_TagString: Untagged
@@ -4732,6 +4732,25 @@ MonoBehaviour:
   projectileCollider: {fileID: 9112919694721347721}
   projectileSpeed: 15
   downwardsVelocity: 1
+--- !u!114 &9112919694721347721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893862663710687328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0a54d94fd4a52489e8b906e020306f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalDamage: 30
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  characterCausingDamage: {fileID: 0}
+  instant_Magic_Attack_Modifier: 1
 --- !u!114 &7855680355188921654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4777,25 +4796,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &9112919694721347721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 893862663710687328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc0a54d94fd4a52489e8b906e020306f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicalDamage: 100
-  magicDamage: 0
-  fireDamage: 0
-  lightningDamage: 0
-  holyDamage: 0
-  characterCausingDamage: {fileID: 0}
-  instant_Magic_Attack_Modifier: 1
 --- !u!1001 &53811663373889368
 PrefabInstance:
   m_ObjectHideFlags: 0
