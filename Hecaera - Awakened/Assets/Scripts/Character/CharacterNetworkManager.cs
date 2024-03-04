@@ -7,6 +7,9 @@ public class CharacterNetworkManager : NetworkBehaviour
 {
     CharacterManager character;
 
+    [Header("Active")]
+    public NetworkVariable<bool> isActive = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     [Header("Position")]
     public NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<Quaternion> networkRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -88,6 +91,11 @@ public class CharacterNetworkManager : NetworkBehaviour
     public void OnIsMovingChanged(bool oldStatus, bool newStatus)
     {
         character.animator.SetBool("IsMoving", isMoving.Value);
+    }
+
+    public virtual void OnIsActiveChanged(bool oldStatus, bool newStatus)
+    {
+        gameObject.SetActive(isActive.Value);
     }
 
     #region Action Animation
