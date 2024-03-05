@@ -618,7 +618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361464829558040072}
   m_Layer: 9
-  m_Name: Thumb_01
+  m_Name: Thumb_01_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -899,7 +899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361430998215656922}
   m_Layer: 9
-  m_Name: Finger_03
+  m_Name: Finger_03_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1014,7 +1014,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361426727518816698}
   m_Layer: 9
-  m_Name: Finger_02
+  m_Name: Finger_02_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1046,7 +1046,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2367291369046246442}
   m_Layer: 9
-  m_Name: IndexFinger_01
+  m_Name: IndexFinger_01_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1078,7 +1078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361068350503578310}
   m_Layer: 9
-  m_Name: Thumb_02
+  m_Name: Thumb_02_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1110,7 +1110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361440773255676714}
   m_Layer: 9
-  m_Name: IndexFinger_02
+  m_Name: IndexFinger_02_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1474,7 +1474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361070787777477226}
   m_Layer: 9
-  m_Name: Finger_01
+  m_Name: Finger_01_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1589,7 +1589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2367587051823448372}
   m_Layer: 9
-  m_Name: Thumb_03
+  m_Name: Thumb_03_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1620,7 +1620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361154928712561616}
   m_Layer: 9
-  m_Name: IndexFinger_04
+  m_Name: IndexFinger_04_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1651,7 +1651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2361338281543399594}
   m_Layer: 9
-  m_Name: Finger_04
+  m_Name: Finger_04_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1765,7 +1765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2367348242467440228}
   m_Layer: 9
-  m_Name: IndexFinger_03
+  m_Name: IndexFinger_03_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2068,7 +2068,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387461808086609}
   m_Layer: 9
-  m_Name: IndexFinger_04
+  m_Name: IndexFinger_04_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2099,7 +2099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387461840799495}
   m_Layer: 9
-  m_Name: Finger_04
+  m_Name: Finger_04_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17690,7 +17690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387462139210857}
   m_Layer: 9
-  m_Name: Thumb_02
+  m_Name: Thumb_02_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22546,7 +22546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387462185066068}
   m_Layer: 9
-  m_Name: Thumb_01
+  m_Name: Thumb_01_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22611,6 +22611,7 @@ GameObject:
   - component: {fileID: 5141387462204382026}
   - component: {fileID: 5141387462204382036}
   - component: {fileID: 5141387462204382037}
+  - component: {fileID: 3044148521286539480}
   m_Layer: 9
   m_Name: Dress
   m_TagString: Untagged
@@ -22685,6 +22686,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3044148521286539480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141387462204382027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baedd976e12657241bf7ff2d1c685342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Bound: 0
+  m_Radius: 0.5
+  m_Height: 0
+  m_Radius2: 0
 --- !u!1 &5141387462249632186
 GameObject:
   m_ObjectHideFlags: 0
@@ -22923,7 +22942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387462383982124}
   m_Layer: 9
-  m_Name: IndexFinger_02
+  m_Name: IndexFinger_02_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27810,7 +27829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387462563400764}
   m_Layer: 9
-  m_Name: Finger_03
+  m_Name: Finger_03_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37760,7 +37779,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387462848032979}
   m_Layer: 9
-  m_Name: Finger_02
+  m_Name: Finger_02_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37824,7 +37843,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387462976379536}
   m_Layer: 9
-  m_Name: Thumb_03
+  m_Name: Thumb_03_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42952,7 +42971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387463182031713}
   m_Layer: 9
-  m_Name: IndexFinger_01
+  m_Name: IndexFinger_01_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47803,14 +47822,14 @@ MonoBehaviour:
   m_Roots: []
   m_UpdateRate: 60
   m_UpdateMode: 3
-  m_Damping: 0.95
+  m_Damping: 0.5
   m_DampingDistrib:
     serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Elasticity: 0.222
+  m_Elasticity: 0.122
   m_ElasticityDistrib:
     serializedVersion: 2
     m_Curve: []
@@ -47847,7 +47866,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_EndLength: 0
   m_EndOffset: {x: 0, y: 0, z: 0}
-  m_Gravity: {x: 0, y: 0, z: 0}
+  m_Gravity: {x: 0, y: -0.5, z: 0}
   m_Force: {x: 0, y: 0, z: 0}
   m_BlendWeight: 1
   m_Colliders: []
@@ -47915,7 +47934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387463516321485}
   m_Layer: 9
-  m_Name: Finger_01
+  m_Name: Finger_01_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48223,7 +48242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5141387463891615701}
   m_Layer: 9
-  m_Name: IndexFinger_03
+  m_Name: IndexFinger_03_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48892,6 +48911,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13497c1db22ec10499e880e183f1c721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive:
+    m_InternalValue: 1
   networkPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   networkRotation:

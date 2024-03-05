@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Character Actions/Weapon Actions/Instant Magic Attack Action")]
@@ -11,13 +12,16 @@ public class InstantMagicAttackWeaponItemAction : WeaponItemAction
     {
         base.AttemptToPerformAction(playerPerformingAction, weaponPerformingAction);
 
-        if (!playerPerformingAction.IsOwner)
-            return;
-
         if (playerPerformingAction.playerNetworkManager.currentHealth.Value <= 0)
             return;
 
         if (!playerPerformingAction.characterLocomotionManager.isGrounded)
+            return;
+
+        if (NetworkManager.Singleton.IsServer)
+            SpawnProjectileAsServer(playerPerformingAction, weaponPerformingAction);
+
+        if (!playerPerformingAction.IsOwner)
             return;
 
         PerformInstantMagicAttack(playerPerformingAction, weaponPerformingAction);
@@ -33,5 +37,10 @@ public class InstantMagicAttackWeaponItemAction : WeaponItemAction
         {
 
         }
+    }
+
+    private void SpawnProjectileAsServer(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
+    {
+        WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(playerPerformingAction.OwnerClientId, (int)PooledObjectType.Instant_Magic_Spell, weaponPerformingAction.oh_LB_Action.objectSpawnDelay);
     }
 }

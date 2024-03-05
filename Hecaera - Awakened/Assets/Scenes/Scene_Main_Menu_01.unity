@@ -45792,6 +45792,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2071971025, guid: 34a674e64b6107e4488674413595b1e6, type: 3}
+      propertyPath: antialiasingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2071971028, guid: 34a674e64b6107e4488674413595b1e6, type: 3}
       propertyPath: frustumSettings.qualitySettings
       value: 
@@ -46224,7 +46228,8 @@ PrefabInstance:
       propertyPath: menuCanvasComponent
       value: 
       objectReference: {fileID: 70664132}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8306951915349806331, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
 --- !u!1 &8717685319916197330
 GameObject:
