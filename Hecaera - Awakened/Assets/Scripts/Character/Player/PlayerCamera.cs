@@ -156,7 +156,6 @@ public class PlayerCamera : MonoBehaviour
         float shortestDistanceOfRightTarget = Mathf.Infinity; //Closest target on the right of the closest target
         float shortestDistanceOfLeftTarget = -Mathf.Infinity; //Closest target on the left of the closest target
 
-        //TODO use layermask
         Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.Instance.GetCharacterLayers());
 
         for(int i = 0; i < colliders.Length; i++)
@@ -165,6 +164,10 @@ public class PlayerCamera : MonoBehaviour
 
             if(lockOnTarget != null)
             {
+                //We dont want to lock on the same team targets.
+                if (lockOnTarget.characterGroup == player.characterGroup)
+                    continue;
+
                 //check if they are in FOV
                 Vector3 lockOnTargetDirection = lockOnTarget.transform.position - player.transform.position;
                 float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);

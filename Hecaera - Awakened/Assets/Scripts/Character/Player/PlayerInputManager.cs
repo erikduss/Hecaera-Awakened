@@ -418,7 +418,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             RT_Input = false;
 
-            if (player.isPerformingAction) return;
+            //if (player.isPerformingAction) return;
 
             player.playerNetworkManager.SetCharacterActionHand(true);
 
@@ -431,10 +431,7 @@ public class PlayerInputManager : MonoBehaviour
         //we only want to check for a holding action if we are already performing an action (charging up)
         if (player.isPerformingAction)
         {
-            if (player.playerNetworkManager.isUsingRightHand.Value)
-            {
-                player.playerNetworkManager.isChargingAttack.Value = Hold_RT_Input;
-            }
+            player.playerNetworkManager.isChargingAttack.Value = Hold_RT_Input;
         }
     }
 }

@@ -13,6 +13,8 @@ public class WorldGameSessionManager : MonoBehaviour
 {
     public static WorldGameSessionManager Instance;
 
+    [HideInInspector] public bool PVPEnabled = false;
+
     [Header("Active Players In Session")]
     public List<PlayerManager> players = new List<PlayerManager>();
 

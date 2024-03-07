@@ -16962,7 +16962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleBarLengthWithStats: 1
-  widthScaleMultiplier: 2
+  widthScaleMultiplier: 4
 --- !u!1 &3348644749749609378
 GameObject:
   m_ObjectHideFlags: 0
@@ -21015,7 +21015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleBarLengthWithStats: 1
-  widthScaleMultiplier: 2
+  widthScaleMultiplier: 4
 --- !u!1 &7178367672450604492
 GameObject:
   m_ObjectHideFlags: 0
@@ -23218,7 +23218,6 @@ GameObject:
   - component: {fileID: 8306951915349806325}
   - component: {fileID: 8306951915349806329}
   - component: {fileID: 8306951915349806328}
-  - component: {fileID: 8306951915349806331}
   m_Layer: 5
   m_Name: GraphicsMenu
   m_TagString: GraphicMenuManager
@@ -23294,20 +23293,6 @@ MonoBehaviour:
   horizontalSensitivityOption: {fileID: 613239909}
   verticalSensitivityOption: {fileID: 1358422423}
   keyboardApplySettingsKey: 13
---- !u!114 &8306951915349806331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8306951915349806330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7d9f1ab801846b40b607a017f51c220, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuCanvasComponent: {fileID: 0}
-  toggleKey: 112
 --- !u!1 &8341055306953058505
 GameObject:
   m_ObjectHideFlags: 0

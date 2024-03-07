@@ -7,7 +7,8 @@ public class CharacterLocomotionManager : MonoBehaviour
     CharacterManager character;
 
     [Header("Ground Check & Jumping")]
-    [SerializeField] protected float gravityForce = -5.55f;
+    [SerializeField] public float gravityForce = -5.55f;
+    public float currentGravityForce;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected LayerMask nonStandableSurfaceLayer;
     [SerializeField] protected float nonStandableCheckRange = 0.5f;
@@ -50,6 +51,7 @@ public class CharacterLocomotionManager : MonoBehaviour
                 yVelocity.y = groundedYVelocity;
                 yVelocity.x = 0;
                 yVelocity.z = 0;
+                currentGravityForce = gravityForce; //reset the gravity force after a jump attack.
             }
         }
         else
@@ -81,7 +83,7 @@ public class CharacterLocomotionManager : MonoBehaviour
 
             character.animator.SetFloat("InAirTimer", inAirTimer);
 
-            yVelocity.y += gravityForce * Time.deltaTime;
+            yVelocity.y += currentGravityForce * Time.deltaTime;
         }
 
         //There should always be some force applied to the character!

@@ -33,6 +33,12 @@ public class ProjectileDamageCollider : DamageCollider
             if (damageTarget == characterCausingDamage)
                 return;
 
+            if (!WorldGameSessionManager.Instance.PVPEnabled)
+            {
+                if (damageTarget.characterGroup == characterCausingDamage.characterGroup)
+                    return;
+            }
+
             contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
             DamageTarget(damageTarget);
@@ -56,7 +62,7 @@ public class ProjectileDamageCollider : DamageCollider
 
         switch (characterCausingDamage.characterCombatManager.currentAttackType)
         {
-            case AttackType.LightAttack01:
+            case AttackType.InstantMagicAttack01:
                 ApplyAttackDamageModifiers(instant_Magic_Attack_Modifier, damageEffect);
                 break;
             default:

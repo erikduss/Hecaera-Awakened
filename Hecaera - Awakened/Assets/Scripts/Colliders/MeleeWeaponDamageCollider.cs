@@ -11,8 +11,11 @@ public class MeleeWeaponDamageCollider : DamageCollider
     public float light_Attack_01_Modifier;
     public float light_Attack_02_Modifier;
     public float light_Attack_03_Modifier;
+    public float jump_Attack_01_Modifier;
     public float heavy_Attack_01_Modifier;
+    public float heavy_Attack_02_Modifier;
     public float charged_Heavy_Attack_01_Modifier;
+    public float charged_Heavy_Attack_02_Modifier;
 
     protected override void Awake()
     {
@@ -36,6 +39,12 @@ public class MeleeWeaponDamageCollider : DamageCollider
             //dont damage yourself
             if (damageTarget == characterCausingDamage)
                 return;
+
+            if (!WorldGameSessionManager.Instance.PVPEnabled)
+            {
+                if (damageTarget.characterGroup == characterCausingDamage.characterGroup)
+                    return;
+            }
 
             contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
@@ -69,13 +78,23 @@ public class MeleeWeaponDamageCollider : DamageCollider
             case AttackType.LightAttack03:
                 ApplyAttackDamageModifiers(light_Attack_03_Modifier, damageEffect);
                 break;
+            case AttackType.LightJumpAttack01:
+                ApplyAttackDamageModifiers(jump_Attack_01_Modifier, damageEffect);
+                break;
             case AttackType.HeavyAttack01:
                 ApplyAttackDamageModifiers(heavy_Attack_01_Modifier, damageEffect);
+                break;
+            case AttackType.HeavyAttack02:
+                ApplyAttackDamageModifiers(heavy_Attack_02_Modifier, damageEffect);
                 break;
             case AttackType.ChargedAttack01:
                 ApplyAttackDamageModifiers(charged_Heavy_Attack_01_Modifier, damageEffect);
                 break;
-            default: 
+            case AttackType.ChargedAttack02:
+                ApplyAttackDamageModifiers(charged_Heavy_Attack_02_Modifier, damageEffect);
+                break;
+            default:
+                Debug.LogError("DAMAGE MODIFIER NOT IMPLEMENTED " + characterCausingDamage.characterCombatManager.currentAttackType);
                 break;
         }
 

@@ -60,7 +60,8 @@ public enum AttackType
     ChargedAttack01,
     ChargedAttack02,
     ChargedAttack03,
-    InstantMagicAttack01
+    InstantMagicAttack01,
+    LightJumpAttack01
 }
 
 public enum PooledObjectType

@@ -24,8 +24,11 @@ public class WeaponItem : Item
     public float light_Attack_01_Modifier = 1;
     public float light_Attack_02_Modifier = 1.2f;
     public float light_Attack_03_Modifier = 1.4f;
+    public float jump_Attack_03_Modifier = 1.4f;
     public float heavy_Attack_01_Modifier = 1.4f;
+    public float heavy_Attack_02_Modifier = 1.8f;
     public float charged_Heavy_Attack_01_Modifier = 2f;
+    public float charged_Heavy_Attack_02_Modifier = 2.4f;
 
     [Header("Stamina Cost Modifiers")]
     public int baseStaminaCost = 20;

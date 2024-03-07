@@ -58,13 +58,20 @@ public class PlayerCombatManager : CharacterCombatManager
             case AttackType.HeavyAttack01:
                 staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.heavyAttackStaminaCostMultiplier;
                 break;
+            case AttackType.HeavyAttack02:
+                staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.heavyAttackStaminaCostMultiplier;
+                break;
             case AttackType.ChargedAttack01:
                 staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.heavyAttackStaminaCostMultiplier;
                 break;
             case AttackType.InstantMagicAttack01:
                 staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.instantMagicAttackStaminaCostMultiplier;
                 break;
-            default: 
+            case AttackType.LightJumpAttack01:
+                staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.lightAttackStaminaCostMultiplier;
+                break;
+            default:
+                Debug.LogError("ATTACK TYPE MODIFIER IS NOT IMPLEMENTED");
                 break;
         }
 
