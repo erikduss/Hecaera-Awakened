@@ -25934,6 +25934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ed6f4a2c9aa2146895eba575db23f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive:
+    m_InternalValue: 1
   networkPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   networkRotation:
@@ -26015,25 +26017,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d193c8640f2df459d7b002b9f5688c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 0}
-  animator: {fileID: 0}
-  characterNetworkManager: {fileID: 0}
-  characterEffectsManager: {fileID: 0}
-  characterAnimatorManager: {fileID: 0}
-  characterCombatManager: {fileID: 0}
-  characterSoundFXManager: {fileID: 0}
-  characterLocomotionManager: {fileID: 0}
-  characterGroup: 0
-  isPerformingAction: 0
-  aICharacterNetworkManager: {fileID: 0}
-  aICharacterCombatManager: {fileID: 0}
-  aICharacterLocomotionManager: {fileID: 0}
-  navMeshAgent: {fileID: 0}
-  currentState: {fileID: 0}
-  idle: {fileID: 0}
-  pursueTarget: {fileID: 0}
-  combbatStance: {fileID: 0}
-  attack: {fileID: 0}
+  lastAttackAnimationPerformed: 
+  currentTarget: {fileID: 0}
+  currentAttackType: 0
+  lockOnTransform: {fileID: 8377964021535360514}
+  magicHandTransform: {fileID: 0}
+  actionRecoveryTimer: 0
+  distanceFromTarget: 0
+  viewableAngle: 0
+  targetsDirection: {x: 0, y: 0, z: 0}
+  detectionRadius: 15
+  minimumFOV: -35
+  maximumFOV: 35
+  attackRotationSpeed: 25
 --- !u!114 &4778982041209353734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26054,17 +26050,22 @@ MonoBehaviour:
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
   characterLocomotionManager: {fileID: 0}
-  characterGroup: 0
+  characterGroup: 1
   isPerformingAction: 0
   aICharacterNetworkManager: {fileID: 0}
   aICharacterCombatManager: {fileID: 0}
   aICharacterLocomotionManager: {fileID: 0}
   navMeshAgent: {fileID: 0}
   currentState: {fileID: 0}
-  idle: {fileID: 0}
-  pursueTarget: {fileID: 0}
-  combbatStance: {fileID: 0}
-  attack: {fileID: 0}
+  idle: {fileID: 11400000, guid: 6ef4328f16827634b9fbd7b5322ab49f, type: 2}
+  pursueTarget: {fileID: 11400000, guid: e4a7292d49c708a4b88e45eb1f2d7472, type: 2}
+  combbatStance: {fileID: 11400000, guid: 73de2774303a3c9428575d786934d111, type: 2}
+  attack: {fileID: 11400000, guid: d83b131f5f0b02e47b18384cc5daa954, type: 2}
+  bossID: 0
+  hasBeenDefeated: 0
+  hasBeenAwakened: 0
+  fogWalls: []
+  wakeBossUp: 0
 --- !u!114 &7690259612933351878
 MonoBehaviour:
   m_ObjectHideFlags: 0
