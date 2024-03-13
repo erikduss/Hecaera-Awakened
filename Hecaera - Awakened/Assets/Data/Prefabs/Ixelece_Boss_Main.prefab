@@ -112,7 +112,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2407528908291577542}
-  m_Layer: 9
+  - component: {fileID: 2553664618711310592}
+  - component: {fileID: 2719419908164266136}
+  m_Layer: 13
   m_Name: joint65
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +137,40 @@ Transform:
   m_Father: {fileID: 5231126566630584129}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -5.5815415, y: -123.03323, z: -20.430399}
+--- !u!136 &2553664618711310592
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248538494628781701}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.15
+  m_Height: 1
+  m_Direction: 0
+  m_Center: {x: -0.4, y: 0, z: 0}
+--- !u!114 &2719419908164266136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248538494628781701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 2553664618711310592}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &309158541499261451
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +212,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7987669699670109114}
-  m_Layer: 9
+  - component: {fileID: 6528828464046476270}
+  - component: {fileID: 7630623820236480941}
+  m_Layer: 13
   m_Name: joint71
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,6 +236,45 @@ Transform:
   m_Father: {fileID: 217119653701225641}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6528828464046476270
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318508760721435574}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7630623820236480941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318508760721435574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6fe5db1fbf8524fb634f7284cb613d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 6528828464046476270}
+  physicalDamage: 50
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  bossCharacter: {fileID: 4778982041209353734}
+  subColliders:
+  - {fileID: 772619267083741239}
+  - {fileID: 3590627037419215044}
+  - {fileID: 6719909383402016872}
+  - {fileID: 3538807894184749729}
+  - {fileID: 2719419908164266136}
 --- !u!1 &382756410666599372
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +378,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7331321548131499029}
-  m_Layer: 9
+  - component: {fileID: 3025350176508487390}
+  - component: {fileID: 3590627037419215044}
+  m_Layer: 13
   m_Name: joint69
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,6 +403,39 @@ Transform:
   m_Father: {fileID: 4389206423057645992}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3025350176508487390
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616932139844246083}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3590627037419215044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616932139844246083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 3025350176508487390}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &1747038059257958188
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +445,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4389206423057645992}
-  m_Layer: 9
+  - component: {fileID: 6557841483650770772}
+  - component: {fileID: 6719909383402016872}
+  m_Layer: 13
   m_Name: joint68
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,6 +470,39 @@ Transform:
   m_Father: {fileID: 8900992762826542275}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6557841483650770772
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747038059257958188}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6719909383402016872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747038059257958188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 6557841483650770772}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &1748668672291706100
 GameObject:
   m_ObjectHideFlags: 0
@@ -2411,7 +2558,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8900992762826542275}
-  m_Layer: 9
+  - component: {fileID: 5719148962457682}
+  - component: {fileID: 3538807894184749729}
+  m_Layer: 13
   m_Name: joint67
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2434,6 +2583,39 @@ Transform:
   m_Father: {fileID: 526712947157417107}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5719148962457682
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5223153291041963538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3538807894184749729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5223153291041963538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 5719148962457682}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &5237382045363077719
 GameObject:
   m_ObjectHideFlags: 0
@@ -18088,7 +18270,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 217119653701225641}
-  m_Layer: 9
+  - component: {fileID: 2192047805970200483}
+  - component: {fileID: 772619267083741239}
+  m_Layer: 13
   m_Name: joint70
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18111,6 +18295,39 @@ Transform:
   m_Father: {fileID: 7331321548131499029}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2192047805970200483
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998308606129783539}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &772619267083741239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998308606129783539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 2192047805970200483}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &7102906956431676204
 GameObject:
   m_ObjectHideFlags: 0
@@ -25774,7 +25991,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1479599037745484785}
-  m_Layer: 9
+  - component: {fileID: 6284000093750180941}
+  - component: {fileID: 567467190118210158}
+  m_Layer: 13
   m_Name: joint78
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25796,6 +26015,44 @@ Transform:
   m_Father: {fileID: 362780123599023705}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6284000093750180941
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7611306558822142267}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &567467190118210158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7611306558822142267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6fe5db1fbf8524fb634f7284cb613d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 6284000093750180941}
+  physicalDamage: 50
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  bossCharacter: {fileID: 4778982041209353734}
+  subColliders:
+  - {fileID: 6282977909436747044}
+  - {fileID: 7971682641624682220}
+  - {fileID: 3672960157143646174}
+  - {fileID: 7201078930255247772}
 --- !u!1 &7629088378785764308
 GameObject:
   m_ObjectHideFlags: 0
@@ -25990,6 +26247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityForce: -5.55
+  currentGravityForce: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
@@ -26030,6 +26288,11 @@ MonoBehaviour:
   minimumFOV: -35
   maximumFOV: 35
   attackRotationSpeed: 25
+  rightClawDamageCollider: {fileID: 7630623820236480941}
+  leftClawDamageCollider: {fileID: 567467190118210158}
+  baseDamage: 25
+  attack01DamageModifier: 1
+  attack02DamageModifier: 1.4
 --- !u!114 &4778982041209353734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26424,7 +26687,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2812315659530720951}
-  m_Layer: 9
+  - component: {fileID: 8856463198713296733}
+  - component: {fileID: 3672960157143646174}
+  m_Layer: 13
   m_Name: joint75
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26447,6 +26712,39 @@ Transform:
   m_Father: {fileID: 1832545493519229821}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8856463198713296733
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7905221327423225027}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3672960157143646174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7905221327423225027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 8856463198713296733}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &7912672395948739309
 GameObject:
   m_ObjectHideFlags: 0
@@ -26942,7 +27240,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3752341417168899154}
-  m_Layer: 9
+  - component: {fileID: 4151177065989775635}
+  - component: {fileID: 7201078930255247772}
+  m_Layer: 13
   m_Name: joint73
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26965,6 +27265,40 @@ Transform:
   m_Father: {fileID: 1586057244786825491}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 5.160773, y: 125.36285, z: -18.401861}
+--- !u!136 &4151177065989775635
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8288068097530215030}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.15
+  m_Height: 1
+  m_Direction: 0
+  m_Center: {x: -0.4, y: 0, z: 0}
+--- !u!114 &7201078930255247772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8288068097530215030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 4151177065989775635}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &8495325891312456256
 GameObject:
   m_ObjectHideFlags: 0
@@ -27310,7 +27644,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8811927269232369619}
-  m_Layer: 9
+  - component: {fileID: 3688273379475468830}
+  - component: {fileID: 7971682641624682220}
+  m_Layer: 13
   m_Name: joint76
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27333,6 +27669,39 @@ Transform:
   m_Father: {fileID: 2812315659530720951}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3688273379475468830
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713262906666014126}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7971682641624682220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8713262906666014126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 3688273379475468830}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &8740853583669531185
 GameObject:
   m_ObjectHideFlags: 0
@@ -27568,7 +27937,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 362780123599023705}
-  m_Layer: 9
+  - component: {fileID: 2963008836163531336}
+  - component: {fileID: 6282977909436747044}
+  m_Layer: 13
   m_Name: joint77
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27591,6 +27962,39 @@ Transform:
   m_Father: {fileID: 8811927269232369619}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2963008836163531336
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152243100639544538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6282977909436747044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152243100639544538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0335ccbcfb5f94f85dd2d4d6f17148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 2963008836163531336}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &9158687715520455425
 GameObject:
   m_ObjectHideFlags: 0

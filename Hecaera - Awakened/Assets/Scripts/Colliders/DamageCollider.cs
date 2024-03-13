@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageCollider : MonoBehaviour
 {
     [Header("Collider")]
-    protected Collider damageCollider;
+    [SerializeField] protected Collider damageCollider;
 
     [Header("Damage")]
     public float physicalDamage = 0;
@@ -18,7 +18,7 @@ public class DamageCollider : MonoBehaviour
     protected Vector3 contactPoint;
 
     [Header("Characters Damaged")]
-    protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
+    public List<CharacterManager> charactersDamaged = new List<CharacterManager>();
 
     protected virtual void Awake()
     {
