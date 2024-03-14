@@ -18489,7 +18489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5efe33b07a5e154187f9c7745140517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGameAsClient: 0
   playerUIHudManager: {fileID: 0}
   playerUIPopUpManager: {fileID: 0}
 --- !u!223 &4520943503205859997
@@ -20081,6 +20080,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6386570180138934751}
   m_CullTransparentMesh: 1
+--- !u!1 &6474140021688484250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5701030222640002546}
+  - component: {fileID: 4950296945018218651}
+  m_Layer: 0
+  m_Name: Boss Health Bars Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5701030222640002546
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474140021688484250}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3337618341276961526}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1040, y: 970}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4950296945018218651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474140021688484250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 50
+    m_Bottom: 50
+  m_ChildAlignment: 7
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &6560615653752147655
 GameObject:
   m_ObjectHideFlags: 0
@@ -22424,6 +22486,7 @@ RectTransform:
   - {fileID: 3692419899111644296}
   - {fileID: 3163328353659629290}
   - {fileID: 819377701}
+  - {fileID: 5701030222640002546}
   m_Father: {fileID: 6879056650331201159}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22450,6 +22513,8 @@ MonoBehaviour:
   fadingAlphaOfStaminaPanel: 0
   stamina_Low_Panel: {fileID: 1323250406}
   stamina_Low_Panel_Image: {fileID: 1323250408}
+  bossHealthBarParent: {fileID: 5701030222640002546}
+  bossHealthBarObject: {fileID: 6882937746782799924, guid: b14064449d5d74341bfd58e01111ad3b, type: 3}
 --- !u!1 &7951124752344654605
 GameObject:
   m_ObjectHideFlags: 0

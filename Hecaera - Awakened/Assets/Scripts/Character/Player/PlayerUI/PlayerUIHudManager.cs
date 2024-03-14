@@ -14,6 +14,10 @@ public class PlayerUIHudManager : MonoBehaviour
     [SerializeField] public GameObject stamina_Low_Panel;
     [SerializeField] Image stamina_Low_Panel_Image;
 
+    [Header("Boss Health Bar")]
+    public Transform bossHealthBarParent;
+    public GameObject bossHealthBarObject;
+
     private void Start()
     {
         stamina_Low_Panel.SetActive(false);

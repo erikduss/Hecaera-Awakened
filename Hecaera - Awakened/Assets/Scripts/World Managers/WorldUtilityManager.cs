@@ -9,7 +9,7 @@ public class WorldUtilityManager : MonoBehaviour
     [Header("Layers")]
     [SerializeField] LayerMask characterLayers;
     [SerializeField] LayerMask environmentLayers;
-
+    [SerializeField] LayerMask damageColliderLayer;
 
     private void Awake()
     {
@@ -31,6 +31,11 @@ public class WorldUtilityManager : MonoBehaviour
     public LayerMask GetEnvironmentLayers()
     {
         return environmentLayers;
+    }
+
+    public LayerMask GetDamageCollidertLayer()
+    {
+        return damageColliderLayer;
     }
 
     public bool CanIDamageThisTarget(CharacterGroup attackingCharacter, CharacterGroup targetCharacter)

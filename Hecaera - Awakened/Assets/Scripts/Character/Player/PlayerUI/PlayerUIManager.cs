@@ -8,9 +8,6 @@ public class PlayerUIManager : MonoBehaviour
     private static PlayerUIManager _instance;
     public static PlayerUIManager instance { get { return _instance; } }
 
-    [Header("NETWORK JOIN")]
-    [SerializeField] bool startGameAsClient;
-
     [HideInInspector] public PlayerUIHudManager playerUIHudManager;
     [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
 
@@ -32,14 +29,5 @@ public class PlayerUIManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-    }
-
-    private void Update()
-    {
-        if (startGameAsClient)
-        {
-            startGameAsClient = false;
-            TitleScreenManager.Instance.JoinGame();
-        }
     }
 }

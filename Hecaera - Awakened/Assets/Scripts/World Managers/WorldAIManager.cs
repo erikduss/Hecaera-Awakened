@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,7 +12,10 @@ public class WorldAIManager : MonoBehaviour
 
     [Header("Characters")]
     [SerializeField] List<AICharacterSpawner> aiCharacterSpawners;
-    [SerializeField] List<GameObject> spawnedInCharacter;
+    [SerializeField] List<AICharacterManager> spawnedInCharacters;
+
+    [Header("Bosses")]
+    [SerializeField] List<AIBossCharacterManager> spawnedInBosses;
 
     private void Awake()
     {
@@ -34,9 +38,32 @@ public class WorldAIManager : MonoBehaviour
         }
     }
 
+    public void AddCharacterToSpawnedCharactersList(AICharacterManager character)
+    {
+        if (spawnedInCharacters.Contains(character))
+            return;
+
+        spawnedInCharacters.Add(character);
+
+        AIBossCharacterManager bossCharacter = character as AIBossCharacterManager;
+
+        if (bossCharacter != null)
+        {
+            if (spawnedInBosses.Contains(bossCharacter))
+                return;
+
+            spawnedInBosses.Add(bossCharacter);
+        }
+    }
+
+    public AIBossCharacterManager GetBossCharacterByID(int id)
+    {
+        return spawnedInBosses.FirstOrDefault(boss => boss.bossID == id);
+    }
+
     private void DespawnAllCharacters()
     {
-        foreach(GameObject character in spawnedInCharacter)
+        foreach(AICharacterManager character in spawnedInCharacters)
         {
             character.GetComponent<NetworkObject>().Despawn();
         }

@@ -6,6 +6,9 @@ public class WorldSoundFXManager : MonoBehaviour
 {
     public static WorldSoundFXManager instance;
 
+    [Header("World Music")]
+    public AudioSource worldMusicSource;
+
     [Header("Menu Sounds")]
     public AudioClip menuMusicTrack;
 
@@ -17,6 +20,9 @@ public class WorldSoundFXManager : MonoBehaviour
 
     [Header("Footstep Sounds")]
     public AudioClip[] footstepSFX;
+
+    [Header("Ixelece Boss Music")]
+    public AudioClip ixeleceBossFightPhase1Music;
 
     private void Awake()
     {

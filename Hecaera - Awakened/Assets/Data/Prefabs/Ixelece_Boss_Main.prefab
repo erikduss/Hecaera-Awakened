@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 2719419908164266136}
   m_Layer: 13
   m_Name: joint65
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 7630623820236480941}
   m_Layer: 13
   m_Name: joint71
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 3590627037419215044}
   m_Layer: 13
   m_Name: joint69
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 6719909383402016872}
   m_Layer: 13
   m_Name: joint68
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2562,7 +2562,7 @@ GameObject:
   - component: {fileID: 3538807894184749729}
   m_Layer: 13
   m_Name: joint67
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18274,7 +18274,7 @@ GameObject:
   - component: {fileID: 772619267083741239}
   m_Layer: 13
   m_Name: joint70
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25995,7 +25995,7 @@ GameObject:
   - component: {fileID: 567467190118210158}
   m_Layer: 13
   m_Name: joint78
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26231,9 +26231,9 @@ MonoBehaviour:
   maxStamina:
     m_InternalValue: 0
   currentHealth:
-    m_InternalValue: 0
+    m_InternalValue: 1000
   maxHealth:
-    m_InternalValue: 0
+    m_InternalValue: 1000
 --- !u!114 &6574639782395816544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26315,20 +26315,27 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterGroup: 1
   isPerformingAction: 0
+  characterName: Ixelece, Fallen Goddess Of Errasil
   aICharacterNetworkManager: {fileID: 0}
   aICharacterCombatManager: {fileID: 0}
   aICharacterLocomotionManager: {fileID: 0}
   navMeshAgent: {fileID: 0}
   currentState: {fileID: 0}
-  idle: {fileID: 11400000, guid: 6ef4328f16827634b9fbd7b5322ab49f, type: 2}
-  pursueTarget: {fileID: 11400000, guid: e4a7292d49c708a4b88e45eb1f2d7472, type: 2}
-  combbatStance: {fileID: 11400000, guid: 73de2774303a3c9428575d786934d111, type: 2}
-  attack: {fileID: 11400000, guid: d83b131f5f0b02e47b18384cc5daa954, type: 2}
+  idle: {fileID: 11400000, guid: a1c83cba42cdef04b894e49ea5f1b617, type: 2}
+  pursueTarget: {fileID: 11400000, guid: 5e72c6fb3b78ac6468cdfb3f1eb5d318, type: 2}
+  combbatStance: {fileID: 11400000, guid: 52c50314a566a624792f3973a77ba7f1, type: 2}
+  attack: {fileID: 11400000, guid: af7a60a1470f50449b981d23a05c503e, type: 2}
   bossID: 0
-  hasBeenDefeated: 0
-  hasBeenAwakened: 0
+  bossFightIsActive:
+    m_InternalValue: 0
+  hasBeenDefeated:
+    m_InternalValue: 0
+  hasBeenAwakened:
+    m_InternalValue: 0
   fogWalls: []
-  wakeBossUp: 0
+  sleepAnimation: Sleep_01
+  awakenAnimation: Awaken_01
+  sleepState: {fileID: 11400000, guid: dc6b106d7b0945c4ca87ee9b13d44314, type: 2}
 --- !u!114 &7690259612933351878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26691,7 +26698,7 @@ GameObject:
   - component: {fileID: 3672960157143646174}
   m_Layer: 13
   m_Name: joint75
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27244,7 +27251,7 @@ GameObject:
   - component: {fileID: 7201078930255247772}
   m_Layer: 13
   m_Name: joint73
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27648,7 +27655,7 @@ GameObject:
   - component: {fileID: 7971682641624682220}
   m_Layer: 13
   m_Name: joint76
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27941,7 +27948,7 @@ GameObject:
   - component: {fileID: 6282977909436747044}
   m_Layer: 13
   m_Name: joint77
-  m_TagString: Untagged
+  m_TagString: DamageableDamageCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

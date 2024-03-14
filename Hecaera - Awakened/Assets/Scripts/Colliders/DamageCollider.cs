@@ -27,6 +27,22 @@ public class DamageCollider : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        //This is a damageable bodypart.
+        //For now, only the boss has this, if in the future adding more of these.
+        //Make sure to add a check to see in which team this parent's character is and which team the other character is in.
+        if(gameObject.tag == "DamageableDamageCollider")
+        {
+            //We hit our own collider
+            if (other.tag == "DamageableDamageCollider") return;
+        }
+
+        //If the other collider is a damage collider instead of a damageable character
+        if(other.gameObject.layer == WorldUtilityManager.Instance.GetDamageCollidertLayer())
+        {
+            //if we did hit a damage collider, we can only continue if this is tagged as a DamageableDamageCollider
+            if (other.tag != "DamageableDamageCollider") return;
+        }
+
         CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
         if(damageTarget != null && !damageTarget.characterNetworkManager.isInvincible.Value)
