@@ -82,14 +82,6 @@ namespace AkshayDhotre.GraphicSettingsMenu
             SettingsMenuManager.Instance.SetAllSettingsFromLoadedSettingsData();
         }
 
-        private void Update()
-        {
-            if(Input.GetKeyDown(keyboardApplySettingsKey))
-            {
-                ApplySettings();
-            }
-        }
-
         /// <summary>
         /// Called when the UI apply button is pressed
         /// </summary>

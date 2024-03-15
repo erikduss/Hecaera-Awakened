@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Erikduss;
 
 namespace AkshayDhotre.GraphicSettingsMenu
 {
@@ -42,12 +43,14 @@ namespace AkshayDhotre.GraphicSettingsMenu
             //If the current option is selected we can cycle through the sub-options!
             if (selected)
             {
-                if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+                if (SettingsMenuManager.Instance.east_Input)
                 {
+                    SettingsMenuManager.Instance.east_Input = false;
                     myOption.SelectNextSubOption();
                 }
-                else if (Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.LeftArrow))
+                else if (SettingsMenuManager.Instance.west_Input)
                 {
+                    SettingsMenuManager.Instance.west_Input = false;
                     myOption.SelectPreviousSubOption();
                 }
             }

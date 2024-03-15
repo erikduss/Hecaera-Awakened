@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -18,6 +20,7 @@ namespace Erikduss
         public GraphicMenuManager settingsGraphicsMenu;
 
         public GameObject settingsMenuGameObject;
+        private EventSystem currentEventSystem;
 
         [Header("Title Screen Inputs")]
         [SerializeField] bool saveSettings = false;
@@ -46,7 +49,19 @@ namespace Erikduss
         [SerializeField] private Slider dialogVolumeSlider;
         [SerializeField] private TextMeshProUGUI dialogVolumePercentageText;
 
+        [Header("Buttons")]
+        [SerializeField] private Button returnButton;
+        [SerializeField] private Button saveButton;
+
         private SettingsSaveData tempSettingsData;
+
+        [Header("Button Interactions")]
+        public bool north_Input = false;
+        public bool south_Input = false;
+        public bool west_Input = false;
+        public bool east_Input = false;
+
+        public bool back_Input = false;
 
         private void Awake()
         {
@@ -69,15 +84,151 @@ namespace Erikduss
                 settingsGraphicsMenu = GameObject.FindGameObjectWithTag("GraphicMenuManager").GetComponent<GraphicMenuManager>();
             }
 
+            currentEventSystem = EventSystem.current;
+
+            //currentEventSystem.GetComponent<InputSystemUIInputModule>().enabled = false;
+
             SetAllSettingsFromLoadedSettingsData();
         }
 
         private void Update()
         {
+            if (!settingsGraphicsMenu.gameObject.activeSelf) return;
+
             if (saveSettings)
             {
                 saveSettings = false;
                 SaveSettings();
+            }
+
+            HandleButtonNorthInput();
+            HandleButtonSouthInput();
+            HandleButtonBackInput();
+        }
+
+        private void HandleButtonNorthInput()
+        {
+            if (north_Input)
+            {
+                north_Input = false;
+
+                //switch state doesnt work due to requiring a constant gameobject value.
+                if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.resolutionOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(saveButton.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.screenmodeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.resolutionOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.qualityLevelOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.screenmodeOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.mainVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.qualityLevelOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.musicVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.mainVolumeOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.sfxVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.musicVolumeOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.dialogVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.sfxVolumeOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.horizontalSensitivityOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.dialogVolumeOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.verticalSensitivityOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.horizontalSensitivityOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == returnButton.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.verticalSensitivityOption.gameObject);
+                }
+                else if(currentEventSystem.currentSelectedGameObject == saveButton.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(returnButton.gameObject);
+                }
+                else
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.resolutionOption.gameObject);
+                }
+            }
+        }
+
+        private void HandleButtonSouthInput()
+        {
+            if (south_Input)
+            {
+                south_Input = false;
+
+                //switch state doesnt work due to requiring a constant gameobject value.
+                if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.resolutionOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.screenmodeOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.screenmodeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.qualityLevelOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.qualityLevelOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.mainVolumeOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.mainVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.musicVolumeOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.musicVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.sfxVolumeOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.sfxVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.dialogVolumeOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.dialogVolumeOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.horizontalSensitivityOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.horizontalSensitivityOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.verticalSensitivityOption.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == settingsGraphicsMenu.verticalSensitivityOption.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(returnButton.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == returnButton.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(saveButton.gameObject);
+                }
+                else if (currentEventSystem.currentSelectedGameObject == saveButton.gameObject)
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.resolutionOption.gameObject);
+                }
+                else
+                {
+                    currentEventSystem.SetSelectedGameObject(settingsGraphicsMenu.resolutionOption.gameObject);
+                }
+            }
+        }
+
+        private void HandleButtonBackInput()
+        {
+            if (back_Input)
+            {
+                back_Input = false;
+
+                CloseSettingsMenu();
             }
         }
 
@@ -87,6 +238,12 @@ namespace Erikduss
             {
                 playerControls = new PlayerControls();
                 playerControls.UI.XInteract.performed += i => saveSettings = true;
+                playerControls.UI.BackInteract.performed += i => back_Input = true;
+
+                playerControls.UI.ButtonNorth.performed += i => north_Input = true;
+                playerControls.UI.ButtonWest.performed += i => west_Input = true;
+                playerControls.UI.ButtonSouth.performed += i => south_Input = true;
+                playerControls.UI.ButtonEast.performed += i => east_Input = true;
             }
 
             playerControls.Enable();
@@ -95,6 +252,14 @@ namespace Erikduss
         private void OnDisable()
         {
             playerControls.Disable();
+
+            saveSettings = false;
+            back_Input = false;
+
+            north_Input = false;
+            west_Input = false;
+            south_Input = false;
+            east_Input = false;
         }
 
         public void SetAllSettingsFromLoadedSettingsData()
