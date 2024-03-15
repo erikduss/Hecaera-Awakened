@@ -49,6 +49,10 @@ public class AIBossCharacterManager : AICharacterManager
 
             StartCoroutine(GetFogWallsFromWorldObjectManager());
 
+            //the fogwalls are active in the build, shouldnt happen.
+            hasBeenAwakened.Value = false;
+            hasBeenDefeated.Value = false;
+
             if (hasBeenAwakened.Value && !hasBeenDefeated.Value) //if the boss is awakened but not defeated
             {
                 for(int i = 0; i < fogWalls.Count; i++)

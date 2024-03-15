@@ -4,7 +4,9 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Netcode;
 using UnityEngine;
 using System;
+#if UNITY_EDITOR
 using ParrelSync;
+#endif
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
