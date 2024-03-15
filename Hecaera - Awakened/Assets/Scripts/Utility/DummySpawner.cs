@@ -4,43 +4,46 @@ using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
-public class DummySpawner : NetworkBehaviour
+namespace Erikduss
 {
-    [SerializeField] GameObject dummyPrefab;
-
-    [SerializeField] List<Vector3> spawnLocations = new List<Vector3>();
-
-    List<NetworkObject> spawnedDummies = new List<NetworkObject>();
-
-    private void Awake()
+    public class DummySpawner : NetworkBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-    }
+        [SerializeField] GameObject dummyPrefab;
 
-    // Start is called before the first frame update
-    public override void OnNetworkSpawn()
-    {
-        if (!NetworkManager.Singleton.IsServer)
-            return;
+        [SerializeField] List<Vector3> spawnLocations = new List<Vector3>();
 
-        base.OnNetworkSpawn();
+        List<NetworkObject> spawnedDummies = new List<NetworkObject>();
 
-        foreach (Vector3 t in spawnLocations)
+        private void Awake()
         {
-            var dummy = Instantiate(dummyPrefab, Vector3.zero, Quaternion.identity);
-
-            dummy.transform.position = t;
-            dummy.transform.localRotation = Quaternion.Euler(0,Random.Range(0f,360f),0);
-
-            NetworkObject netComponent = dummy.GetComponent<NetworkObject>();
-            netComponent.Spawn();
-
-            spawnedDummies.Add(netComponent);
+            DontDestroyOnLoad(gameObject);
         }
-    }
 
-    public override void OnNetworkDespawn()
-    {
-        base.OnNetworkDespawn();
+        // Start is called before the first frame update
+        public override void OnNetworkSpawn()
+        {
+            if (!NetworkManager.Singleton.IsServer)
+                return;
+
+            base.OnNetworkSpawn();
+
+            foreach (Vector3 t in spawnLocations)
+            {
+                var dummy = Instantiate(dummyPrefab, Vector3.zero, Quaternion.identity);
+
+                dummy.transform.position = t;
+                dummy.transform.localRotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+
+                NetworkObject netComponent = dummy.GetComponent<NetworkObject>();
+                netComponent.Spawn();
+
+                spawnedDummies.Add(netComponent);
+            }
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+        }
     }
 }

@@ -3,40 +3,43 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UI_Boss_HP_Bar : UI_StatBar
+namespace Erikduss
 {
-    [SerializeField] AIBossCharacterManager bossCharacter;
-
-    [SerializeField] TextMeshProUGUI bossNameText;
-    [SerializeField] TextMeshProUGUI bossPhaseText;
-
-    public void EnableBossHPBar(AIBossCharacterManager boss)
+    public class UI_Boss_HP_Bar : UI_StatBar
     {
-        bossCharacter = boss;
-        bossCharacter.aICharacterNetworkManager.currentHealth.OnValueChanged += OnBossHPChanged;
-        SetMaxStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
-        SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
+        [SerializeField] AIBossCharacterManager bossCharacter;
 
-        bossNameText.text = bossCharacter.characterName;
-    }
+        [SerializeField] TextMeshProUGUI bossNameText;
+        [SerializeField] TextMeshProUGUI bossPhaseText;
 
-    private void OnDestroy()
-    {
-        bossCharacter.aICharacterNetworkManager.currentHealth.OnValueChanged -= OnBossHPChanged;
-    }
-
-    private void OnBossHPChanged(int oldValue, int newValue)
-    {
-        SetStat(newValue);
-
-        if(newValue <= 0)
+        public void EnableBossHPBar(AIBossCharacterManager boss)
         {
-            RemoveHPBar(2.5f);
-        }
-    }
+            bossCharacter = boss;
+            bossCharacter.aICharacterNetworkManager.currentHealth.OnValueChanged += OnBossHPChanged;
+            SetMaxStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
+            SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
 
-    public void RemoveHPBar(float time)
-    {
-        Destroy(gameObject, time);
+            bossNameText.text = bossCharacter.characterName;
+        }
+
+        private void OnDestroy()
+        {
+            bossCharacter.aICharacterNetworkManager.currentHealth.OnValueChanged -= OnBossHPChanged;
+        }
+
+        private void OnBossHPChanged(int oldValue, int newValue)
+        {
+            SetStat(newValue);
+
+            if (newValue <= 0)
+            {
+                RemoveHPBar(2.5f);
+            }
+        }
+
+        public void RemoveHPBar(float time)
+        {
+            Destroy(gameObject, time);
+        }
     }
 }

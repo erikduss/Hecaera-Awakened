@@ -3,52 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class PlayerStatsManager : CharacterStatsManager
+namespace Erikduss
 {
-    PlayerManager player;
-    private float staminaLowWarningThreshold = 30;
-
-    protected override void Awake()
+    public class PlayerStatsManager : CharacterStatsManager
     {
-        base.Awake();
+        PlayerManager player;
+        private float staminaLowWarningThreshold = 30;
 
-        player = GetComponent<PlayerManager>();
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-
-        //To prevent the stats to never be calculated, calculate it here.
-        CalculateHealthBasedOnVitalityLevel(player.playerNetworkManager.vitality.Value);
-        CalculateStaminaBasedOnEnduranceLevel(player.playerNetworkManager.endurance.Value);
-    }
-
-    public override void RegenerateStamina()
-    {
-        //ONLY OWNERS VAN EDIT THEIR NETWORK VARIABLES.
-        if (!player.IsOwner)
-            return;
-
-        //TODO: Show stamina low indicator in Player UI
-
-        if(player.playerNetworkManager.currentStamina.Value <= staminaLowWarningThreshold)
+        protected override void Awake()
         {
-            //Enable if stamina is low (can only do 1 action, this should be a set number that can be changed if needed.)
-            StartCoroutine(PlayerUIManager.instance.playerUIHudManager.FadeAlphaOfStaminaPanel(true));
+            base.Awake();
+
+            player = GetComponent<PlayerManager>();
         }
-        else
+
+        protected override void Start()
         {
-            if (PlayerUIManager.instance.playerUIHudManager.stamina_Low_Panel.activeInHierarchy)
+            base.Start();
+
+            //To prevent the stats to never be calculated, calculate it here.
+            CalculateHealthBasedOnVitalityLevel(player.playerNetworkManager.vitality.Value);
+            CalculateStaminaBasedOnEnduranceLevel(player.playerNetworkManager.endurance.Value);
+        }
+
+        public override void RegenerateStamina()
+        {
+            //ONLY OWNERS VAN EDIT THEIR NETWORK VARIABLES.
+            if (!player.IsOwner)
+                return;
+
+            //TODO: Show stamina low indicator in Player UI
+
+            if (player.playerNetworkManager.currentStamina.Value <= staminaLowWarningThreshold)
             {
-                if (!PlayerUIManager.instance.playerUIHudManager.fadingAlphaOfStaminaPanel)
+                //Enable if stamina is low (can only do 1 action, this should be a set number that can be changed if needed.)
+                StartCoroutine(PlayerUIManager.instance.playerUIHudManager.FadeAlphaOfStaminaPanel(true));
+            }
+            else
+            {
+                if (PlayerUIManager.instance.playerUIHudManager.stamina_Low_Panel.activeInHierarchy)
                 {
-                    //Disable if player can do 2 actions
-                    StartCoroutine(PlayerUIManager.instance.playerUIHudManager.FadeAlphaOfStaminaPanel(false));
+                    if (!PlayerUIManager.instance.playerUIHudManager.fadingAlphaOfStaminaPanel)
+                    {
+                        //Disable if player can do 2 actions
+                        StartCoroutine(PlayerUIManager.instance.playerUIHudManager.FadeAlphaOfStaminaPanel(false));
+                    }
                 }
             }
-        }
 
-        base.RegenerateStamina();
+            base.RegenerateStamina();
+        }
     }
 }

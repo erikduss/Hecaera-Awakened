@@ -3,46 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WorldItemDatabase : MonoBehaviour
+namespace Erikduss
 {
-    public static WorldItemDatabase Instance;
-
-    public WeaponItem unarmedWeapon;
-
-    [Header("Weapon")]
-    [SerializeField] List<WeaponItem> weapons = new List<WeaponItem>();
-
-    //List of every item in the game with unique IDs
-    private List<Item> items = new List<Item>();
-
-    private void Awake()
+    public class WorldItemDatabase : MonoBehaviour
     {
-        if(Instance == null)
+        public static WorldItemDatabase Instance;
+
+        public WeaponItem unarmedWeapon;
+
+        [Header("Weapon")]
+        [SerializeField] List<WeaponItem> weapons = new List<WeaponItem>();
+
+        //List of every item in the game with unique IDs
+        private List<Item> items = new List<Item>();
+
+        private void Awake()
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            DontDestroyOnLoad(gameObject);
+
+            //Add all our weapons to item list
+            foreach (var weapon in weapons)
+            {
+                items.Add(weapon);
+            }
+
+            //Assign unique id to all items
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].itemID = i;
+            }
         }
 
-        DontDestroyOnLoad(gameObject);
-
-        //Add all our weapons to item list
-        foreach(var weapon in weapons)
+        public WeaponItem GetWeaponByID(int ID)
         {
-            items.Add(weapon);
+            return weapons.FirstOrDefault(weapon => weapon.itemID == ID);
         }
-
-        //Assign unique id to all items
-        for(int i = 0; i< items.Count; i++)
-        {
-            items[i].itemID = i;
-        }
-    }
-
-    public WeaponItem GetWeaponByID(int ID)
-    {
-        return weapons.FirstOrDefault(weapon => weapon.itemID == ID);
     }
 }

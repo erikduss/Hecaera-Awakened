@@ -2,36 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class SerializableDictionary<Tkey, TValue> : Dictionary<Tkey, TValue>, ISerializationCallbackReceiver
+namespace Erikduss
 {
-    [SerializeField] private List<Tkey> keys = new List<Tkey>();
-    [SerializeField] private List<TValue> values = new List<TValue>();
-
-    public void OnBeforeSerialize()
+    [System.Serializable]
+    public class SerializableDictionary<Tkey, TValue> : Dictionary<Tkey, TValue>, ISerializationCallbackReceiver
     {
-        keys.Clear();
-        values.Clear();
+        [SerializeField] private List<Tkey> keys = new List<Tkey>();
+        [SerializeField] private List<TValue> values = new List<TValue>();
 
-        foreach(KeyValuePair<Tkey, TValue> pair in this)
+        public void OnBeforeSerialize()
         {
-            keys.Add(pair.Key);
-            values.Add(pair.Value);
-        }
-    }
+            keys.Clear();
+            values.Clear();
 
-    public void OnAfterDeserialize() 
-    {
-        Clear();
-
-        if(keys.Count != values.Count)
-        {
-            Debug.LogError("YOUR KEY COUNT DOES NOT MATCH YOUR VALUE COUNT");
+            foreach (KeyValuePair<Tkey, TValue> pair in this)
+            {
+                keys.Add(pair.Key);
+                values.Add(pair.Value);
+            }
         }
 
-        for(int i = 0; i < keys.Count; i++)
+        public void OnAfterDeserialize()
         {
-            Add(keys[i], values[i]);
+            Clear();
+
+            if (keys.Count != values.Count)
+            {
+                Debug.LogError("YOUR KEY COUNT DOES NOT MATCH YOUR VALUE COUNT");
+            }
+
+            for (int i = 0; i < keys.Count; i++)
+            {
+                Add(keys[i], values[i]);
+            }
         }
     }
 }

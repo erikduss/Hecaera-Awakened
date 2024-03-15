@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Character Actions/Weapon Actions/Test Action")]
-public class WeaponItemAction : ScriptableObject
+namespace Erikduss
 {
-    public int actionID;
-    public PooledObjectType pooledObjectType = PooledObjectType.NONE;
-    public float objectSpawnDelay = 0f;
-
-    public virtual void AttemptToPerformAction(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
+    [CreateAssetMenu(menuName = "Character Actions/Weapon Actions/Test Action")]
+    public class WeaponItemAction : ScriptableObject
     {
-        if (playerPerformingAction.IsOwner)
-        {
-            playerPerformingAction.playerNetworkManager.currentWeaponBeingUsed.Value = weaponPerformingAction.itemID;
-        }
+        public int actionID;
+        public PooledObjectType pooledObjectType = PooledObjectType.NONE;
+        public float objectSpawnDelay = 0f;
 
-        Debug.Log("ACTION FIRED");
+        public virtual void AttemptToPerformAction(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
+        {
+            if (playerPerformingAction.IsOwner)
+            {
+                playerPerformingAction.playerNetworkManager.currentWeaponBeingUsed.Value = weaponPerformingAction.itemID;
+            }
+
+            Debug.Log("ACTION FIRED");
+        }
     }
 }

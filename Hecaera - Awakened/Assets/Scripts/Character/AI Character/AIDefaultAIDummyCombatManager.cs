@@ -2,45 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIDefaultAIDummyCombatManager : AICharacterCombatManager
+namespace Erikduss
 {
-    [Header("Damage Colliders")]
-    [SerializeField] DefaultAIDummyHandDamageCollider rightHandDamageCollider;
-    [SerializeField] DefaultAIDummyHandDamageCollider leftHandDamageCollider;
-
-    [Header("Damage")]
-    [SerializeField] int baseDamage = 25;
-    [SerializeField] float attack01DamageModifier = 1f;
-    [SerializeField] float attack02DamageModifier = 1.4f;
-
-    public void SetAttack01Damage()
+    public class AIDefaultAIDummyCombatManager : AICharacterCombatManager
     {
-        rightHandDamageCollider.physicalDamage = baseDamage * attack01DamageModifier;
-        leftHandDamageCollider.physicalDamage = baseDamage * attack01DamageModifier;
-    }
-    public void SetAttack02Damage()
-    {
-        rightHandDamageCollider.physicalDamage = baseDamage * attack02DamageModifier;
-        leftHandDamageCollider.physicalDamage = baseDamage * attack02DamageModifier;
-    }
+        [Header("Damage Colliders")]
+        [SerializeField] DefaultAIDummyHandDamageCollider rightHandDamageCollider;
+        [SerializeField] DefaultAIDummyHandDamageCollider leftHandDamageCollider;
 
-    public void OpenRightHandDamageCollider()
-    {
-        rightHandDamageCollider.EnableDamageCollider();
-    }
+        [Header("Damage")]
+        [SerializeField] int baseDamage = 25;
+        [SerializeField] float attack01DamageModifier = 1f;
+        [SerializeField] float attack02DamageModifier = 1.4f;
 
-    public void CloseRightHandDamageCollider()
-    {
-        rightHandDamageCollider.DisableDamageCollider();
-    }
+        public void SetAttack01Damage()
+        {
+            rightHandDamageCollider.physicalDamage = baseDamage * attack01DamageModifier;
+            leftHandDamageCollider.physicalDamage = baseDamage * attack01DamageModifier;
+        }
+        public void SetAttack02Damage()
+        {
+            rightHandDamageCollider.physicalDamage = baseDamage * attack02DamageModifier;
+            leftHandDamageCollider.physicalDamage = baseDamage * attack02DamageModifier;
+        }
 
-    public void OpenLeftHandDamageCollider()
-    {
-        leftHandDamageCollider.EnableDamageCollider();
-    }
+        public void OpenRightHandDamageCollider()
+        {
+            rightHandDamageCollider.EnableDamageCollider();
+        }
 
-    public void CloseLeftHandDamageCollider()
-    {
-        leftHandDamageCollider.DisableDamageCollider();
+        public void CloseRightHandDamageCollider()
+        {
+            rightHandDamageCollider.DisableDamageCollider();
+        }
+
+        public void OpenLeftHandDamageCollider()
+        {
+            leftHandDamageCollider.EnableDamageCollider();
+        }
+
+        public void CloseLeftHandDamageCollider()
+        {
+            leftHandDamageCollider.DisableDamageCollider();
+        }
     }
 }

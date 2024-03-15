@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkObjectSpawner : MonoBehaviour
+namespace Erikduss
 {
-    [Header("Object")]
-    [SerializeField] GameObject networkGameObject;
-    [SerializeField] GameObject instantiatedGameObject;
-
-    private void Awake()
+    public class NetworkObjectSpawner : MonoBehaviour
     {
+        [Header("Object")]
+        [SerializeField] GameObject networkGameObject;
+        [SerializeField] GameObject instantiatedGameObject;
 
-    }
-
-    private void Start()
-    {
-        WorldObjectManager.Instance.SpawnObject(this);
-        gameObject.SetActive(false);
-    }
-
-    public void AttemptToSpawnCharacter()
-    {
-        if (networkGameObject != null)
+        private void Awake()
         {
-            instantiatedGameObject = Instantiate(networkGameObject);
-            instantiatedGameObject.transform.position = transform.position;
-            instantiatedGameObject.transform.rotation = transform.rotation;
-            instantiatedGameObject.GetComponent<NetworkObject>().Spawn();
+
+        }
+
+        private void Start()
+        {
+            WorldObjectManager.Instance.SpawnObject(this);
+            gameObject.SetActive(false);
+        }
+
+        public void AttemptToSpawnCharacter()
+        {
+            if (networkGameObject != null)
+            {
+                instantiatedGameObject = Instantiate(networkGameObject);
+                instantiatedGameObject.transform.position = transform.position;
+                instantiatedGameObject.transform.rotation = transform.rotation;
+                instantiatedGameObject.GetComponent<NetworkObject>().Spawn();
+            }
         }
     }
 }

@@ -2,33 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterEffectsManager : MonoBehaviour
+namespace Erikduss
 {
-    CharacterManager character;
-
-    [Header("VFX")]
-    [SerializeField] GameObject bloodSplatterVFX;
-
-    protected virtual void Awake()
+    public class CharacterEffectsManager : MonoBehaviour
     {
-        character = GetComponent<CharacterManager>();
-    }
+        CharacterManager character;
 
-    public virtual void ProcessInstantEffect(InstantCharacterEffect effect)
-    {
-        effect.ProcessEffect(character);
-    }
+        [Header("VFX")]
+        [SerializeField] GameObject bloodSplatterVFX;
 
-    public void PlayBloodSplatterVFX(Vector3 contactPoint)
-    {
-        //if we manually placed a different blood splatter effect on this model
-        if(bloodSplatterVFX != null)
+        protected virtual void Awake()
         {
-            GameObject bloodSplatter = Instantiate(bloodSplatterVFX, contactPoint, Quaternion.identity);
+            character = GetComponent<CharacterManager>();
         }
-        else //use the default blood splatter
+
+        public virtual void ProcessInstantEffect(InstantCharacterEffect effect)
         {
-            GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.Instance.bloodSplatterVFX, contactPoint, Quaternion.identity);
+            effect.ProcessEffect(character);
+        }
+
+        public void PlayBloodSplatterVFX(Vector3 contactPoint)
+        {
+            //if we manually placed a different blood splatter effect on this model
+            if (bloodSplatterVFX != null)
+            {
+                GameObject bloodSplatter = Instantiate(bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
+            else //use the default blood splatter
+            {
+                GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.Instance.bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
         }
     }
 }

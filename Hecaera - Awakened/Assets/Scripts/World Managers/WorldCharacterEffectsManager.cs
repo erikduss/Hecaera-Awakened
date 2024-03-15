@@ -2,37 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldCharacterEffectsManager : MonoBehaviour
+namespace Erikduss
 {
-    public static WorldCharacterEffectsManager Instance;
-
-    [Header("VFX")]
-    public GameObject bloodSplatterVFX; //the default blood splatter VFX
-
-    [Header("Damage")]
-    public TakeDamageEffect takeDamageEffect;
-
-    [SerializeField] List<InstantCharacterEffect> instantEffects;
-
-    private void Awake()
+    public class WorldCharacterEffectsManager : MonoBehaviour
     {
-        if(Instance == null)
+        public static WorldCharacterEffectsManager Instance;
+
+        [Header("VFX")]
+        public GameObject bloodSplatterVFX; //the default blood splatter VFX
+
+        [Header("Damage")]
+        public TakeDamageEffect takeDamageEffect;
+
+        [SerializeField] List<InstantCharacterEffect> instantEffects;
+
+        private void Awake()
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            GenerateEffectIDs();
         }
 
-        GenerateEffectIDs();
-    }
-
-    private void GenerateEffectIDs()
-    {
-        for(int i = 0; i < instantEffects.Count; i++)
+        private void GenerateEffectIDs()
         {
-            instantEffects[i].instantEffectID = i;
+            for (int i = 0; i < instantEffects.Count; i++)
+            {
+                instantEffects[i].instantEffectID = i;
+            }
         }
     }
 }

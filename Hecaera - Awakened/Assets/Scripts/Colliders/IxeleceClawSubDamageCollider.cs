@@ -2,32 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IxeleceClawSubDamageCollider : DamageCollider
+namespace Erikduss
 {
-    public IxeleceClawDamageCollider mainClawDamageCollider;
-
-    protected override void Awake()
+    public class IxeleceClawSubDamageCollider : DamageCollider
     {
-        damageCollider = GetComponent<Collider>();
+        public IxeleceClawDamageCollider mainClawDamageCollider;
 
-        physicalDamage = mainClawDamageCollider.physicalDamage;
-        magicDamage = mainClawDamageCollider.magicDamage;
-        fireDamage = mainClawDamageCollider.fireDamage;
-        lightningDamage = mainClawDamageCollider.lightningDamage;
-        holyDamage = mainClawDamageCollider.holyDamage;
-    }
-
-    protected override void DamageTarget(CharacterManager damageTarget)
-    {
-        //We need to add it to the main damage collider to make sure all sub damage colliders know we already damaged this.
-        if(mainClawDamageCollider.charactersDamaged.Contains(damageTarget))
+        protected override void Awake()
         {
-            Debug.Log("We already damaged this character!");
-            return;
+            damageCollider = GetComponent<Collider>();
+
+            physicalDamage = mainClawDamageCollider.physicalDamage;
+            magicDamage = mainClawDamageCollider.magicDamage;
+            fireDamage = mainClawDamageCollider.fireDamage;
+            lightningDamage = mainClawDamageCollider.lightningDamage;
+            holyDamage = mainClawDamageCollider.holyDamage;
         }
 
-        mainClawDamageCollider.charactersDamaged.Add(damageTarget);
+        protected override void DamageTarget(CharacterManager damageTarget)
+        {
+            //We need to add it to the main damage collider to make sure all sub damage colliders know we already damaged this.
+            if (mainClawDamageCollider.charactersDamaged.Contains(damageTarget))
+            {
+                Debug.Log("We already damaged this character!");
+                return;
+            }
 
-        base.DamageTarget(damageTarget);
+            mainClawDamageCollider.charactersDamaged.Add(damageTarget);
+
+            base.DamageTarget(damageTarget);
+        }
     }
 }

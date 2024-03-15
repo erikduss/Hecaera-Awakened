@@ -2,39 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimatorManager : CharacterAnimatorManager
-{ 
-    PlayerManager player;
-
-    protected override void Awake()
+namespace Erikduss
+{
+    public class PlayerAnimatorManager : CharacterAnimatorManager
     {
-        base.Awake();
+        PlayerManager player;
 
-        player = GetComponent<PlayerManager>();
-        player.animator.SetBool("UseTHAnimations", player.UseTHAnimations);
-    }
-
-    private void OnAnimatorMove()
-    {
-        if (player.characterAnimatorManager.applyRootMotion)
+        protected override void Awake()
         {
-            Vector3 velocity = player.animator.deltaPosition;
-            player.characterController.Move(velocity);
-            player.transform.rotation *= player.animator.deltaRotation;
-        }
-    }
+            base.Awake();
 
-    //animation event calls
-    public override void EnableCanDoCombo()
-    {
-        if (player.playerNetworkManager.isUsingRightHand.Value)
+            player = GetComponent<PlayerManager>();
+            player.animator.SetBool("UseTHAnimations", player.UseTHAnimations);
+        }
+
+        private void OnAnimatorMove()
         {
-            player.playerCombatManager.canComboWithMainHandWeapon = true;
+            if (player.characterAnimatorManager.applyRootMotion)
+            {
+                Vector3 velocity = player.animator.deltaPosition;
+                player.characterController.Move(velocity);
+                player.transform.rotation *= player.animator.deltaRotation;
+            }
         }
-    }
 
-    public override void DisableCanDoCombo()
-    {
-        player.playerCombatManager.canComboWithMainHandWeapon = false;
+        //animation event calls
+        public override void EnableCanDoCombo()
+        {
+            if (player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                player.playerCombatManager.canComboWithMainHandWeapon = true;
+            }
+        }
+
+        public override void DisableCanDoCombo()
+        {
+            player.playerCombatManager.canComboWithMainHandWeapon = false;
+        }
     }
 }

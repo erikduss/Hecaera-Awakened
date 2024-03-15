@@ -2,70 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enums : MonoBehaviour
+namespace Erikduss
 {
-    
-}
+    public class Enums : MonoBehaviour
+    {
 
-public enum CharacterSlot
-{
-    CharacterSlot_01,
-    CharacterSlot_02,
-    CharacterSlot_03,
-    CharacterSlot_04,
-    CharacterSlot_05,
-    CharacterSlot_06,
-    CharacterSlot_07,
-    CharacterSlot_08,
-    CharacterSlot_09,
-    CharacterSlot_10,
-    NO_SLOT
-}
+    }
 
-//The specific groups, used to detect who can attack who. You cannot attack someone in your own team.
-public enum CharacterGroup
-{
-    Team01,
-    Team02,
-}
+    public enum CharacterSlot
+    {
+        CharacterSlot_01,
+        CharacterSlot_02,
+        CharacterSlot_03,
+        CharacterSlot_04,
+        CharacterSlot_05,
+        CharacterSlot_06,
+        CharacterSlot_07,
+        CharacterSlot_08,
+        CharacterSlot_09,
+        CharacterSlot_10,
+        NO_SLOT
+    }
 
-public enum EnemySpawnType
-{
-    BASIC_DUMMY,
-    BOSS
-}
+    //The specific groups, used to detect who can attack who. You cannot attack someone in your own team.
+    public enum CharacterGroup
+    {
+        Team01,
+        Team02,
+    }
 
-public enum AudioSourceType
-{
-    DEFAULT,
-    MUSIC,
-    SFX,
-    DIALOG
-}
+    public enum EnemySpawnType
+    {
+        BASIC_DUMMY,
+        BOSS
+    }
 
-public enum WeaponModelSlot
-{
-    RightHand,
-    LeftHand
-}
+    public enum AudioSourceType
+    {
+        DEFAULT,
+        MUSIC,
+        SFX,
+        DIALOG
+    }
 
-public enum AttackType
-{
-    LightAttack01,
-    LightAttack02,
-    LightAttack03,
-    HeavyAttack01,
-    HeavyAttack02,
-    HeavyAttack03,
-    ChargedAttack01,
-    ChargedAttack02,
-    ChargedAttack03,
-    InstantMagicAttack01,
-    LightJumpAttack01
-}
+    public enum WeaponModelSlot
+    {
+        RightHand,
+        LeftHand
+    }
 
-public enum PooledObjectType
-{
-    NONE,
-    Instant_Magic_Spell
+    public enum AttackType
+    {
+        LightAttack01,
+        LightAttack02,
+        LightAttack03,
+        HeavyAttack01,
+        HeavyAttack02,
+        HeavyAttack03,
+        ChargedAttack01,
+        ChargedAttack02,
+        ChargedAttack03,
+        InstantMagicAttack01,
+        LightJumpAttack01
+    }
+
+    public enum PooledObjectType
+    {
+        NONE,
+        Instant_Magic_Spell
+    }
+
 }

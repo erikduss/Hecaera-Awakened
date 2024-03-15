@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class AICharacterNetworkManager : CharacterNetworkManager
+namespace Erikduss
 {
-    
+    public class AICharacterNetworkManager : CharacterNetworkManager
+    {
 
+
+    }
 }

@@ -2,26 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponModelInstantiationSlot : MonoBehaviour
+namespace Erikduss
 {
-    public WeaponModelSlot weaponSlot;
-    public GameObject currentWeaponModel;
-
-    public void UnloadWeapon()
+    public class WeaponModelInstantiationSlot : MonoBehaviour
     {
-        if(currentWeaponModel != null)
+        public WeaponModelSlot weaponSlot;
+        public GameObject currentWeaponModel;
+
+        public void UnloadWeapon()
         {
-            Destroy(currentWeaponModel);
+            if (currentWeaponModel != null)
+            {
+                Destroy(currentWeaponModel);
+            }
         }
-    }
 
-    public void LoadWeapon(GameObject weaponModel)
-    {
-        currentWeaponModel = weaponModel;
-        weaponModel.transform.parent = transform;
+        public void LoadWeapon(GameObject weaponModel)
+        {
+            currentWeaponModel = weaponModel;
+            weaponModel.transform.parent = transform;
 
-        weaponModel.transform.localPosition = Vector3.zero;
-        weaponModel.transform.localRotation = Quaternion.identity;
-        weaponModel.transform.localScale = Vector3.one;
+            weaponModel.transform.localPosition = Vector3.zero;
+            weaponModel.transform.localRotation = Quaternion.identity;
+            weaponModel.transform.localScale = Vector3.one;
+        }
     }
 }

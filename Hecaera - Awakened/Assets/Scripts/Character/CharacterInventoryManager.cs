@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterInventoryManager : MonoBehaviour
+namespace Erikduss
 {
-    
+    public class CharacterInventoryManager : MonoBehaviour
+    {
+
+    }
 }

@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LockOnTransform : MonoBehaviour
+namespace Erikduss
 {
-    //used to fetch the lock on transform gameobject.
+    public class LockOnTransform : MonoBehaviour
+    {
+        //used to fetch the lock on transform gameobject.
+    }
 }

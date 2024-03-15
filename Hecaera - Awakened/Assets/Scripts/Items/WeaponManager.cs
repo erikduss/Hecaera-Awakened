@@ -2,29 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponManager : MonoBehaviour
+namespace Erikduss
 {
-    public MeleeWeaponDamageCollider meleeDamageCollider;
-
-    private void Awake()
+    public class WeaponManager : MonoBehaviour
     {
-        meleeDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-    }
+        public MeleeWeaponDamageCollider meleeDamageCollider;
 
-    public void SetWeaponDamage(CharacterManager characterWieldingWeapon, WeaponItem weapon)
-    {
-        meleeDamageCollider.characterCausingDamage = characterWieldingWeapon;
-        meleeDamageCollider.physicalDamage = weapon.physicalDamage;
-        meleeDamageCollider.magicDamage = weapon.magicDamage;
-        meleeDamageCollider.fireDamage = weapon.fireDamage;
-        meleeDamageCollider.lightningDamage = weapon.lightningDamage;
-        meleeDamageCollider.holyDamage = weapon.holyDamage;
+        private void Awake()
+        {
+            meleeDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+        }
 
-        meleeDamageCollider.light_Attack_01_Modifier = weapon.light_Attack_01_Modifier;
-        meleeDamageCollider.light_Attack_02_Modifier = weapon.light_Attack_02_Modifier;
-        meleeDamageCollider.light_Attack_03_Modifier = weapon.light_Attack_03_Modifier;
+        public void SetWeaponDamage(CharacterManager characterWieldingWeapon, WeaponItem weapon)
+        {
+            meleeDamageCollider.characterCausingDamage = characterWieldingWeapon;
+            meleeDamageCollider.physicalDamage = weapon.physicalDamage;
+            meleeDamageCollider.magicDamage = weapon.magicDamage;
+            meleeDamageCollider.fireDamage = weapon.fireDamage;
+            meleeDamageCollider.lightningDamage = weapon.lightningDamage;
+            meleeDamageCollider.holyDamage = weapon.holyDamage;
 
-        meleeDamageCollider.heavy_Attack_01_Modifier = weapon.heavy_Attack_01_Modifier;
-        meleeDamageCollider.charged_Heavy_Attack_01_Modifier = weapon.charged_Heavy_Attack_01_Modifier;
+            meleeDamageCollider.light_Attack_01_Modifier = weapon.light_Attack_01_Modifier;
+            meleeDamageCollider.light_Attack_02_Modifier = weapon.light_Attack_02_Modifier;
+            meleeDamageCollider.light_Attack_03_Modifier = weapon.light_Attack_03_Modifier;
+
+            meleeDamageCollider.heavy_Attack_01_Modifier = weapon.heavy_Attack_01_Modifier;
+            meleeDamageCollider.charged_Heavy_Attack_01_Modifier = weapon.charged_Heavy_Attack_01_Modifier;
+        }
     }
 }

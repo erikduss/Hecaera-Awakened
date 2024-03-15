@@ -3,36 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_StatBar : MonoBehaviour
+namespace Erikduss
 {
-    private Slider slider;
-    private RectTransform rectTransform;
-
-    [Header("Bar Options")]
-    [SerializeField] protected bool scaleBarLengthWithStats = true;
-    [SerializeField] protected float widthScaleMultiplier = 1f;
-
-    protected virtual void Awake()
+    public class UI_StatBar : MonoBehaviour
     {
-        slider = GetComponent<Slider>();
-        rectTransform = GetComponent<RectTransform>();
-    }
+        private Slider slider;
+        private RectTransform rectTransform;
 
-    public virtual void SetStat(int newValue)
-    {
-        slider.value = newValue;
-    }
+        [Header("Bar Options")]
+        [SerializeField] protected bool scaleBarLengthWithStats = true;
+        [SerializeField] protected float widthScaleMultiplier = 1f;
 
-    public virtual void SetMaxStat(int maxValue)
-    {
-        slider.maxValue = maxValue;
-        slider.value = maxValue;
-
-        if (scaleBarLengthWithStats)
+        protected virtual void Awake()
         {
-            rectTransform.sizeDelta = new Vector2(maxValue * widthScaleMultiplier, rectTransform.sizeDelta.y);
-            //Resets the position of the bars based on their layout settings.
-            PlayerUIManager.instance.playerUIHudManager.RefreshHUD();
+            slider = GetComponent<Slider>();
+            rectTransform = GetComponent<RectTransform>();
+        }
+
+        public virtual void SetStat(int newValue)
+        {
+            slider.value = newValue;
+        }
+
+        public virtual void SetMaxStat(int maxValue)
+        {
+            slider.maxValue = maxValue;
+            slider.value = maxValue;
+
+            if (scaleBarLengthWithStats)
+            {
+                rectTransform.sizeDelta = new Vector2(maxValue * widthScaleMultiplier, rectTransform.sizeDelta.y);
+                //Resets the position of the bars based on their layout settings.
+                PlayerUIManager.instance.playerUIHudManager.RefreshHUD();
+            }
         }
     }
 }

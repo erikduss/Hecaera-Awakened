@@ -2,35 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleScreenLoadMenuInputManager : MonoBehaviour
+namespace Erikduss
 {
-    PlayerControls playerControls;
-
-    [Header("Title Screen Inputs")]
-    [SerializeField] bool deleteCharacterSlot = false;
-
-    private void Update()
+    public class TitleScreenLoadMenuInputManager : MonoBehaviour
     {
-        if (deleteCharacterSlot)
-        {
-            deleteCharacterSlot = false;
-            TitleScreenManager.Instance.AttemptToDeleteCharacterSlot();
-        }
-    }
+        PlayerControls playerControls;
 
-    private void OnEnable()
-    {
-        if(playerControls == null)
+        [Header("Title Screen Inputs")]
+        [SerializeField] bool deleteCharacterSlot = false;
+
+        private void Update()
         {
-            playerControls = new PlayerControls();
-            playerControls.UI.XInteract.performed += i => deleteCharacterSlot = true;
+            if (deleteCharacterSlot)
+            {
+                deleteCharacterSlot = false;
+                TitleScreenManager.Instance.AttemptToDeleteCharacterSlot();
+            }
         }
 
-        playerControls.Enable();
-    }
+        private void OnEnable()
+        {
+            if (playerControls == null)
+            {
+                playerControls = new PlayerControls();
+                playerControls.UI.XInteract.performed += i => deleteCharacterSlot = true;
+            }
 
-    private void OnDisable()
-    {
-        playerControls.Disable();
+            playerControls.Enable();
+        }
+
+        private void OnDisable()
+        {
+            playerControls.Disable();
+        }
     }
 }

@@ -4,40 +4,43 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Match_Scroll_Wheel_To_Selected_Button : MonoBehaviour
+namespace Erikduss
 {
-    [SerializeField] GameObject currentSelected;
-    [SerializeField] GameObject previouslySelected;
-    [SerializeField] RectTransform currentSelectedTransform;
-
-    [SerializeField] RectTransform contentPanel;
-    [SerializeField] ScrollRect scrollRect;
-
-    private void Update()
+    public class UI_Match_Scroll_Wheel_To_Selected_Button : MonoBehaviour
     {
-        /*
-        currentSelected = EventSystem.current.currentSelectedGameObject;
-        
-        if(currentSelected != null)
+        [SerializeField] GameObject currentSelected;
+        [SerializeField] GameObject previouslySelected;
+        [SerializeField] RectTransform currentSelectedTransform;
+
+        [SerializeField] RectTransform contentPanel;
+        [SerializeField] ScrollRect scrollRect;
+
+        private void Update()
         {
-            if(currentSelected !=  previouslySelected)
+            /*
+            currentSelected = EventSystem.current.currentSelectedGameObject;
+
+            if(currentSelected != null)
             {
-                previouslySelected = currentSelected;
-                currentSelectedTransform = currentSelected.GetComponent<RectTransform>();
-                SnapTo(currentSelectedTransform);
-            }
-        }*/
-    }
+                if(currentSelected !=  previouslySelected)
+                {
+                    previouslySelected = currentSelected;
+                    currentSelectedTransform = currentSelected.GetComponent<RectTransform>();
+                    SnapTo(currentSelectedTransform);
+                }
+            }*/
+        }
 
-    private void SnapTo(RectTransform target)
-    {
-        Canvas.ForceUpdateCanvases();
+        private void SnapTo(RectTransform target)
+        {
+            Canvas.ForceUpdateCanvases();
 
-        Vector2 newPosition = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
+            Vector2 newPosition = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
 
-        //we only want to lock the position on the y axis (up and down)
-        newPosition.x = 0;
+            //we only want to lock the position on the y axis (up and down)
+            newPosition.x = 0;
 
-        contentPanel.anchoredPosition = newPosition;
+            contentPanel.anchoredPosition = newPosition;
+        }
     }
 }

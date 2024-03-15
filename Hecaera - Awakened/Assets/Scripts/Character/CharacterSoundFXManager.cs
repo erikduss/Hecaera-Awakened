@@ -4,41 +4,44 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterSoundFXManager : MonoBehaviour
+namespace Erikduss
 {
-    private AudioSource audioSource;
-    private bool startedGame = false;
-
-    protected virtual void Awake()
+    public class CharacterSoundFXManager : MonoBehaviour
     {
-        audioSource = GetComponent<AudioSource>();
-        WorldAudioVolumesManager.Instance.AddAudioSource(audioSource, AudioSourceType.SFX);
-    }
+        private AudioSource audioSource;
+        private bool startedGame = false;
 
-    public void PlaySoundFX(AudioClip soundFX, float volume = 1, bool randomizePitch = true, float pitchRandom = 0.1f)
-    {
-        audioSource.PlayOneShot(soundFX, volume);
-
-        //Resets pitch
-        audioSource.pitch = 1;
-
-        if (randomizePitch)
+        protected virtual void Awake()
         {
-            audioSource.pitch += Random.Range(-pitchRandom, pitchRandom);
+            audioSource = GetComponent<AudioSource>();
+            WorldAudioVolumesManager.Instance.AddAudioSource(audioSource, AudioSourceType.SFX);
         }
-    }
 
-    public void PlayFootstepSoundFX()
-    {
-        if(!startedGame)
-            if (SceneManager.GetActiveScene().buildIndex == 0) return;
+        public void PlaySoundFX(AudioClip soundFX, float volume = 1, bool randomizePitch = true, float pitchRandom = 0.1f)
+        {
+            audioSource.PlayOneShot(soundFX, volume);
 
-        startedGame = true;
-        audioSource.PlayOneShot(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.footstepSFX));
-    }
+            //Resets pitch
+            audioSource.pitch = 1;
 
-    public void PlayRollSoundFX()
-    {
-        audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+            if (randomizePitch)
+            {
+                audioSource.pitch += Random.Range(-pitchRandom, pitchRandom);
+            }
+        }
+
+        public void PlayFootstepSoundFX()
+        {
+            if (!startedGame)
+                if (SceneManager.GetActiveScene().buildIndex == 0) return;
+
+            startedGame = true;
+            audioSource.PlayOneShot(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.footstepSFX));
+        }
+
+        public void PlayRollSoundFX()
+        {
+            audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+        }
     }
 }

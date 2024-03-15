@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AICharacterLocomotionManager : CharacterLocomotionManager
+namespace Erikduss
 {
-    public void RotateTowardsAgent(AICharacterManager aiCharacter)
+    public class AICharacterLocomotionManager : CharacterLocomotionManager
     {
-        if (aiCharacter.aICharacterNetworkManager.isMoving.Value)
+        public void RotateTowardsAgent(AICharacterManager aiCharacter)
         {
-            aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation;
+            if (aiCharacter.aICharacterNetworkManager.isMoving.Value)
+            {
+                aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation;
+            }
         }
     }
 }

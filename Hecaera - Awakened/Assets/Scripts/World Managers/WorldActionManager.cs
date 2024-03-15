@@ -3,37 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WorldActionManager : MonoBehaviour
+namespace Erikduss
 {
-    public static WorldActionManager Instance;
-
-    [Header("Weapon Item Actions")]
-    public WeaponItemAction[] weaponItemActions;
-
-    private void Awake()
+    public class WorldActionManager : MonoBehaviour
     {
-        if(Instance == null)
+        public static WorldActionManager Instance;
+
+        [Header("Weapon Item Actions")]
+        public WeaponItemAction[] weaponItemActions;
+
+        private void Awake()
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            DontDestroyOnLoad(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
-    }
-
-    private void Start()
-    {
-        for(int i = 0; i < weaponItemActions.Length; i++)
+        private void Start()
         {
-            weaponItemActions[i].actionID = i;
+            for (int i = 0; i < weaponItemActions.Length; i++)
+            {
+                weaponItemActions[i].actionID = i;
+            }
         }
-    }
 
-    public WeaponItemAction GetWeaponItemActionByID(int ID)
-    {
-        return weaponItemActions.FirstOrDefault(action => action.actionID == ID);
+        public WeaponItemAction GetWeaponItemActionByID(int ID)
+        {
+            return weaponItemActions.FirstOrDefault(action => action.actionID == ID);
+        }
     }
 }

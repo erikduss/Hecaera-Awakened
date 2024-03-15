@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Character Effects/Instant Effects/Take Stamina Damage")]
-public class TakeStaminaDamageEffect : InstantCharacterEffect
+namespace Erikduss
 {
-    public float staminaDamage;
-    public override void ProcessEffect(CharacterManager character)
+    [CreateAssetMenu(menuName = "Character Effects/Instant Effects/Take Stamina Damage")]
+    public class TakeStaminaDamageEffect : InstantCharacterEffect
     {
-        CalculateStaminaDamage(character);
-    }
-
-    private void CalculateStaminaDamage(CharacterManager character)
-    {
-        if (character.IsOwner)
+        public float staminaDamage;
+        public override void ProcessEffect(CharacterManager character)
         {
-            character.characterNetworkManager.currentStamina.Value -= staminaDamage;
+            CalculateStaminaDamage(character);
+        }
+
+        private void CalculateStaminaDamage(CharacterManager character)
+        {
+            if (character.IsOwner)
+            {
+                character.characterNetworkManager.currentStamina.Value -= staminaDamage;
+            }
         }
     }
 }

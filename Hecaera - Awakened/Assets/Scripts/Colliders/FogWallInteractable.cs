@@ -3,48 +3,51 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class FogWallInteractable : NetworkBehaviour
+namespace Erikduss
 {
-    [Header("Fog")]
-    [SerializeField] GameObject[] fogGameObjects;
-
-    [Header("ID")]
-    public int fogWallID;
-
-    [Header("Active")]
-    public NetworkVariable<bool> isActive = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
-    public override void OnNetworkSpawn()
+    public class FogWallInteractable : NetworkBehaviour
     {
-        base.OnNetworkSpawn();
+        [Header("Fog")]
+        [SerializeField] GameObject[] fogGameObjects;
 
-        OnIsActiveChanged(false, isActive.Value);
-        isActive.OnValueChanged += OnIsActiveChanged;
-        WorldObjectManager.Instance.AddFogWallToList(this);
-    }
+        [Header("ID")]
+        public int fogWallID;
 
-    public override void OnNetworkDespawn()
-    {
-        base.OnNetworkDespawn();
+        [Header("Active")]
+        public NetworkVariable<bool> isActive = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-        isActive.OnValueChanged -= OnIsActiveChanged;
-        WorldObjectManager.Instance.RemoveFogWallFromList(this);
-    }
-
-    private void OnIsActiveChanged(bool oldStatus, bool newStatus)
-    {
-        if (isActive.Value)
+        public override void OnNetworkSpawn()
         {
-            foreach (var fogObject in fogGameObjects)
-            {
-                fogObject.SetActive(true);
-            }
+            base.OnNetworkSpawn();
+
+            OnIsActiveChanged(false, isActive.Value);
+            isActive.OnValueChanged += OnIsActiveChanged;
+            WorldObjectManager.Instance.AddFogWallToList(this);
         }
-        else
+
+        public override void OnNetworkDespawn()
         {
-            foreach (var fogObject in fogGameObjects)
+            base.OnNetworkDespawn();
+
+            isActive.OnValueChanged -= OnIsActiveChanged;
+            WorldObjectManager.Instance.RemoveFogWallFromList(this);
+        }
+
+        private void OnIsActiveChanged(bool oldStatus, bool newStatus)
+        {
+            if (isActive.Value)
             {
-                fogObject.SetActive(false);
+                foreach (var fogObject in fogGameObjects)
+                {
+                    fogObject.SetActive(true);
+                }
+            }
+            else
+            {
+                foreach (var fogObject in fogGameObjects)
+                {
+                    fogObject.SetActive(false);
+                }
             }
         }
     }

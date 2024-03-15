@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIState : ScriptableObject
+namespace Erikduss
 {
-    public virtual AIState Tick(AICharacterManager aiCharacter)
+    public class AIState : ScriptableObject
     {
-        return this;
-    }
+        public virtual AIState Tick(AICharacterManager aiCharacter)
+        {
+            return this;
+        }
 
-    protected virtual AIState SwitchState(AICharacterManager aiCharacter, AIState newState)
-    {
-        ResetStateFlags(aiCharacter);
-        return newState;
-    }
+        protected virtual AIState SwitchState(AICharacterManager aiCharacter, AIState newState)
+        {
+            ResetStateFlags(aiCharacter);
+            return newState;
+        }
 
-    protected virtual void ResetStateFlags(AICharacterManager aICharacterManager)
-    {
-        //reset any state flags so theyre blank on returning to the state.
+        protected virtual void ResetStateFlags(AICharacterManager aICharacterManager)
+        {
+            //reset any state flags so theyre blank on returning to the state.
+        }
     }
 }

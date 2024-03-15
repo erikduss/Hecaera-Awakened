@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "A.I/States/Idle")]
-public class IdleState : AIState
+namespace Erikduss
 {
-    public override AIState Tick(AICharacterManager aiCharacter)
+    [CreateAssetMenu(menuName = "A.I/States/Idle")]
+    public class IdleState : AIState
     {
-        if(aiCharacter.characterCombatManager.currentTarget != null)
+        public override AIState Tick(AICharacterManager aiCharacter)
         {
-            return SwitchState(aiCharacter, aiCharacter.pursueTarget);
+            if (aiCharacter.characterCombatManager.currentTarget != null)
+            {
+                return SwitchState(aiCharacter, aiCharacter.pursueTarget);
+            }
+            else
+            {
+                //return this state to continually search for a target
+                aiCharacter.aICharacterCombatManager.FindATargetViaLineOfSight(aiCharacter);
+                return this;
+            }
         }
-        else
-        {
-            //return this state to continually search for a target
-            aiCharacter.aICharacterCombatManager.FindATargetViaLineOfSight(aiCharacter);
-            return this;
-        }
+
     }
 }

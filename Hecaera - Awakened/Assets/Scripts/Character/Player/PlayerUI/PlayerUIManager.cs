@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class PlayerUIManager : MonoBehaviour
+namespace Erikduss
 {
-    private static PlayerUIManager _instance;
-    public static PlayerUIManager instance { get { return _instance; } }
-
-    [HideInInspector] public PlayerUIHudManager playerUIHudManager;
-    [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
-
-    private void Awake()
+    public class PlayerUIManager : MonoBehaviour
     {
-        if (instance == null)
+        private static PlayerUIManager _instance;
+        public static PlayerUIManager instance { get { return _instance; } }
+
+        [HideInInspector] public PlayerUIHudManager playerUIHudManager;
+        [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
+
+        private void Awake()
         {
-            _instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (instance == null)
+            {
+                _instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
+            playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
         }
 
-        playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
-        playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
-    }
-
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
+        private void Start()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

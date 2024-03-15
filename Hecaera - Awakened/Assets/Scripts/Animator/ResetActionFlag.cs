@@ -2,54 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResetActionFlag : StateMachineBehaviour
+namespace Erikduss
 {
-    CharacterManager character;
-
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public class ResetActionFlag : StateMachineBehaviour
     {
-        if(character == null)
+        CharacterManager character;
+
+        // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+        override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            character = animator.GetComponent<CharacterManager>();
+            if (character == null)
+            {
+                character = animator.GetComponent<CharacterManager>();
+            }
+
+            //This is called when an action ends and the state returns to empty.
+            character.isPerformingAction = false;
+            character.characterAnimatorManager.applyRootMotion = false;
+            character.characterLocomotionManager.canMove = true;
+            character.characterLocomotionManager.canRotate = true;
+            character.characterLocomotionManager.isRolling = false;
+            character.characterAnimatorManager.DisableCanDoCombo();
+
+            if (character.IsOwner)
+            {
+                character.characterNetworkManager.isJumping.Value = false;
+                character.characterNetworkManager.isInvincible.Value = false;
+            }
         }
 
-        //This is called when an action ends and the state returns to empty.
-        character.isPerformingAction = false;
-        character.characterAnimatorManager.applyRootMotion = false;
-        character.characterLocomotionManager.canMove = true;
-        character.characterLocomotionManager.canRotate = true;
-        character.characterLocomotionManager.isRolling = false;
-        character.characterAnimatorManager.DisableCanDoCombo();
+        // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+        //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        //{
+        //    
+        //}
 
-        if (character.IsOwner)
-        {
-            character.characterNetworkManager.isJumping.Value = false;
-            character.characterNetworkManager.isInvincible.Value = false;
-        }
+        // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+        //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        //{
+        //    
+        //}
+
+        // OnStateMove is called right after Animator.OnAnimatorMove()
+        //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        //{
+        //    // Implement code that processes and affects root motion
+        //}
+
+        // OnStateIK is called right after Animator.OnAnimatorIK()
+        //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        //{
+        //    // Implement code that sets up animation IK (inverse kinematics)
+        //}
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

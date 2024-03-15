@@ -6,73 +6,76 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WorldAIManager : MonoBehaviour
+namespace Erikduss
 {
-    public static WorldAIManager Instance;
-
-    [Header("Characters")]
-    [SerializeField] List<AICharacterSpawner> aiCharacterSpawners;
-    [SerializeField] List<AICharacterManager> spawnedInCharacters;
-
-    [Header("Bosses")]
-    [SerializeField] List<AIBossCharacterManager> spawnedInBosses;
-
-    private void Awake()
+    public class WorldAIManager : MonoBehaviour
     {
-        if (Instance == null)
+        public static WorldAIManager Instance;
+
+        [Header("Characters")]
+        [SerializeField] List<AICharacterSpawner> aiCharacterSpawners;
+        [SerializeField] List<AICharacterManager> spawnedInCharacters;
+
+        [Header("Bosses")]
+        [SerializeField] List<AIBossCharacterManager> spawnedInBosses;
+
+        private void Awake()
         {
-            Instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        else
+
+        public void SpawnCharacter(AICharacterSpawner aiCharacterSpawner)
         {
-            Destroy(gameObject);
+            if (NetworkManager.Singleton.IsServer)
+            {
+                aiCharacterSpawners.Add(aiCharacterSpawner);
+                aiCharacterSpawner.AttemptToSpawnCharacter();
+            }
         }
-    }
 
-    public void SpawnCharacter(AICharacterSpawner aiCharacterSpawner)
-    {
-        if (NetworkManager.Singleton.IsServer)
+        public void AddCharacterToSpawnedCharactersList(AICharacterManager character)
         {
-            aiCharacterSpawners.Add(aiCharacterSpawner);
-            aiCharacterSpawner.AttemptToSpawnCharacter();
-        }
-    }
-
-    public void AddCharacterToSpawnedCharactersList(AICharacterManager character)
-    {
-        if (spawnedInCharacters.Contains(character))
-            return;
-
-        spawnedInCharacters.Add(character);
-
-        AIBossCharacterManager bossCharacter = character as AIBossCharacterManager;
-
-        if (bossCharacter != null)
-        {
-            if (spawnedInBosses.Contains(bossCharacter))
+            if (spawnedInCharacters.Contains(character))
                 return;
 
-            spawnedInBosses.Add(bossCharacter);
+            spawnedInCharacters.Add(character);
+
+            AIBossCharacterManager bossCharacter = character as AIBossCharacterManager;
+
+            if (bossCharacter != null)
+            {
+                if (spawnedInBosses.Contains(bossCharacter))
+                    return;
+
+                spawnedInBosses.Add(bossCharacter);
+            }
         }
-    }
 
-    public AIBossCharacterManager GetBossCharacterByID(int id)
-    {
-        return spawnedInBosses.FirstOrDefault(boss => boss.bossID == id);
-    }
-
-    private void DespawnAllCharacters()
-    {
-        foreach(AICharacterManager character in spawnedInCharacters)
+        public AIBossCharacterManager GetBossCharacterByID(int id)
         {
-            character.GetComponent<NetworkObject>().Despawn();
+            return spawnedInBosses.FirstOrDefault(boss => boss.bossID == id);
         }
-    }
 
-    private void DisableAllCharacters()
-    {
-        //disable character gameobjects, sync disabled status on network.
-        //disable gameobjects upon connecting
-        //can be used to disable characters that are far from players to save memory.
+        private void DespawnAllCharacters()
+        {
+            foreach (AICharacterManager character in spawnedInCharacters)
+            {
+                character.GetComponent<NetworkObject>().Despawn();
+            }
+        }
+
+        private void DisableAllCharacters()
+        {
+            //disable character gameobjects, sync disabled status on network.
+            //disable gameobjects upon connecting
+            //can be used to disable characters that are far from players to save memory.
+        }
     }
 }

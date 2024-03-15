@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantMagicAttack : Projectile
+namespace Erikduss
 {
-    [SerializeField] private float projectileSpeed = 2f;
-    [SerializeField] private float downwardsVelocity = 1f;
-
-    protected override void Update()
+    public class InstantMagicAttack : Projectile
     {
-        base.Update();
+        [SerializeField] private float projectileSpeed = 2f;
+        [SerializeField] private float downwardsVelocity = 1f;
 
-        if (objectEnabled.Value)
+        protected override void Update()
         {
-            rb.velocity = transform.forward * projectileSpeed;
+            base.Update();
+
+            if (objectEnabled.Value)
+            {
+                rb.velocity = transform.forward * projectileSpeed;
+            }
+
         }
-            
     }
 }

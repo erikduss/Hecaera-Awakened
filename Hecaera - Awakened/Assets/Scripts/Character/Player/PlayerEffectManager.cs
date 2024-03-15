@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEffectManager : CharacterEffectsManager
+namespace Erikduss
 {
-    [Header("Dedug Delete Later")]
-    [SerializeField] InstantCharacterEffect effectToTest;
-    [SerializeField] bool processEffect = false;
-
-    private void Update()
+    public class PlayerEffectManager : CharacterEffectsManager
     {
-        if (processEffect)
+        [Header("Dedug Delete Later")]
+        [SerializeField] InstantCharacterEffect effectToTest;
+        [SerializeField] bool processEffect = false;
+
+        private void Update()
         {
-            processEffect = false;
-            //Using an instantiate, if not using instantiate it will change values in the inspector instead, destroying all the base values.
-            InstantCharacterEffect effect = Instantiate(effectToTest);
-            ProcessInstantEffect(effect);
+            if (processEffect)
+            {
+                processEffect = false;
+                //Using an instantiate, if not using instantiate it will change values in the inspector instead, destroying all the base values.
+                InstantCharacterEffect effect = Instantiate(effectToTest);
+                ProcessInstantEffect(effect);
+            }
         }
     }
 }
