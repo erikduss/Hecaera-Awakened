@@ -17,7 +17,7 @@ namespace Erikduss
         [SerializeField] List<AICharacterManager> spawnedInCharacters;
 
         [Header("Bosses")]
-        [SerializeField] List<AIBossCharacterManager> spawnedInBosses;
+        public List<AIBossCharacterManager> spawnedInBosses;
 
         private void Awake()
         {

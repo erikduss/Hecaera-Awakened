@@ -18,6 +18,15 @@ namespace Erikduss
 
         private void Start()
         {
+            StartCoroutine(SpawnObject());
+        }
+
+        private IEnumerator SpawnObject()
+        {
+            //We want to wait till the character spawn in first. This is to prevent issues with objects not being correctly linked to a character.
+            while (WorldAIManager.Instance.spawnedInBosses.Count == 0)
+                yield return new WaitForEndOfFrame();
+
             WorldObjectManager.Instance.SpawnObject(this);
             gameObject.SetActive(false);
         }

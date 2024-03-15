@@ -49,35 +49,12 @@ namespace Erikduss
                     hasBeenAwakened.Value = WorldSaveGameManager.instance.currentCharacterData.bossesAwakened[bossID];
                 }
 
-                StartCoroutine(GetFogWallsFromWorldObjectManager());
-
                 //the fogwalls are active in the build, shouldnt happen.
+                //Besides, this only happens when joining into the game scene. So it should ALWAYS be false when joining the game scene.
                 hasBeenAwakened.Value = false;
                 hasBeenDefeated.Value = false;
 
-                if (hasBeenAwakened.Value && !hasBeenDefeated.Value) //if the boss is awakened but not defeated
-                {
-                    for (int i = 0; i < fogWalls.Count; i++)
-                    {
-                        fogWalls[i].isActive.Value = true;
-                    }
-                }
-                else if (hasBeenDefeated.Value) //if the boss is defeated
-                {
-                    for (int i = 0; i < fogWalls.Count; i++)
-                    {
-                        fogWalls[i].isActive.Value = false;
-                    }
-
-                    aICharacterNetworkManager.isActive.Value = false;
-                }
-                else //If the boss is not interacted with yet.
-                {
-                    for (int i = 0; i < fogWalls.Count; i++)
-                    {
-                        fogWalls[i].isActive.Value = false;
-                    }
-                }
+                StartCoroutine(GetFogWallsFromWorldObjectManager());
             }
 
             if (!hasBeenAwakened.Value)
@@ -102,11 +79,33 @@ namespace Erikduss
 
             foreach (var fogWall in WorldObjectManager.Instance.fogWalls)
             {
-                Debug.Log("Add fog walls");
                 if (fogWall.fogWallID == bossID)
                 {
-                    Debug.Log("Found matching fog wall");
                     fogWalls.Add(fogWall);
+                }
+            }
+
+            if (hasBeenAwakened.Value && !hasBeenDefeated.Value) //if the boss is awakened but not defeated
+            {
+                for (int i = 0; i < fogWalls.Count; i++)
+                {
+                    fogWalls[i].isActive.Value = true;
+                }
+            }
+            else if (hasBeenDefeated.Value) //if the boss is defeated
+            {
+                for (int i = 0; i < fogWalls.Count; i++)
+                {
+                    fogWalls[i].isActive.Value = false;
+                }
+
+                aICharacterNetworkManager.isActive.Value = false;
+            }
+            else //If the boss is not interacted with yet.
+            {
+                for (int i = 0; i < fogWalls.Count; i++)
+                {
+                    fogWalls[i].isActive.Value = false;
                 }
             }
         }
@@ -152,6 +151,8 @@ namespace Erikduss
         {
             if (IsOwner)
             {
+                Debug.Log("Boss is being woken up");
+
                 if (!hasBeenAwakened.Value)
                 {
                     characterAnimatorManager.PlayTargetActionAnimation(awakenAnimation, true);
