@@ -63,6 +63,8 @@ namespace Erikduss
 
         public bool back_Input = false;
 
+        private bool eventControlsDisabled = false;
+
         private void Awake()
         {
             if (Instance == null)
@@ -93,7 +95,23 @@ namespace Erikduss
 
         private void Update()
         {
-            if (!settingsGraphicsMenu.gameObject.activeSelf) return;
+            if (!settingsMenuGameObject.gameObject.activeSelf)
+            {
+                //if (eventControlsDisabled)
+                //{
+                //    //event controls need to be enabled again if they are disabled
+                //    eventControlsDisabled = false;
+                //    currentEventSystem.GetComponent<InputSystemUIInputModule>().enabled = true;
+                //}
+                //return;
+            }
+
+            if (!eventControlsDisabled)
+            {
+                ////event controls need to be disabled if they are enabled to prevent it applying twice.
+                //eventControlsDisabled = true;
+                //currentEventSystem.GetComponent<InputSystemUIInputModule>().enabled = false;
+            }
 
             if (saveSettings)
             {
@@ -101,9 +119,17 @@ namespace Erikduss
                 SaveSettings();
             }
 
-            HandleButtonNorthInput();
-            HandleButtonSouthInput();
+            if (!settingsMenuGameObject.gameObject.activeSelf) return;
+
+            //HandleButtonNorthInput();
+            //HandleButtonSouthInput();
             HandleButtonBackInput();
+        }
+
+        private void ToggleEventSystemControls()
+        {
+            eventControlsDisabled = true;
+            currentEventSystem.GetComponent<InputSystemUIInputModule>().enabled = false;
         }
 
         private void HandleButtonNorthInput()

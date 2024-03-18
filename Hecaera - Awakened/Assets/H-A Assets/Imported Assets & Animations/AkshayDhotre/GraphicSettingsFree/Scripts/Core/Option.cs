@@ -25,7 +25,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
 
         public bool canCycleBack = true;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if(fallBackOption.name == "")
             {
@@ -41,7 +41,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         /// <summary>
         /// Changes the suboptiontext value to the current suboption name
         /// </summary>
-        public void UpdateSuboptionText()
+        protected virtual void UpdateSuboptionText()
         {
             if(currentSubOption != null)
             {
@@ -57,7 +57,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         /// <summary>
         /// Selects the next sub option in the list. If the current suboption is the last element in the list, the first element will be selected
         /// </summary>
-        public void SelectNextSubOption()
+        public virtual void SelectNextSubOption()
         {
             if (currentSubOptionIndex >= (subOptionList.Count - 1))
             {
@@ -72,7 +72,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         /// <summary>
         /// Selects the next sub option in the list. If the current suboption is the first element in the list, the last element will be selected
         /// </summary>
-        public void SelectPreviousSubOption()
+        public virtual void SelectPreviousSubOption()
         {
             if (currentSubOptionIndex <= 0)
             {
@@ -88,7 +88,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         /// Gets the next suboption index for cycling through the options
         /// </summary>
         /// <returns></returns>
-        private int GetNextSuboptionIndex()
+        public virtual int GetNextSuboptionIndex()
         {
             return GetNextValue(currentSubOptionIndex, subOptionList.Count);
         }
@@ -97,7 +97,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         /// Gets the previous suboption index for cycling through the options 
         /// </summary>
         /// <returns></returns>
-        private int GetPreviousSubOptionIndex()
+        public virtual int GetPreviousSubOptionIndex()
         {
             return GetPreviousValue(currentSubOptionIndex, subOptionList.Count);
         }
@@ -108,7 +108,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         /// <param name="currentVal"></param>
         /// <param name="maxVal"></param>
         /// <returns></returns>
-        private int GetNextValue(int currentVal, int maxVal)
+        protected virtual int GetNextValue(int currentVal, int maxVal)
         {
             if (currentVal >= maxVal - 1)
             {
@@ -126,7 +126,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         /// <param name="currentVal"></param>
         /// <param name="maxVal"></param>
         /// <returns></returns>
-        private int GetPreviousValue(int currentVal, int maxVal)
+        protected virtual int GetPreviousValue(int currentVal, int maxVal)
         {
             if (currentVal == 0)
                 return maxVal - 1;

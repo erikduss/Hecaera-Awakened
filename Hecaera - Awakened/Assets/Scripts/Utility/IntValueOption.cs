@@ -2,6 +2,7 @@ using AkshayDhotre.GraphicSettingsMenu;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Erikduss
 {
@@ -11,9 +12,11 @@ namespace Erikduss
         [SerializeField] private int maxValue;
         [SerializeField] private int minValue;
 
-        private void Awake()
+        [SerializeField] private Slider valueSlider;
+
+        protected override void Awake()
         {
-            Initialize();
+            //Initialize();
         }
 
         public void Initialize()
@@ -53,13 +56,69 @@ namespace Erikduss
             }
         }
 
+        public override void SelectNextSubOption()
+        {
+            //Prevent cycle if disabled
+            if (currentSubOptionIndex >= (subOptionList.Count - 1))
+            {
+                if (!canCycleBack) return;
+            }
 
-        /// <summary>
-        /// Goes through the list of the suboptions and then finds the suboption which has value equal to the input value
-        /// and assigns that sub option as the current sub option
-        /// </summary>
-        /// <param name="v"></param>
-        public void SetCurrentsuboptionByValue(int v)
+            currentSubOptionIndex = GetNextValue(0,0);
+
+            int fixedIndex = currentSubOptionIndex + Mathf.Abs(minValue); //The index needs to consider there can be minus values but not minus indexes.
+
+            currentSubOption = subOptionList[fixedIndex];
+            UpdateSuboptionText();
+
+            valueSlider.value = currentSubOption.integerValue;
+        }
+        public override void SelectPreviousSubOption()
+        {
+            //Prevent cycle if disabled
+            if (currentSubOptionIndex <= minValue)
+            {
+                if (!canCycleBack) return;
+            }
+
+            currentSubOptionIndex = GetPreviousValue(0,0);
+
+            int fixedIndex = currentSubOptionIndex + Mathf.Abs(minValue); //The index needs to consider there can be minus values but not minus indexes.
+
+            currentSubOption = subOptionList[fixedIndex];
+            UpdateSuboptionText();
+
+            valueSlider.value = currentSubOption.integerValue;
+        }
+
+        protected override int GetNextValue(int currentVal, int maxVal)
+        {
+            //Dont move further or cycle back when reaching the max
+            if (currentSubOptionIndex >= maxValue)
+            {
+                return currentSubOptionIndex;
+            }
+            else
+            {
+                return currentSubOptionIndex + 1;
+            }
+        }
+
+        protected override int GetPreviousValue(int currentVal, int maxVal)
+        {
+            //Done move back or cycle forward if reaching the minimum.
+            if (currentSubOptionIndex == minValue)
+                return minValue;
+
+            return currentSubOptionIndex - 1;
+        }
+
+    /// <summary>
+    /// Goes through the list of the suboptions and then finds the suboption which has value equal to the input value
+    /// and assigns that sub option as the current sub option
+    /// </summary>
+    /// <param name="v"></param>
+    public void SetCurrentsuboptionByValue(int v)
         {
             if (subOptionList.Count > 0)
             {

@@ -64,7 +64,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         {
             /// The controls works only if this method returns true
             //Gets the top most parent, and it the canvas component is enabled the menu is active!
-            if (transform.root.GetComponent<Canvas>().enabled)
+            if (SettingsMenuManager.Instance.settingsMenuGameObject.gameObject.activeSelf)
             {
                 return true;
             }
