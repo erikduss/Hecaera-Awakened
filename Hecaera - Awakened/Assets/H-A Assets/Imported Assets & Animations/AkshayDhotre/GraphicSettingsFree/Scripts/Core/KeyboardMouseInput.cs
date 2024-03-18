@@ -66,6 +66,8 @@ namespace AkshayDhotre.GraphicSettingsMenu
             //Gets the top most parent, and it the canvas component is enabled the menu is active!
             if (SettingsMenuManager.Instance.settingsMenuGameObject.gameObject.activeSelf)
             {
+                if (PlayerUIManager.instance.playerUIPopUpManager.abandonChangedSettingsPopUp.activeSelf) return false;
+
                 return true;
             }
 

@@ -31,7 +31,7 @@ namespace AkshayDhotre.GraphicSettingsMenu
         public KeyCode keyboardApplySettingsKey = KeyCode.Return;
 
         private GraphicSettingDataContainer dataToSave = new GraphicSettingDataContainer();//Data to be saved will be stored in this 
-        private GraphicSettingDataContainer dataToLoad = new GraphicSettingDataContainer();//Data will be loaded into this 
+        public GraphicSettingDataContainer dataToLoad = new GraphicSettingDataContainer();//Data will be loaded into this 
 
         private GraphicSettingSaveManager graphicSettingSaveManager;
 
@@ -155,6 +155,20 @@ namespace AkshayDhotre.GraphicSettingsMenu
             dataToSave.verticalSensitivity = verticalSensitivityOption.currentSubOption.integerValue;
 
             graphicSettingSaveManager.SaveSettings(dataToSave);
+
+            //Also update the loaded data.
+            dataToLoad.screenHeight = (int)resolutionOption.currentSubOption.vector2Value.y;
+            dataToLoad.screenWidth = (int)resolutionOption.currentSubOption.vector2Value.x;
+            dataToLoad.screenMode = screenmodeOption.currentSubOption.integerValue;
+            dataToLoad.qualityLevel = qualityLevelOption.currentSubOption.integerValue;
+
+            dataToLoad.mainVolume = mainVolumeOption.currentSubOption.integerValue;
+            dataToLoad.musicVolume = musicVolumeOption.currentSubOption.integerValue;
+            dataToLoad.sfxVolume = sfxVolumeOption.currentSubOption.integerValue;
+            dataToLoad.dialogVolume = dialogVolumeOption.currentSubOption.integerValue;
+
+            dataToLoad.horizontalSensitivity = horizontalSensitivityOption.currentSubOption.integerValue;
+            dataToLoad.verticalSensitivity = verticalSensitivityOption.currentSubOption.integerValue;
         }
 
         /// <summary>

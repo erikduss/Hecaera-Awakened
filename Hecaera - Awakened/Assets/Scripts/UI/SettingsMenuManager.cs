@@ -292,12 +292,12 @@ namespace Erikduss
         {
             tempSettingsData = new SettingsSaveData
             {
-                mainVolume = settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue,
-                musicVolume = settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue,
-                SFXVolume = settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue,
-                dialogVolume = settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue,
-                horizontalSensitivity = settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue,
-                verticalSensitivity = settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue
+                mainVolume = settingsGraphicsMenu.dataToLoad.mainVolume,
+                musicVolume = settingsGraphicsMenu.dataToLoad.musicVolume,
+                SFXVolume = settingsGraphicsMenu.dataToLoad.sfxVolume,
+                dialogVolume = settingsGraphicsMenu.dataToLoad.dialogVolume,
+                horizontalSensitivity = settingsGraphicsMenu.dataToLoad.horizontalSensitivity,
+                verticalSensitivity = settingsGraphicsMenu.dataToLoad.verticalSensitivity
             };
 
             mainVolumeSlider.value = tempSettingsData.mainVolume;
@@ -324,12 +324,12 @@ namespace Erikduss
         {
             //check if settings are changed (different from save file)
             if (
-                tempSettingsData.mainVolume != settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue
-                || tempSettingsData.musicVolume != settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue
-                || tempSettingsData.SFXVolume != settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue
-                || tempSettingsData.dialogVolume != settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue
-                || tempSettingsData.horizontalSensitivity != settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue
-                || tempSettingsData.verticalSensitivity != settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue)
+                settingsGraphicsMenu.dataToLoad.mainVolume != settingsGraphicsMenu.mainVolumeOption.currentSubOption.integerValue
+                || settingsGraphicsMenu.dataToLoad.musicVolume != settingsGraphicsMenu.musicVolumeOption.currentSubOption.integerValue
+                || settingsGraphicsMenu.dataToLoad.sfxVolume != settingsGraphicsMenu.sfxVolumeOption.currentSubOption.integerValue
+                || settingsGraphicsMenu.dataToLoad.dialogVolume != settingsGraphicsMenu.dialogVolumeOption.currentSubOption.integerValue
+                || settingsGraphicsMenu.dataToLoad.horizontalSensitivity != settingsGraphicsMenu.horizontalSensitivityOption.currentSubOption.integerValue
+                || settingsGraphicsMenu.dataToLoad.verticalSensitivity != settingsGraphicsMenu.verticalSensitivityOption.currentSubOption.integerValue)
             {
                 PlayerUIManager.instance.playerUIPopUpManager.DisplayAbandonChangedSettingsPopUp();
             }
@@ -342,6 +342,7 @@ namespace Erikduss
             }
         }
 
+        //not used
         public void ReturnToButtonPanelInGame()
         {
             //check if settings are changed (different from save file)

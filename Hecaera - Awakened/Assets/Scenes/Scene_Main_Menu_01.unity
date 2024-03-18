@@ -46399,10 +46399,22 @@ PrefabInstance:
     - target: {fileID: 551051637, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 70664134}
+      objectReference: {fileID: 642510520}
+    - target: {fileID: 551051637, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RevertSettingsChanges
+      objectReference: {fileID: 0}
+    - target: {fileID: 551051637, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Erikduss.PlayerUIPopUpManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 578764554, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612376651, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -172.19699
       objectReference: {fileID: 0}
     - target: {fileID: 613239903, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_AnchorMax.y
@@ -46634,11 +46646,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1573248010, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1573248010, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.6990599
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1659808125, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_AnchorMax.x
@@ -46703,7 +46715,15 @@ PrefabInstance:
     - target: {fileID: 1960735781, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 70664134}
+      objectReference: {fileID: 642510520}
+    - target: {fileID: 1960735781, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseAbandonChangedSettingsPopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960735781, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Erikduss.PlayerUIPopUpManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1980661153, guid: ef9838717b1bcff4d88e906521dade34, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

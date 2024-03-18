@@ -25,7 +25,7 @@ namespace Erikduss
 
         [Header("Settings")]
         [SerializeField] GameObject settingsMenu;
-        [SerializeField] GameObject abandonChangedSettingsPopUp;
+        [SerializeField] public GameObject abandonChangedSettingsPopUp;
         [SerializeField] Button returnFromSettingsButton;
         [SerializeField] Button abandonChangedSettingsConfirmButton;
 
@@ -178,11 +178,13 @@ namespace Erikduss
 
         public void RevertSettingsChanges()
         {
-            abandonChangedSettingsPopUp.SetActive(false);
+            //abandonChangedSettingsPopUp.SetActive(false);
             //reset settings!
             SettingsMenuManager.Instance.SetAllSettingsFromLoadedSettingsData();
 
-            CloseSettingsMenu(false);
+            //CloseSettingsMenu(false);
+
+            CloseAbandonChangedSettingsPopUp();
         }
 
         public void DisplayAbandonChangedSettingsPopUp()
