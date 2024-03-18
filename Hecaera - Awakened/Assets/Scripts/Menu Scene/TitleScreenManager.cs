@@ -188,5 +188,10 @@ namespace Erikduss
             deleteCharacterSlotPopUp.SetActive(false);
             loadMenureturnButton.Select();
         }
+
+        public void LaunchExperimentalScene()
+        {
+            SceneManager.LoadScene("LoadingToExperimental");
+        }
     }
 }

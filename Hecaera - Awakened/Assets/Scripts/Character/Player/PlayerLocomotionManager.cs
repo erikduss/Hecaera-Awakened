@@ -311,6 +311,8 @@ namespace Erikduss
             if (!player.characterLocomotionManager.isGrounded)
                 return;
 
+            if (currentGravityForce == 0) currentGravityForce = gravityForce;
+
             player.playerAnimatorManager.PlayTargetActionAnimation("Main_Jump_Start_01", false, true, true);
 
             if (player.IsOwner)

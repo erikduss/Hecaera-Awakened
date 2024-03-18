@@ -374,6 +374,7 @@ namespace Erikduss
 
         public int GetWorldSceneIndex()
         {
+            if (worldSceneName != "Scene_World_01") return 6;
             return worldSceneIndex;
         }
     }

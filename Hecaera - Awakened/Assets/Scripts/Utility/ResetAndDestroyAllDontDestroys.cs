@@ -8,6 +8,7 @@ namespace Erikduss
     public class ResetAndDestroyAllDontDestroys : MonoBehaviour
     {
         public bool startedDestroying = false;
+        public string sceneNameToLoadTo = "Scene_Main_Menu_01";
 
         // Start is called before the first frame update
         void Start()
@@ -60,7 +61,7 @@ namespace Erikduss
                 && WorldSoundFXManager.instance == null && WorldItemDatabase.Instance == null && WorldProjectilesManager.Instance == null
                 && WorldActionManager.Instance == null && PlayerMaterialManagement.Instance == null && WorldSaveGameManager.instance == null)
             {
-                SceneManager.LoadScene(0); //go back to splash screen
+                SceneManager.LoadScene(sceneNameToLoadTo); //go back to splash screen
             }
             else
             {
