@@ -26326,7 +26326,7 @@ GameObject:
   - component: {fileID: 7103346325821213038}
   - component: {fileID: 5681364539109499207}
   - component: {fileID: 7792350104226931290}
-  - component: {fileID: 5944266067660266681}
+  - component: {fileID: 7484811064334558451}
   - component: {fileID: 6574639782395816544}
   - component: {fileID: 6251472098008579525}
   - component: {fileID: 4778982041209353734}
@@ -26441,7 +26441,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &5944266067660266681
+--- !u!114 &7484811064334558451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26450,7 +26450,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7629088378785764308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8ed6f4a2c9aa2146895eba575db23f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 287c271703a8857479cf9244bcf64c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActive:
@@ -26493,9 +26493,9 @@ MonoBehaviour:
   maxStamina:
     m_InternalValue: 0
   currentHealth:
-    m_InternalValue: 1000
+    m_InternalValue: 0
   maxHealth:
-    m_InternalValue: 1000
+    m_InternalValue: 0
 --- !u!114 &6574639782395816544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26597,6 +26597,9 @@ MonoBehaviour:
   fogWalls: []
   sleepAnimation: Sleep_01
   awakenAnimation: Awaken_01
+  minimumHealthPercentageToShift: 0
+  phaseShiftAnimation: Phase_Change_01
+  phase02CombatStanceState: {fileID: 11400000, guid: 2d662a9cf167663478132413e68dbda2, type: 2}
   sleepState: {fileID: 11400000, guid: dc6b106d7b0945c4ca87ee9b13d44314, type: 2}
 --- !u!114 &7690259612933351878
 MonoBehaviour:
@@ -26845,7 +26848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7652824055540532481}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: -0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

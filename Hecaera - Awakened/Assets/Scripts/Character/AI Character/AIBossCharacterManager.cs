@@ -19,6 +19,11 @@ namespace Erikduss
         [SerializeField] string sleepAnimation;
         [SerializeField] string awakenAnimation;
 
+        [Header("Phase Shift")]
+        public float minimumHealthPercentageToShift = 0;
+        [SerializeField] string phaseShiftAnimation = "Phase_Change_01";
+        [SerializeField] CombatStanceState phase02CombatStanceState;
+
         [Header("States")]
         [SerializeField] BossSleepState sleepState;
 
@@ -112,12 +117,18 @@ namespace Erikduss
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
+            PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("IXELECE DEFEATED");
             if (IsOwner)
             {
                 characterNetworkManager.currentHealth.Value = 0;
                 characterNetworkManager.isDead.Value = true;
 
                 bossFightIsActive.Value = false;
+
+                foreach(var fogWall in fogWalls)
+                {
+                    fogWall.isActive.Value = false;
+                }
 
                 if (!manuallySelectDeathAnimation)
                 {
@@ -189,8 +200,19 @@ namespace Erikduss
                 UI_Boss_HP_Bar bossHPBar = bossHealthBar.GetComponentInChildren<UI_Boss_HP_Bar>();
                 bossHPBar.EnableBossHPBar(this);
 
-                WorldSoundFXManager.instance.worldMusicSource.PlayOneShot(WorldSoundFXManager.instance.ixeleceBossFightPhase1Music);
+                WorldSoundFXManager.instance.PlayBossTrack(WorldSoundFXManager.instance.ixeleceBossFightIntroMusic, WorldSoundFXManager.instance.ixeleceBossFightPhase1Music);
             }
+            else
+            {
+                WorldSoundFXManager.instance.StopBossTrack();
+            }
+        }
+
+        public void PhaseShift()
+        {
+            characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
+            combbatStance = Instantiate(phase02CombatStanceState);
+            currentState = combbatStance;
         }
     }
 }

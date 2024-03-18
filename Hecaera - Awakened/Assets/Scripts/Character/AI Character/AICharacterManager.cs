@@ -45,9 +45,20 @@ namespace Erikduss
                 //use a copy so the original is not modified.
                 idle = Instantiate(idle);
                 pursueTarget = Instantiate(pursueTarget);
+                combbatStance = Instantiate(combbatStance);
+                attack = Instantiate(attack);
 
                 currentState = idle;
             }
+
+            aICharacterNetworkManager.currentHealth.OnValueChanged += aICharacterNetworkManager.CheckHP;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+
+            aICharacterNetworkManager.currentHealth.OnValueChanged -= aICharacterNetworkManager.CheckHP;
         }
 
         protected override void Update()

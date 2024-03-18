@@ -17,6 +17,12 @@ namespace Erikduss
         [SerializeField] TextMeshProUGUI youDiedPopUpText;
         [SerializeField] CanvasGroup youDiedPopUpCanvasGroup;
 
+        [Header("BOSS DEFEATED Pop Up")]
+        [SerializeField] GameObject bossDefeatedPopUpGameObject;
+        [SerializeField] TextMeshProUGUI bossDefeatedPopUpBackgroundText;
+        [SerializeField] TextMeshProUGUI bossDefeatedPopUpText;
+        [SerializeField] CanvasGroup bossDefeatedPopUpCanvasGroup;
+
         [Header("Menu Buttons Pop Up")]
         public bool buttonsMenuIsOpen = false;
         [SerializeField] GameObject menuButtonsPopUpGameObject;
@@ -45,6 +51,18 @@ namespace Erikduss
             StartCoroutine(StretchPopUpTextOverTime(youDiedPopUpBackgroundText, 8, 19f));
             StartCoroutine(FadeInPopUpOverTimer(youDiedPopUpCanvasGroup, 5));
             StartCoroutine(WaitThenFadeOutPopUpOverTime(youDiedPopUpCanvasGroup, 2, 5));
+        }
+
+        public void SendBossDefeatedPopUp(string bossDefeatedMessage)
+        {
+            bossDefeatedPopUpText.text = bossDefeatedMessage;
+            bossDefeatedPopUpBackgroundText.text = bossDefeatedMessage;
+
+            bossDefeatedPopUpGameObject.SetActive(true);
+            bossDefeatedPopUpBackgroundText.characterSpacing = 0;
+            StartCoroutine(StretchPopUpTextOverTime(bossDefeatedPopUpBackgroundText, 8, 19f));
+            StartCoroutine(FadeInPopUpOverTimer(bossDefeatedPopUpCanvasGroup, 5));
+            StartCoroutine(WaitThenFadeOutPopUpOverTime(bossDefeatedPopUpCanvasGroup, 2, 5));
         }
 
         private IEnumerator StretchPopUpTextOverTime(TextMeshProUGUI text, float duration, float stretchAmount)

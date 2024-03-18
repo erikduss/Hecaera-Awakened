@@ -39,7 +39,7 @@ namespace Erikduss
 
         public void RemoveHPBar(float time)
         {
-            Destroy(gameObject, time);
+            Destroy(gameObject.transform.parent.gameObject, time);
         }
     }
 }
