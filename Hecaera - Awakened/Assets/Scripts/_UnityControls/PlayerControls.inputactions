@@ -243,6 +243,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Que RB",
+                    "type": "Button",
+                    "id": "e5faf00a-357d-4a81-b938-6c547eb5089b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "LB",
                     "type": "Button",
                     "id": "3fc80412-698d-46ef-baf9-d27794e3bcee",
@@ -252,9 +261,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Que LB",
+                    "type": "Button",
+                    "id": "9654acb8-8d8d-4869-8ebe-369a4dc54174",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "RT",
                     "type": "Button",
                     "id": "50ea8b9e-4648-4962-887c-2c16c750d80b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Que RT",
+                    "type": "Button",
+                    "id": "5373888e-b8e8-4fbd-8e22-c50143cc0f27",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -555,6 +582,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenButtonsMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "951ac085-2d60-48ac-8e0e-3be6d0d27ee9",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Que RB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bca77b12-50bd-4d23-8d00-21a5f7e1d71d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Que RB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b9d0c2c-fd33-4c62-9507-324042dccd65",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Que RT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef0cc37c-ec46-4225-8d96-45d4b14266d7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Que RT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64135705-85ea-4e92-92d4-8f7507cb79f0",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Que LB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d86660a9-f3ca-4238-b8a0-b4043de77dc2",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Que LB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

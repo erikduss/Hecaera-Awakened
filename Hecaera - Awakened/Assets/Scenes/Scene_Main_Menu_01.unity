@@ -14158,6 +14158,10 @@ MonoBehaviour:
   LB_Input: 0
   RT_Input: 0
   Hold_RT_Input: 0
+  que_Input_Timer: 0
+  default_Que_Input_Time: 0.35
+  que_RB_Input: 0
+  que_RT_Input: 0
   openMenuButton_Input: 0
 --- !u!1 &982515391
 GameObject:
@@ -46230,6 +46234,10 @@ PrefabInstance:
     - target: {fileID: 4516241446513854362, guid: 34a674e64b6107e4488674413595b1e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160223673806622215, guid: 34a674e64b6107e4488674413595b1e6, type: 3}
+      propertyPath: cameraSmoothSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34a674e64b6107e4488674413595b1e6, type: 3}

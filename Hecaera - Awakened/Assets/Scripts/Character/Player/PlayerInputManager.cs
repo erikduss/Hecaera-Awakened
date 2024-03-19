@@ -41,6 +41,14 @@ namespace Erikduss
         [SerializeField] bool RT_Input = false;
         [SerializeField] bool Hold_RT_Input = false;
 
+        [Header("Qued Inputs")]
+        private bool input_Que_Is_Active = false;
+        [SerializeField] float que_Input_Timer = 0;
+        [SerializeField] float default_Que_Input_Time = 0.35f;
+        [SerializeField] bool que_RB_Input = false;
+        [SerializeField] bool que_RT_Input = false;
+        [SerializeField] bool que_LB_Input = false;
+
         [Header("Menu Input")]
         [SerializeField] bool openMenuButton_Input = false;
 
@@ -134,6 +142,11 @@ namespace Erikduss
 
                 //Menu Input
                 playerControls.PlayerActions.OpenButtonsMenu.performed += i => openMenuButton_Input = true;
+
+                //Qued Inputs
+                playerControls.PlayerActions.QueRB.performed += i => QueInput(ref que_RB_Input);
+                playerControls.PlayerActions.QueRT.performed += i => QueInput(ref que_RT_Input);
+                playerControls.PlayerActions.QueLB.performed += i => QueInput(ref que_LB_Input);
             }
 
             playerControls.Enable();
@@ -189,6 +202,7 @@ namespace Erikduss
             HandleRTInput();
             HandleHoldRTInput();
             HandleLBInput();
+            HandleQuedInputs();
         }
 
         private void ResetInputBoolsWhileMenuIsOpen()
@@ -434,6 +448,61 @@ namespace Erikduss
             if (player.isPerformingAction)
             {
                 player.playerNetworkManager.isChargingAttack.Value = Hold_RT_Input;
+            }
+        }
+
+        //Is called by all inputs, and sets the passed on ref to true and all the other ones to false.
+        private void QueInput(ref bool quedInput) //passing a ref, we pass a specific bool and not the value of it.
+        {
+            //reset all qued inputs
+            ResetAllQuedInputs();
+
+            //check for ui window being open, return if true
+
+            if(player.isPerformingAction || player.playerNetworkManager.isJumping.Value)
+            {
+                quedInput = true;
+                que_Input_Timer = default_Que_Input_Time;
+                input_Que_Is_Active = true;
+            }
+        }
+
+        private void ProcessQuedInputs()
+        {
+            if (player.playerNetworkManager.isDead.Value)
+                return;
+
+            if (que_RB_Input)
+                RB_Input = true;
+
+            if (que_RT_Input)
+                RT_Input = true;
+        }
+
+        private void ResetAllQuedInputs()
+        {
+            que_RB_Input = false;
+            que_RT_Input = false;
+            que_LB_Input = false;
+            //que_LT_Input = false;
+        }
+
+        private void HandleQuedInputs()
+        {
+            if (input_Que_Is_Active)
+            {
+                //while the timer is running, keep attemting the input.
+                if(que_Input_Timer > 0)
+                {
+                    que_Input_Timer -= Time.deltaTime;
+                    ProcessQuedInputs();
+                }
+                else
+                {
+                    ResetAllQuedInputs();
+                    input_Que_Is_Active = false;
+                    que_Input_Timer = 0;
+                }
             }
         }
     }

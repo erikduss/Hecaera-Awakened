@@ -13,7 +13,7 @@ namespace Erikduss
         [SerializeField] Transform cameraPivotTransform;
 
         [Header("Camera Settings")]
-        private float cameraSmoothSpeed = 1; //THE BIGGER THIS NUMBER, THE LONGER FOR THE CAMERA TO REACH ITS POSITION DURING MOVEMENT.
+        [SerializeField] private float cameraSmoothSpeed = 1; //THE BIGGER THIS NUMBER, THE LONGER FOR THE CAMERA TO REACH ITS POSITION DURING MOVEMENT.
         [SerializeField] private float leftAndRightRotationSpeed = 220;
         [SerializeField] private float upAndDownRotationSpeed = 220;
         [SerializeField] float minimumPivot = -30; //The lowest point you are able to look down
