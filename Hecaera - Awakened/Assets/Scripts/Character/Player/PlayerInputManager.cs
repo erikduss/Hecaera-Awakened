@@ -477,6 +477,9 @@ namespace Erikduss
 
             if (que_RT_Input)
                 RT_Input = true;
+
+            if (que_LB_Input)
+                LB_Input = true;
         }
 
         private void ResetAllQuedInputs()
