@@ -123,6 +123,11 @@ namespace Erikduss
 
         private void HandleGroundedMovement()
         {
+            if(player.characterLocomotionManager.canMove || player.playerLocomotionManager.canRotate)
+            {
+                GetMovementValues();
+            }
+
             if (!player.characterLocomotionManager.canMove)
                 return;
 
