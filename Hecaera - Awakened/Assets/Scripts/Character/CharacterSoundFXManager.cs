@@ -17,9 +17,9 @@ namespace Erikduss
             WorldAudioVolumesManager.Instance.AddAudioSource(audioSource, AudioSourceType.SFX);
         }
 
-        public void PlaySoundFX(AudioClip soundFX, float volume = 1, bool randomizePitch = true, float pitchRandom = 0.1f)
+        public void PlaySoundFX(AudioClip soundFX, bool randomizePitch = true, float pitchRandom = 0.1f)
         {
-            audioSource.PlayOneShot(soundFX, volume);
+            audioSource.PlayOneShot(soundFX);
 
             //Resets pitch
             audioSource.pitch = 1;

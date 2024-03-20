@@ -29,6 +29,9 @@ namespace Erikduss
         public AudioClip ixeleceBossFightIntroMusic;
         public AudioClip ixeleceBossFightPhase1Music;
 
+        [Header("Ixelece Voice")]
+        public AudioClip[] ixeleceScreams;
+
         private void Awake()
         {
             if (instance == null)
