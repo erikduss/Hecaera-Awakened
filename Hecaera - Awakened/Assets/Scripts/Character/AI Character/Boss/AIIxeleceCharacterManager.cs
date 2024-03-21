@@ -12,6 +12,7 @@ namespace Erikduss
 
         [Header("Ixelece Specific")]
         [SerializeField] private Vector3 middleArenaTeleportLocation;
+        [SerializeField] private GameObject sphereGroundIndicatorPrefab;
 
         public override void OnNetworkSpawn()
         {

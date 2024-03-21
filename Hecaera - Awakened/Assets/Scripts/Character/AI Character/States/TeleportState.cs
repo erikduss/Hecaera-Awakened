@@ -18,6 +18,9 @@ namespace Erikduss
         private bool teleportStarted = false;
         private bool teleportingBack = false;
         private bool teleportFinished = false;
+        private bool spawnedDamageIndicator = false;
+
+        [HideInInspector] public GameObject damageIndicatorPrefab;
 
         //We want to teleport to a location and afterwards return to the combatstance state.
         public override AIState Tick(AICharacterManager aiCharacter)
@@ -42,6 +45,13 @@ namespace Erikduss
                 }
                 else if (teleportDelayTimer >= 0 && !aiCharacter.isPerformingAction)
                 {
+                    if (!spawnedDamageIndicator)
+                    {
+                        spawnedDamageIndicator = true;
+                        damageIndicatorPrefab = Instantiate(damageIndicatorPrefab, teleportDestination, Quaternion.identity);
+                        damageIndicatorPrefab.GetComponent<GroundIndicator>().SetIndicatorSize(16f);
+                    }
+
                     teleportDelayTimer -= Time.deltaTime;
                     aiCharacter.transform.position = new Vector3(10,-20,100);
                     aiCharacter.transform.rotation = new Quaternion(0,180,0,0);
@@ -55,6 +65,7 @@ namespace Erikduss
                 }
                 else if (!aiCharacter.isPerformingAction && teleportingBack)
                 {
+                    Destroy(damageIndicatorPrefab);
                     IxeleceMaterialManagement.Instance.RevertIxeleceMaterial();
                     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Idle", false);
 
