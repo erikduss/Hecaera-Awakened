@@ -29,6 +29,7 @@ namespace Erikduss
     {
         Team01,
         Team02,
+        NONE,
     }
 
     public enum EnemySpawnType
@@ -63,7 +64,9 @@ namespace Erikduss
         ChargedAttack02,
         ChargedAttack03,
         InstantMagicAttack01,
-        LightJumpAttack01
+        LightJumpAttack01,
+        //Boss attacks
+        SunbeamAttack
     }
 
     public enum PooledObjectType

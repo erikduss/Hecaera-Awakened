@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childObjectToScale: {fileID: 6555105637522385135}
-  indicatorRadius: 1
+  indicatorSize: 1
 --- !u!1 &6555105636545658386
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +88,8 @@ GameObject:
   - component: {fileID: 6555105636545658413}
   - component: {fileID: 6555105636545658412}
   - component: {fileID: 6555105636545658408}
-  m_Layer: 0
+  - component: {fileID: 5210880943153171480}
+  m_Layer: 13
   m_Name: Decal_FireRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,6 +234,25 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5210880943153171480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6555105636545658386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59986e30d8d743747b89c2486ea57fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 6555105636545658408}
+  physicalDamage: 100
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
 --- !u!1 &6555105637522385135
 GameObject:
   m_ObjectHideFlags: 0

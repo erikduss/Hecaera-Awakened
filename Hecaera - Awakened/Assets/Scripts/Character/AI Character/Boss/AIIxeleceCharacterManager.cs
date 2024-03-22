@@ -8,7 +8,7 @@ namespace Erikduss
     {
         [SerializeField] TeleportState teleportState;
 
-        [SerializeField] AIIxeleceSoundFXManager soundManager;
+        [SerializeField] public AIIxeleceSoundFXManager soundManager;
 
         [Header("Ixelece Specific")]
         [SerializeField] private Vector3 middleArenaTeleportLocation;
@@ -23,6 +23,7 @@ namespace Erikduss
                 teleportState = Instantiate(teleportState);
 
                 teleportState.teleportDestination = middleArenaTeleportLocation;
+                teleportState.characterManager = this;
 
                 aICharacterNetworkManager.maxStamina.Value = 500;
                 aICharacterNetworkManager.currentStamina.Value = 500;

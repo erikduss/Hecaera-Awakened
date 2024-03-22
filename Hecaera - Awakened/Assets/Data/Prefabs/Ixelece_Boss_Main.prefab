@@ -170,6 +170,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &309158541499261451
 GameObject:
@@ -282,6 +283,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   bossCharacter: {fileID: 0}
   subColliders:
   - {fileID: 772619267083741239}
@@ -5452,6 +5454,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &1747038059257958188
 GameObject:
@@ -5519,6 +5522,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &1748668672291706100
 GameObject:
@@ -8004,6 +8008,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &5237382045363077719
 GameObject:
@@ -22794,7 +22799,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 5
+  m_StoppingDistance: 100
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -33532,6 +33537,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
 --- !u!1 &7102906956431676204
 GameObject:
@@ -41323,6 +41329,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   bossCharacter: {fileID: 0}
   subColliders:
   - {fileID: 6282977909436747044}
@@ -41734,7 +41741,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1000
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -41986,6 +41993,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &7837936466547447876
 GameObject:
@@ -42084,6 +42092,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &7912672395948739309
 GameObject:
@@ -42709,6 +42718,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &8495325891312456256
 GameObject:
@@ -43155,6 +43165,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &8740853583669531185
 GameObject:
@@ -43462,6 +43473,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
 --- !u!1 &9158687715520455425
 GameObject:

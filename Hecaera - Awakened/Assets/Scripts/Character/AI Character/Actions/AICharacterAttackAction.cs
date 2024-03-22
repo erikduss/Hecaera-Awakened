@@ -23,6 +23,8 @@ namespace Erikduss
         public float minimimAttackDistance = 0;
         public float maximumAttackDistance = 2;
 
+        [Header("Visual Indicating")]
+        public bool showVisualIndicator = false;
 
         public void AttemptToPerformAction(AICharacterManager aICharacter)
         {

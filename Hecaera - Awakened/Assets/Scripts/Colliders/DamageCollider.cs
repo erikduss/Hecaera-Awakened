@@ -21,6 +21,7 @@ namespace Erikduss
 
         [Header("Characters Damaged")]
         public List<CharacterManager> charactersDamaged = new List<CharacterManager>();
+        public CharacterGroup groupOfAttack = CharacterGroup.NONE;
 
         protected virtual void Awake()
         {
@@ -46,6 +47,11 @@ namespace Erikduss
             }
 
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
+
+            if(damageTarget != null)
+            {
+                if (damageTarget.characterGroup == groupOfAttack) return;
+            }
 
             if (damageTarget != null && !damageTarget.characterNetworkManager.isInvincible.Value)
             {
