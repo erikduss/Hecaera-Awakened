@@ -93,7 +93,7 @@ namespace Erikduss
                 return;
 
             //Calculate if poise is broken, for now it always is.
-            poiseBroken = true;
+            poiseBroken = character.playTakeDamageAnimations;
 
             if (angleHitFrom >= 145 && angleHitFrom <= 180)
             {

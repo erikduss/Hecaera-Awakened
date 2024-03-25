@@ -12,6 +12,7 @@ namespace Erikduss
         //2. Process combat logic while waiting to attack (block, strafe, dodge)
         //3. If target is too far, switch to pursue state
         //4. If target is null, back to idle.
+        public bool isStationaryBoss = false;
 
         [Header("Attacks")]
         public List<AICharacterAttackAction> aiCharacterAttacks; //A list of all attacks this character can do.
@@ -41,11 +42,13 @@ namespace Erikduss
             {
                 if (aiCharacter.aICharacterCombatManager.viewableAngle < -30 || aiCharacter.aICharacterCombatManager.viewableAngle > 30)
                 {
-                    aiCharacter.aICharacterCombatManager.PivotTowardsTarget(aiCharacter);
+                    //aiCharacter.aICharacterCombatManager.PivotTowardsTarget(aiCharacter);
                 }
             }
 
-            aiCharacter.aICharacterCombatManager.RotateTowardsAgent(aiCharacter);
+            aiCharacter.aICharacterCombatManager.RotateTowardsTarget(aiCharacter);
+
+            //aiCharacter.aICharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
             //if we dont have a target anymore, return to idle.
             if (aiCharacter.aICharacterCombatManager.currentTarget == null)
@@ -64,13 +67,16 @@ namespace Erikduss
                 return SwitchState(aiCharacter, aiCharacter.attack);
             }
 
-            if (aiCharacter.aICharacterCombatManager.distanceFromTarget > maximumEngagementDistance)
-                return SwitchState(aiCharacter, aiCharacter.pursueTarget);
+            if (!isStationaryBoss)
+            {
+                if (aiCharacter.aICharacterCombatManager.distanceFromTarget > maximumEngagementDistance)
+                    return SwitchState(aiCharacter, aiCharacter.pursueTarget);
 
-            //if we're waiting for recovery timer, we dont just want to stand still
-            NavMeshPath path = new NavMeshPath();
-            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aICharacterCombatManager.currentTarget.transform.position, path);
-            aiCharacter.navMeshAgent.SetPath(path);
+                //if we're waiting for recovery timer, we dont just want to stand still
+                NavMeshPath path = new NavMeshPath();
+                aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aICharacterCombatManager.currentTarget.transform.position, path);
+                aiCharacter.navMeshAgent.SetPath(path);
+            }
 
             return this;
         }

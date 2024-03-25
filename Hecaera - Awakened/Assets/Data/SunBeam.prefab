@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5783349659663388357}
+  - component: {fileID: 1652298970975523518}
   m_Layer: 0
   m_Name: SunBeam
   m_TagString: Untagged
@@ -35,6 +36,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1652298970975523518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783349659663388356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e51eccc3693a2b4484545a253f258b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToFollow: {fileID: 0}
+  casterCharacter: {fileID: 0}
+  sunbeamChildGameobject: {fileID: 5783349660484314559}
 --- !u!1 &5783349660484121717
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +336,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4836,7 +4852,7 @@ ParticleSystemRenderer:
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 20
+  m_LengthScale: 6
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
@@ -4884,14 +4900,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5783349660484162807}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.00000017881393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5783349659663388357}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &5783349660469214895
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5126,8 +5142,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5
-      minScalar: 0.8000001
+      scalar: 6
+      minScalar: 3.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9685,7 +9701,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.9915115, b: 0.28795812, a: 0.75}
-  m_Intensity: 0.7
+  m_Intensity: 1.4
   m_Range: 6
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9779,13 +9795,15 @@ GameObject:
   - component: {fileID: 5783349660484466265}
   - component: {fileID: 5783349660469293261}
   - component: {fileID: 5783349660470671637}
-  m_Layer: 0
+  - component: {fileID: 1967257155135063332}
+  - component: {fileID: 7315972946471665531}
+  m_Layer: 13
   m_Name: Core_Distance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5783349660484466265
 Transform:
   m_ObjectHideFlags: 0
@@ -9793,7 +9811,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5783349660484314559}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: -0.00000014901161}
+  m_LocalRotation: {x: 0, y: 0.9990483, z: 0.043619405, w: 0}
   m_LocalPosition: {x: 0.086, y: 0, z: -0.4619999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9801,7 +9819,7 @@ Transform:
   - {fileID: 5783349660484406071}
   m_Father: {fileID: 5783349659663388357}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: -5, y: 180, z: 0}
 --- !u!198 &5783349660469293261
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14593,3 +14611,37 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!136 &1967257155135063332
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783349660484314559}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 30
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -15}
+--- !u!114 &7315972946471665531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783349660484314559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 261d250361559c34fa193431cf20b12a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 1967257155135063332}
+  physicalDamage: 50
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  groupOfAttack: 1

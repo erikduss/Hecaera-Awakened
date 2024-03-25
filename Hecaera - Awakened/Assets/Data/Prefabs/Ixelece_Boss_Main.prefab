@@ -146,7 +146,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 248538494628781701}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.15
   m_Height: 1.2
   m_Direction: 0
@@ -260,7 +260,7 @@ SphereCollider:
   m_GameObject: {fileID: 318508760721435574}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
@@ -5431,7 +5431,7 @@ SphereCollider:
   m_GameObject: {fileID: 1616932139844246083}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
@@ -5499,7 +5499,7 @@ SphereCollider:
   m_GameObject: {fileID: 1747038059257958188}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
@@ -7985,7 +7985,7 @@ SphereCollider:
   m_GameObject: {fileID: 5223153291041963538}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
@@ -33514,7 +33514,7 @@ SphereCollider:
   m_GameObject: {fileID: 6998308606129783539}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
@@ -41306,7 +41306,7 @@ SphereCollider:
   m_GameObject: {fileID: 7611306558822142267}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
@@ -41563,15 +41563,15 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 8377964021535360514}
-  magicHandTransform: {fileID: 0}
+  magicHandTransform: {fileID: 362780123599023705}
   actionRecoveryTimer: 0
   distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
-  detectionRadius: 15
-  minimumFOV: -35
-  maximumFOV: 35
-  attackRotationSpeed: 25
+  detectionRadius: 150
+  minimumFOV: -180
+  maximumFOV: 180
+  attackRotationSpeed: 5
   rightClawDamageCollider: {fileID: 7630623820236480941}
   leftClawDamageCollider: {fileID: 567467190118210158}
   baseDamage: 25
@@ -41599,6 +41599,7 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterGroup: 1
   isPerformingAction: 0
+  playTakeDamageAnimations: 0
   characterName: Ixelece, Fallen Goddess Of Errasil
   aICharacterNetworkManager: {fileID: 0}
   aICharacterCombatManager: {fileID: 0}
@@ -41625,8 +41626,10 @@ MonoBehaviour:
   sleepState: {fileID: 11400000, guid: dc6b106d7b0945c4ca87ee9b13d44314, type: 2}
   teleportState: {fileID: 11400000, guid: ac2ab3d3e23cceb44b4fb96de5caf4d1, type: 2}
   soundManager: {fileID: 3942244864916318175}
+  combatManager: {fileID: 0}
   middleArenaTeleportLocation: {x: 6.34, y: 3.4, z: 87.79}
   sphereGroundIndicatorPrefab: {fileID: 6555105636536880854, guid: 54078205f321f5e489f2113388cd2403, type: 3}
+  sunbeamAttackPrefab: {fileID: 5783349659663388356, guid: 7c252caee1497854bba8192f7a4ff3d6, type: 3}
 --- !u!114 &3942244864916318175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41970,7 +41973,7 @@ SphereCollider:
   m_GameObject: {fileID: 7792564363827506930}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
@@ -42069,7 +42072,7 @@ SphereCollider:
   m_GameObject: {fileID: 7905221327423225027}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: -0.3, y: -0.13, z: -0.09}
@@ -42694,7 +42697,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8288068097530215030}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.15
   m_Height: 1.2
   m_Direction: 0
@@ -43142,7 +43145,7 @@ SphereCollider:
   m_GameObject: {fileID: 8713262906666014126}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
@@ -43450,7 +43453,7 @@ SphereCollider:
   m_GameObject: {fileID: 9152243100639544538}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}

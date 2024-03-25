@@ -74,6 +74,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childObjectToScale: {fileID: 6555105637522385135}
   indicatorSize: 1
+  indicatorRenderers:
+  - {fileID: 6555105636545658414}
+  - {fileID: 2697794332139624232}
+  - {fileID: 8179581002981024500}
 --- !u!1 &6555105636545658386
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +257,7 @@ MonoBehaviour:
   lightningDamage: 0
   holyDamage: 0
   charactersDamaged: []
+  groupOfAttack: 2
 --- !u!1 &6555105637522385135
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,12 +373,37 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f4b0de1f51626e94393f6d1897a32d23, type: 2}
+    - target: {fileID: 6896610040087302508, guid: f21e244654162bf4687dac892cc3684f, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896610040087302508, guid: f21e244654162bf4687dac892cc3684f, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896610040087302508, guid: f21e244654162bf4687dac892cc3684f, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896610040087302508, guid: f21e244654162bf4687dac892cc3684f, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896610040087302508, guid: f21e244654162bf4687dac892cc3684f, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[1].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6289702857333251080, guid: f21e244654162bf4687dac892cc3684f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f21e244654162bf4687dac892cc3684f, type: 3}
 --- !u!4 &2489202429308295418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3532956754296357742, guid: f21e244654162bf4687dac892cc3684f, type: 3}
+  m_PrefabInstance: {fileID: 1408774668530424724}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2697794332139624232 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3962187724201233596, guid: f21e244654162bf4687dac892cc3684f, type: 3}
   m_PrefabInstance: {fileID: 1408774668530424724}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1646027090836688948
@@ -775,6 +805,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 6164786086520618222, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164786086520618222, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164786086520618222, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164786086520618222, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164786086520618222, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
+      propertyPath: FloatCurve.m_Curve.Array.data[1].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
     - target: {fileID: 6618629069464527302, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
       propertyPath: m_ReflectionProbeUsage
       value: 0
@@ -789,5 +839,10 @@ PrefabInstance:
 --- !u!4 &2860874208113842342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1002737461941869460, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
+  m_PrefabInstance: {fileID: 3051661021739893554}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8179581002981024500 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6618629069464527302, guid: 2aa2bd07e0266534fbd81ca9f3eb36ff, type: 3}
   m_PrefabInstance: {fileID: 3051661021739893554}
   m_PrefabAsset: {fileID: 0}

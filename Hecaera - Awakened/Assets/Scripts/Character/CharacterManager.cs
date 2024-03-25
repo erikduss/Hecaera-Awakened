@@ -23,6 +23,8 @@ namespace Erikduss
         [Header("Flags")]
         public bool isPerformingAction = false;
 
+        public bool playTakeDamageAnimations = true;
+
         protected virtual void Awake()
         {
             DontDestroyOnLoad(this);

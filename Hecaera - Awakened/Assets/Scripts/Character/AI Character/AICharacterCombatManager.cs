@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Erikduss
 {
@@ -131,6 +132,31 @@ namespace Erikduss
             {
                 aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Turn_Left_180", true);
             }
+        }
+
+        public void RotateTowardsTarget(AICharacterManager aICharacter)
+        {
+            if (currentTarget == null)
+            {
+                return;
+            }
+
+            if (!aICharacter.characterLocomotionManager.canRotate)
+            {
+                return;
+            }
+
+            Vector3 targetDirection = currentTarget.transform.position - aICharacter.transform.position;
+            targetDirection.y = 0;
+            targetDirection.Normalize();
+
+            if (targetDirection == Vector3.zero)
+            {
+                targetDirection = aICharacter.transform.forward;
+            }
+
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            aICharacter.transform.rotation = Quaternion.Slerp(aICharacter.transform.rotation, targetRotation, attackRotationSpeed * Time.deltaTime);
         }
 
         public void RotateTowardsAgent(AICharacterManager aICharacter)

@@ -9,10 +9,14 @@ namespace Erikduss
         [SerializeField] TeleportState teleportState;
 
         [SerializeField] public AIIxeleceSoundFXManager soundManager;
+        public AIIxeleceCombatManager combatManager;
 
         [Header("Ixelece Specific")]
         [SerializeField] private Vector3 middleArenaTeleportLocation;
         [SerializeField] private GameObject sphereGroundIndicatorPrefab;
+
+        [SerializeField] private GameObject sunbeamAttackPrefab;
+        private SunBeamLogic currentSpawnedSunbeam;
 
         public override void OnNetworkSpawn()
         {
@@ -29,6 +33,8 @@ namespace Erikduss
                 aICharacterNetworkManager.currentStamina.Value = 500;
                 aICharacterNetworkManager.maxHealth.Value = 1000;
                 aICharacterNetworkManager.currentHealth.Value = 1000;
+
+                combatManager = GetComponent<AIIxeleceCombatManager>();
             }
         }
 
@@ -44,6 +50,29 @@ namespace Erikduss
         public void FadeOutModel()
         {
 
+        }
+
+        public void StartSunbeam()
+        {
+            GameObject inst = Instantiate(sunbeamAttackPrefab);
+            currentSpawnedSunbeam = inst.GetComponent<SunBeamLogic>();
+            currentSpawnedSunbeam.objectToFollow = aICharacterCombatManager.magicHandTransform.gameObject;
+            currentSpawnedSunbeam.casterCharacter = this;
+        }
+
+        public void ActivateSunbeamDamage()
+        {
+            currentSpawnedSunbeam.ActivateSunbeam();
+            combatManager.SetSunbeamDamage();
+            combatManager.OpenRightClawDamageCollider();
+            combatManager.OpenLeftClawDamageCollider();
+        }
+
+        public void DeactivateSunbeamDamage()
+        {
+            currentSpawnedSunbeam.DeativateSunbeam();
+            combatManager.CloseLeftClawDamageCollider();
+            combatManager.CloseRightClawDamageCollider();
         }
     }
 }

@@ -88,8 +88,6 @@ namespace Erikduss
                 teleportMaterial.color = new Color(teleportMaterial.color.r, teleportMaterial.color.g, teleportMaterial.color.b, startAlpha);
                 float timer = 0;
 
-                yield return null;
-
                 while (timer < duration)
                 {
                     timer += Time.deltaTime;

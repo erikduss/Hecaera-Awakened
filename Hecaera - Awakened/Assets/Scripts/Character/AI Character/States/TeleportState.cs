@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Erikduss
 {
@@ -80,7 +81,7 @@ namespace Erikduss
                     damageIndicatorCollider.DisableDamageCollider();
                     Destroy(damageIndicatorPrefab);
                     IxeleceMaterialManagement.Instance.RevertIxeleceMaterial();
-                    aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Idle", false);
+                    aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Idle", false, false, true, true);
 
                     teleportFinished = true;
                     //aiCharacter.navMeshAgent.enabled = true;
@@ -89,6 +90,19 @@ namespace Erikduss
                 }
                 return this;
             }
+        }
+
+        protected override void ResetStateFlags(AICharacterManager aICharacterManager)
+        {
+            base.ResetStateFlags(aICharacterManager);
+
+            aICharacterManager.isPerformingAction = false;
+            aICharacterManager.characterLocomotionManager.canRotate = true;
+
+            teleportFinished = false;
+            teleportStarted = false;
+            teleportingBack = false;
+            spawnedDamageIndicator = false;
         }
     }
 }

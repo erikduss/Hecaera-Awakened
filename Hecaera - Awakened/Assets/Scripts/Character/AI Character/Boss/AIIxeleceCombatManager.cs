@@ -26,6 +26,12 @@ namespace Erikduss
             leftClawDamageCollider.physicalDamage = baseDamage * attack02DamageModifier;
         }
 
+        public void SetSunbeamDamage()
+        {
+            rightClawDamageCollider.physicalDamage = baseDamage * attack01DamageModifier;
+            leftClawDamageCollider.physicalDamage = baseDamage * attack01DamageModifier;
+        }
+
         public void OpenRightClawDamageCollider()
         {
             rightClawDamageCollider.EnableDamageCollider();
