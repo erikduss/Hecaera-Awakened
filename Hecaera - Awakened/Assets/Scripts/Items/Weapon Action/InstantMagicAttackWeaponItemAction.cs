@@ -43,7 +43,7 @@ namespace Erikduss
 
         private void SpawnProjectileAsServer(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
         {
-            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(playerPerformingAction.OwnerClientId, (int)PooledObjectType.Instant_Magic_Spell, weaponPerformingAction.oh_LB_Action.objectSpawnDelay);
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(playerPerformingAction.OwnerClientId, (int)PooledObjectType.Instant_Magic_Spell, weaponPerformingAction.oh_LB_Action.objectSpawnDelay, Vector3.zero, Quaternion.identity);
         }
     }
 }

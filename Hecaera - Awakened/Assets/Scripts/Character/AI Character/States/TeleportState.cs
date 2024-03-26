@@ -48,6 +48,7 @@ namespace Erikduss
                     //aiCharacter.GetComponent<CharacterController>().enabled = false;
                     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation(teleportStartAnimation, true, false);
                     characterManager.soundManager.PlaySoundFX(electrifiedAudio);
+                    characterManager.aIBossUIManager.ActivateAttackIndicator(AttackIndicatorType.RED_INDICATED, 0.5f, 0.25f);
                     IxeleceMaterialManagement.Instance.SetIxeleceTeleportMaterial();
                     IxeleceMaterialManagement.Instance.FadeTeleportMaterials(2f, 1f, 0f);
                 }

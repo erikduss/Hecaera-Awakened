@@ -66,13 +66,23 @@ namespace Erikduss
         InstantMagicAttack01,
         LightJumpAttack01,
         //Boss attacks
-        SunbeamAttack
+        SunbeamAttack,
+        DeathFromAbove
     }
 
     public enum PooledObjectType
     {
         NONE,
-        Instant_Magic_Spell
+        Instant_Magic_Spell,
+        FireFruit
+    }
+
+    public enum AttackIndicatorType
+    {
+        NONE,
+        YELLOW_NORMAL,
+        RED_INDICATED,
+        BLUE_CHARGE
     }
 
 }

@@ -49,12 +49,20 @@ namespace Erikduss
             //}
         }
 
-        private void SpawnProjectileFromObjectPool(ulong clientID, int projectileObjectTypeID)
+        private void SpawnProjectileFromObjectPool(ulong clientID, int projectileObjectTypeID, Vector3 spawnLoc, Quaternion spawnRot, bool isNPC)
         {
             PooledObjectType type = (PooledObjectType)projectileObjectTypeID;
-            PlayerManager projectileOwner = WorldGameSessionManager.Instance.players.Where(a => a.OwnerClientId == clientID).FirstOrDefault();
-            Vector3 spawnLocation = projectileOwner.characterCombatManager.magicHandTransform.position;
-            Quaternion spawnRotation = projectileOwner.transform.rotation;
+
+            Vector3 spawnLocation = spawnLoc;
+            Quaternion spawnRotation = spawnRot;
+            PlayerManager projectileOwner = null;
+
+            if (!isNPC)
+            {
+                projectileOwner = WorldGameSessionManager.Instance.players.Where(a => a.OwnerClientId == clientID).FirstOrDefault();
+                spawnLocation = projectileOwner.characterCombatManager.magicHandTransform.position;
+                spawnRotation = projectileOwner.transform.rotation;
+            }
 
             GameObject prefab = WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(type);
             NetworkObject obj = WorldNetworkObjectPoolManager.Instance.GetNetworkObject(prefab, spawnLocation, spawnRotation);
@@ -62,7 +70,12 @@ namespace Erikduss
             Projectile spawnedProjectile = obj.GetComponent<Projectile>();
             if (spawnedProjectile != null)
             {
-                spawnedProjectile.projectileOwnerNetworkID.Value = projectileOwner.NetworkObjectId;
+                if(!isNPC)
+                    spawnedProjectile.projectileOwnerNetworkID.Value = projectileOwner.NetworkObjectId;
+                else
+                {
+                    spawnedProjectile.projectileOwnerNetworkID.Value = clientID; //on spawning with isNPC this gets set to the npc id instead of client
+                }
                 //spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;
                 spawnedProjectile.objectEnabled.Value = true;
                 spawnedProjectile.networkPosition.Value = spawnLocation;
@@ -84,23 +97,23 @@ namespace Erikduss
             //}
         }
 
-        private IEnumerator SpawnProjectileWithDelay(ulong clientID, int projectileObjectTypeID, float spawnDelay)
+        private IEnumerator SpawnProjectileWithDelay(ulong clientID, int projectileObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, bool isNPC)
         {
             //This is used to make sure the projectile spawns exactly when we want it to.
             //Could change this into a synced animation event.
             yield return new WaitForSeconds(spawnDelay);
 
-            SpawnProjectileFromObjectPool(clientID, projectileObjectTypeID);
+            SpawnProjectileFromObjectPool(clientID, projectileObjectTypeID, spawnLocation, spawnRotation, isNPC);
             NotifyTheServerOfSpawnActionClientRpc(clientID, projectileObjectTypeID);
         }
 
         [ServerRpc]
-        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int projectileObjectTypeID, float spawnDelay)
+        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int projectileObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, bool isNPC = false)
         {
             //can only be called by the server.
             if (NetworkManager.Singleton.IsServer)
             {
-                StartCoroutine(SpawnProjectileWithDelay(clientID, projectileObjectTypeID, spawnDelay));
+                StartCoroutine(SpawnProjectileWithDelay(clientID, projectileObjectTypeID, spawnDelay, spawnLocation, spawnRotation, isNPC));
             }
         }
 

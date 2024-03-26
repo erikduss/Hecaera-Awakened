@@ -137,8 +137,14 @@ namespace Erikduss
 
         public override void OnNetworkDespawn()
         {
+            projectileOwnerNetworkID.OnValueChanged -= OnProjectileOwnerNetworkIDChange;
+
             if (!NetworkManager.Singleton.IsServer)
+            {
+                objectEnabled.OnValueChanged -= OnObjectEnabledChange;
                 return;
+            }
+                
 
             base.OnNetworkDespawn();
         }
@@ -182,7 +188,9 @@ namespace Erikduss
 
         public void OnProjectileOwnerNetworkIDChange(ulong oldID, ulong newID)
         {
-            PlayerManager projectileOwner = WorldGameSessionManager.Instance.GetPlayerWithNetworkID(newID);
+            CharacterManager projectileOwner = WorldGameSessionManager.Instance.GetPlayerWithNetworkID(newID);
+
+            if (projectileOwner == null) projectileOwner = WorldAIManager.Instance.spawnedInBosses[0];
 
             //If the player is not found, the projectile must be fired by an NPC
 

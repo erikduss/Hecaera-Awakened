@@ -37,7 +37,13 @@ namespace Erikduss
 
                 if (!WorldGameSessionManager.Instance.PVPEnabled)
                 {
-                    if (damageTarget.characterGroup == characterCausingDamage.characterGroup)
+                    //Attack coming from NPC
+                    if(characterCausingDamage == null)
+                    {
+                        if (damageTarget.characterGroup == groupOfAttack)
+                            return;
+                    }
+                    else if (damageTarget.characterGroup == characterCausingDamage.characterGroup)
                         return;
                 }
 
@@ -60,16 +66,27 @@ namespace Erikduss
             damageEffect.fireDamage = fireDamage;
             damageEffect.holyDamage = holyDamage;
             damageEffect.contactPoint = contactPoint;
-            damageEffect.angleHitFrom = Vector3.SignedAngle(characterCausingDamage.transform.forward, damageTarget.transform.forward, Vector3.up);
 
-            switch (characterCausingDamage.characterCombatManager.currentAttackType)
+            if (characterCausingDamage != null)
+                damageEffect.angleHitFrom = Vector3.SignedAngle(characterCausingDamage.transform.forward, damageTarget.transform.forward, Vector3.up);
+            else
+                damageEffect.angleHitFrom = Vector3.SignedAngle(damageTarget.transform.up, damageTarget.transform.forward, Vector3.up);
+
+            if(characterCausingDamage != null)
             {
-                case AttackType.InstantMagicAttack01:
-                    ApplyAttackDamageModifiers(instant_Magic_Attack_Modifier, damageEffect);
-                    break;
-                default:
-                    ApplyAttackDamageModifiers(instant_Magic_Attack_Modifier, damageEffect);
-                    break;
+                switch (characterCausingDamage.characterCombatManager.currentAttackType)
+                {
+                    case AttackType.InstantMagicAttack01:
+                        ApplyAttackDamageModifiers(instant_Magic_Attack_Modifier, damageEffect);
+                        break;
+                    default:
+                        ApplyAttackDamageModifiers(instant_Magic_Attack_Modifier, damageEffect);
+                        break;
+                }
+            }
+            else
+            {
+                ApplyAttackDamageModifiers(instant_Magic_Attack_Modifier, damageEffect);
             }
 
             Debug.Log("Dealing: " + damageEffect.physicalDamage + " Damage");
