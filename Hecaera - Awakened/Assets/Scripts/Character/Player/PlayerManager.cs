@@ -300,6 +300,11 @@ namespace Erikduss
             }
         }
 
+        public bool AmITheHost()
+        {
+            return IsServer;
+        }
+
         private void DebugMenu()
         {
             if (respawnCharacter)

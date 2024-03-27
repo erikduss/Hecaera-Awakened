@@ -92,6 +92,12 @@ namespace Erikduss
             localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxStamina.Value;
         }
 
+        public bool AmITheHost()
+        {
+            PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
+            return localPlayer.AmITheHost();
+        }
+
         private void ConnectionApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
             Debug.Log("Approving connection request!");

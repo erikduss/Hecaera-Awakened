@@ -18,6 +18,7 @@ namespace Erikduss
             if (boss != null)
             {
                 executedTrigger = true;
+                WorldBossEncounterManager.Instance.TeleportAllOtherPlayersToEncounter(other.GetComponent<CharacterManager>(), bossID);
                 boss.WakeBoss();
             }
         }
