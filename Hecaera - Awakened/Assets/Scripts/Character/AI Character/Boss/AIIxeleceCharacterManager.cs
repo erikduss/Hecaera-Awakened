@@ -43,10 +43,10 @@ namespace Erikduss
                 aICharacterNetworkManager.currentStamina.Value = 500;
                 aICharacterNetworkManager.maxHealth.Value = 1000;
                 aICharacterNetworkManager.currentHealth.Value = 1000;
-
-                combatManager = GetComponent<AIIxeleceCombatManager>();
-                aIBossUIManager = GetComponent<AIBossUIManager>();
             }
+
+            combatManager = GetComponent<AIIxeleceCombatManager>();
+            aIBossUIManager = GetComponent<AIBossUIManager>();
         }
 
         public override void WakeBoss()
@@ -94,6 +94,8 @@ namespace Erikduss
 
         public void SpawnFireFruitRandom()
         {
+            if (!IsOwner) return;
+
             if(stopDOAAtPercentage == -1f)
             {
                 //set the percentage at which to stop attacking at.

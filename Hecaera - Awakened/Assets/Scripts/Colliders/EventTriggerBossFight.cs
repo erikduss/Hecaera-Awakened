@@ -11,6 +11,8 @@ namespace Erikduss
 
         private void OnTriggerEnter(Collider other)
         {
+            //ONLY THE HOST GETS TO EXECUTE THE TELEPORT COMMAND DUE TO BOSS BEING NULL FOR CLIENTS
+
             if (executedTrigger) return;
 
             AIBossCharacterManager boss = WorldAIManager.Instance.GetBossCharacterByID(bossID);

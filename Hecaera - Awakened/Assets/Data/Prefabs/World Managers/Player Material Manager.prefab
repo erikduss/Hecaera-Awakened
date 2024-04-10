@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2873429640150022447}
   - component: {fileID: 1664933981341035756}
+  - component: {fileID: 5240361148866189398}
   m_Layer: 0
   m_Name: Player Material Manager
   m_TagString: Untagged
@@ -45,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   additionalPlayerMaterials:
-  - {fileID: 2100000, guid: ec04a7c9184b08445923c2d22d946a3d, type: 2}
   - {fileID: 2100000, guid: d0e9921bf29568f449a8aac484a51552, type: 2}
   - {fileID: 2100000, guid: 45aa73ea087e8324ca6aa7f0d1df52e4, type: 2}
   - {fileID: 2100000, guid: 3bc1efeed02a1b046af929b52d2721e5, type: 2}
@@ -55,5 +55,24 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 36c53c1037eb02d448fc7e92a89f6405, type: 2}
   - {fileID: 2100000, guid: a7416e7b7477e8548abf15b6a179197c, type: 2}
   - {fileID: 2100000, guid: 99aa634bc42f9e540be56ab91672b7df, type: 2}
+  - {fileID: 2100000, guid: 1d669259667996d46ba6c6e0730ccb0d, type: 2}
   lastSelectedMaterialIndex: -1
   dodgeColor: {r: 0.4193963, g: 0, b: 2.6701567, a: 0}
+--- !u!114 &5240361148866189398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6447547456879694300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe594b23915ac8c4ab3b89b445dcd5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainBodyRenderers: []
+  propsRenderers: []
+  leftOverRenderers: []
+  mainBodyMaterial: {fileID: 2100000, guid: f317f0228d2405242871f55f7476c980, type: 2}
+  propsMaterial: {fileID: 8748892135801146194, guid: 37cf2ba8cbbaa374fb58b8024efd87ab, type: 3}
+  teleportMaterial: {fileID: 2100000, guid: e858c1a3f2a488b4ea7bd618ec9a7ff0, type: 2}

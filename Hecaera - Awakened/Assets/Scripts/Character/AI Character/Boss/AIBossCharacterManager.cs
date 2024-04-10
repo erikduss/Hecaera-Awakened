@@ -61,12 +61,14 @@ namespace Erikduss
                 hasBeenDefeated.Value = false;
 
                 StartCoroutine(GetFogWallsFromWorldObjectManager());
+
+                if (!hasBeenAwakened.Value)
+                {
+                    characterAnimatorManager.PlayTargetActionAnimation(sleepAnimation, true);
+                }
             }
 
-            if (!hasBeenAwakened.Value)
-            {
-                characterAnimatorManager.PlayTargetActionAnimation(sleepAnimation, true);
-            }
+            animator.SetBool("IsAwakened", hasBeenAwakened.Value);
         }
 
         public override void OnNetworkDespawn()
@@ -195,6 +197,8 @@ namespace Erikduss
         {
             if (bossFightIsActive.Value)
             {
+                animator.SetBool("IsAwakened", true);
+
                 GameObject bossHealthBar = Instantiate(PlayerUIManager.instance.playerUIHudManager.bossHealthBarObject,
                 PlayerUIManager.instance.playerUIHudManager.bossHealthBarParent);
 

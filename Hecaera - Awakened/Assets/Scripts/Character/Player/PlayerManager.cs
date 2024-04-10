@@ -214,16 +214,25 @@ namespace Erikduss
             }
             else
             {
-                //we killed the other player, to keep it fair. Heal other player too.
-                WorldGameSessionManager.Instance.HealLocalPlayerToFull();
+                if (WorldGameSessionManager.Instance.PVPEnabled)
+                {
+                    //we killed the other player, to keep it fair. Heal other player too.
+                    WorldGameSessionManager.Instance.HealLocalPlayerToFull();
+                }
             }
 
             yield return base.ProcessDeathEvent(manuallySelectDeathAnimation);
 
-            if (IsOwner)
+            if (WorldBossEncounterManager.Instance.DoWeStillHaveRespawnsAvailable())
             {
-                //automatically revive
-                ReviveCharacter();
+                //only the server can execute this. But still needed everywhere to keep track of respawn charges.
+                WorldBossEncounterManager.Instance.RespawnPlayerAtEnouncterSpawnPoint(this, 0);
+
+                if (IsOwner)
+                {
+                    //automatically revive
+                    ReviveCharacter();
+                }
             }
         }
 

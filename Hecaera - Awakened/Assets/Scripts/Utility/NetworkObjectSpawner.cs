@@ -18,7 +18,12 @@ namespace Erikduss
 
         private void Start()
         {
-            StartCoroutine(SpawnObject());
+            if(WorldGameSessionManager.Instance.AmITheHost())
+                StartCoroutine(SpawnObject());
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         private IEnumerator SpawnObject()

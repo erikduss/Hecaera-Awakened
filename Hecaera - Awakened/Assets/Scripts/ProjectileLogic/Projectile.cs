@@ -29,6 +29,7 @@ namespace Erikduss
         private NetworkObject netObj;
         protected Rigidbody rb;
         public ProjectileDamageCollider projectileCollider;
+        private AIIxeleceCharacterManager backUpBossCharManager;
 
         private void Start()
         {
@@ -133,6 +134,8 @@ namespace Erikduss
             }
 
             projectileOwnerNetworkID.OnValueChanged += OnProjectileOwnerNetworkIDChange; //should be done on both the server and the client.
+
+            if (backUpBossCharManager == null) backUpBossCharManager = FindObjectOfType<AIIxeleceCharacterManager>();
         }
 
         public override void OnNetworkDespawn()
@@ -151,6 +154,8 @@ namespace Erikduss
 
         public override void OnDestroy()
         {
+            if (NetworkManager.Singleton == null) return;
+
             if (!NetworkManager.Singleton.IsServer)
                 return;
 
@@ -190,7 +195,8 @@ namespace Erikduss
         {
             CharacterManager projectileOwner = WorldGameSessionManager.Instance.GetPlayerWithNetworkID(newID);
 
-            if (projectileOwner == null) projectileOwner = WorldAIManager.Instance.spawnedInBosses[0];
+            if (projectileOwner == null && WorldAIManager.Instance.spawnedInBosses.Count > 0) projectileOwner = WorldAIManager.Instance.spawnedInBosses[0];
+            else projectileOwner = backUpBossCharManager;
 
             //If the player is not found, the projectile must be fired by an NPC
 

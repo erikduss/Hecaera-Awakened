@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Collections;
+using System.Linq;
 
 namespace Erikduss
 {
@@ -105,6 +106,26 @@ namespace Erikduss
             if (clientID != NetworkManager.Singleton.LocalClientId)
             {
                 PerformWeaponBasedAction(actionID, weaponID);
+            }
+        }
+
+        //Requireownership to false is required to allow the server to force teleport a player.
+        [ServerRpc(RequireOwnership = false)]
+        public void NotifyTheServerOfTeleportActionServerRpc(ulong clientID, int teleportLocationID, int encounterID, bool preventTeleport, bool setMaxTeleportValue)
+        {
+            if (IsServer)
+            {
+                TeleportActionForAllClientsClientRpc(clientID, teleportLocationID, encounterID, preventTeleport, setMaxTeleportValue);
+            }
+        }
+
+        [ClientRpc]
+        public void TeleportActionForAllClientsClientRpc(ulong clientID, int teleportLocationID, int encounterID, bool preventTeleport, bool setMaxTeleportValue)
+        {
+            if (IsOwner)
+            {
+                if (!preventTeleport) transform.position = WorldBossEncounterManager.Instance.bossEncounter.Where(a => a.encounterBossID == encounterID).FirstOrDefault().playerSpawnLocations[teleportLocationID].position;
+                if (setMaxTeleportValue) WorldBossEncounterManager.Instance.SetMaxSpawnAmount();
             }
         }
 

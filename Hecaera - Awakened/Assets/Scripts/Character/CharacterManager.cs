@@ -25,6 +25,8 @@ namespace Erikduss
 
         public bool playTakeDamageAnimations = true;
 
+        public float respawnTime = 5f;
+
         protected virtual void Awake()
         {
             DontDestroyOnLoad(this);
@@ -114,7 +116,7 @@ namespace Erikduss
                 }
             }
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(respawnTime);
         }
 
         public virtual void ReviveCharacter()
