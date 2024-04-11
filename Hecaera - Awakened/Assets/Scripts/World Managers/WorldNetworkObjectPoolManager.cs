@@ -61,7 +61,7 @@ namespace Erikduss
             // Registers all objects in PooledPrefabsList to the cache.
             foreach (var configObject in PooledPrefabsList)
             {
-                Debug.Log("Spawning spells!");
+                Debug.Log("Spawning pooled objects!");
                 //Add prefab to cache
                 //RegisterPrefabInternal(configObject.Prefab, configObject.PrewarmCount, objectPoolParentObject.transform);
                 RegisterPrefabInternal(configObject.Prefab, configObject.PrewarmCount, configObject.pooledObjectType);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 namespace Erikduss
 {
@@ -70,11 +71,22 @@ namespace Erikduss
             Projectile spawnedProjectile = obj.GetComponent<Projectile>();
             if (spawnedProjectile != null)
             {
-                if(!isNPC)
+                if (!isNPC)
+                {
+                    Debug.Log("Being Spawned by player");
                     spawnedProjectile.projectileOwnerNetworkID.Value = projectileOwner.NetworkObjectId;
+                    spawnedProjectile.projectileCollider.groupOfAttack = projectileOwner.characterGroup;
+                }
                 else
                 {
+                    Debug.Log("Being Spawned by NPC");
                     spawnedProjectile.projectileOwnerNetworkID.Value = clientID; //on spawning with isNPC this gets set to the npc id instead of client
+
+                    if(type == PooledObjectType.FireFruit)
+                    {
+                        Vector3 indicatorLocation = new Vector3(spawnLocation.x, 5f, spawnLocation.z);
+                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, 5f, spawnedProjectile, true);
+                    }
                 }
                 //spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;
                 spawnedProjectile.objectEnabled.Value = true;

@@ -195,12 +195,10 @@ namespace Erikduss
         {
             CharacterManager projectileOwner = WorldGameSessionManager.Instance.GetPlayerWithNetworkID(newID);
 
+            if (projectileOwner == null && newID == 0) return;
+
             if (projectileOwner == null && WorldAIManager.Instance.spawnedInBosses.Count > 0) projectileOwner = WorldAIManager.Instance.spawnedInBosses[0];
-            else projectileOwner = backUpBossCharManager;
-
-            //If the player is not found, the projectile must be fired by an NPC
-
-            if (projectileOwner == null) return;
+            else if (projectileOwner == null) projectileOwner = backUpBossCharManager;
 
             projectileCollider.characterCausingDamage = projectileOwner;
         }

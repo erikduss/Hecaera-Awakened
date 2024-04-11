@@ -27,6 +27,12 @@ namespace Erikduss
 
         protected override void OnTriggerEnter(Collider other)
         {
+            if (other.gameObject.layer == WorldUtilityManager.Instance.GetEnvironmentLayers())
+            {
+                Debug.Log("PROJECTILE HIT ENVIRONMENT");
+                return;
+            }
+
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
             if (damageTarget != null && !damageTarget.characterNetworkManager.isInvincible.Value)

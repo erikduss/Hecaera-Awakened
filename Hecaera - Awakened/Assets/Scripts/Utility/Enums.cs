@@ -74,7 +74,8 @@ namespace Erikduss
     {
         NONE,
         Instant_Magic_Spell,
-        FireFruit
+        FireFruit,
+        DamageIndicator
     }
 
     public enum AttackIndicatorType

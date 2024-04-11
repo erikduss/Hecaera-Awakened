@@ -116,6 +116,14 @@ namespace Erikduss
 
             Vector3 spawnLocation = new Vector3(middleArenaTeleportLocation.x + randomX, middleArenaTeleportLocation.y + randomY, middleArenaTeleportLocation.z + randomZ);
 
+
+            //TODO
+            /*
+                What should happen here?
+                Projectiles should despawn the moment they hit the ground/player.
+                Indicators should remain for the entirety of the projectile life.
+            */
+
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.FireFruit, 0, spawnLocation, Quaternion.identity, true);
             SpawnIndicator(new Vector3(spawnLocation.x, 5f, spawnLocation.z), 5f);
 
@@ -124,12 +132,12 @@ namespace Erikduss
 
         private void SpawnIndicator(Vector3 location, float size)
         {
-            var damageIndicatorInst = Instantiate(sphereGroundIndicatorPrefab, location, Quaternion.identity);
-            damageIndicatorInst.GetComponent<GroundIndicator>().SetIndicatorSize(size);
-            var damageIndicatorCollider = damageIndicatorInst.GetComponentInChildren<DamageCollider>();
-            damageIndicatorCollider.groupOfAttack = CharacterGroup.Team02;
-            damageIndicatorCollider.DisableDamageCollider();
-            Destroy(damageIndicatorInst, 2f);
+            //var damageIndicatorInst = Instantiate(sphereGroundIndicatorPrefab, location, Quaternion.identity);
+            //damageIndicatorInst.GetComponent<GroundIndicator>().SetIndicatorSize(size);
+            //var damageIndicatorCollider = damageIndicatorInst.GetComponentInChildren<DamageCollider>();
+            //damageIndicatorCollider.groupOfAttack = CharacterGroup.Team02;
+            //damageIndicatorCollider.DisableDamageCollider();
+            //Destroy(damageIndicatorInst, 2f);
         }
 
         public void StopDeathFromAbove()
