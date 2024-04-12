@@ -116,16 +116,8 @@ namespace Erikduss
 
             Vector3 spawnLocation = new Vector3(middleArenaTeleportLocation.x + randomX, middleArenaTeleportLocation.y + randomY, middleArenaTeleportLocation.z + randomZ);
 
-
-            //TODO
-            /*
-                What should happen here?
-                Projectiles should despawn the moment they hit the ground/player.
-                Indicators should remain for the entirety of the projectile life.
-            */
-
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.FireFruit, 0, spawnLocation, Quaternion.identity, true);
-            SpawnIndicator(new Vector3(spawnLocation.x, 5f, spawnLocation.z), 5f);
+            //SpawnIndicator(new Vector3(spawnLocation.x, 5f, spawnLocation.z), 5f);
 
             spawnedFireFruits++;
         }

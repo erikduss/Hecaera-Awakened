@@ -13,6 +13,7 @@ namespace Erikduss
         public NetworkVariable<Quaternion> networkRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> networkSize = new NetworkVariable<float>(2f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+        public NetworkVariable<bool> damageColliderEnabled = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         [SerializeField] GameObject childObjectToScale;
 
@@ -20,17 +21,16 @@ namespace Erikduss
 
         protected virtual void Update()
         {
-            //Projectiles are being handles by the server only!, assign its network position to the position of our transform.
             if (NetworkManager.Singleton.IsServer)
             {
                 networkPosition.Value = transform.position;
                 networkRotation.Value = transform.rotation;
             }
-            //if the character is being controlled from elsewhere, then assign its position here locally.
             else
             {
                 transform.position = networkPosition.Value;
                 transform.rotation = networkRotation.Value;
+                SetIndicatorSize(networkSize.Value);
             }
         }
 

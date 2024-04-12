@@ -29,7 +29,7 @@ namespace Erikduss
             DontDestroyOnLoad(gameObject);
         }
 
-        private void SpawnGroundIndicatorFromObjectPool(ulong clientID, int indicatorObjectTypeID, Vector3 spawnLoc, Quaternion spawnRot, float indicatorSize, bool isNPC, Projectile attachedProjectile)
+        private void SpawnGroundIndicatorFromObjectPool(ulong clientID, int indicatorObjectTypeID, Vector3 spawnLoc, Quaternion spawnRot, float indicatorSize, bool isNPC, Projectile attachedProjectile, bool enableDamageCollider, float damageColliderEnableDelay, float colliderActiveTime)
         {
             PooledObjectType type = (PooledObjectType)indicatorObjectTypeID;
 
@@ -52,30 +52,30 @@ namespace Erikduss
             if(indicator != null)
             {
                 SphereIndicatorDamageCollider collider = indicator.GetComponentInChildren<SphereIndicatorDamageCollider>();
-
+                collider.groupOfAttack = CharacterGroup.Team02;
                 collider.DisableDamageCollider();
 
-                indicator.StartFadeingIndicator(indicatorSize, attachedProjectile);
+                indicator.StartFadeingIndicator(indicatorSize, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime);
             }
         }
 
-        private IEnumerator SpawnIndicatorWithDelay(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, bool isNPC, Projectile attachedProjectile)
+        private IEnumerator SpawnIndicatorWithDelay(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, bool isNPC, Projectile attachedProjectile, bool enableDamageCollider, float damageColliderEnableDelay, float colliderActiveTime)
         {
             //This is used to make sure the indicator spawns exactly when we want it to.
             //Could change this into a synced animation event.
             yield return new WaitForSeconds(spawnDelay);
 
-            SpawnGroundIndicatorFromObjectPool(clientID, indicatorObjectTypeID, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile);
+            SpawnGroundIndicatorFromObjectPool(clientID, indicatorObjectTypeID, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime);
             NotifyTheServerOfSpawnActionClientRpc(clientID, indicatorObjectTypeID);
         }
 
         [ServerRpc]
-        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, Projectile attachedProjectile, bool isNPC = false)
+        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, Projectile attachedProjectile, bool isNPC = false, bool enableDamageCollider = false, float damageColliderEnableDelay = 0f, float colliderActiveTime = 3f)
         {
             //can only be called by the server.
             if (NetworkManager.Singleton.IsServer)
             {
-                StartCoroutine(SpawnIndicatorWithDelay(clientID, indicatorObjectTypeID, spawnDelay, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile));
+                StartCoroutine(SpawnIndicatorWithDelay(clientID, indicatorObjectTypeID, spawnDelay, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime));
             }
         }
 

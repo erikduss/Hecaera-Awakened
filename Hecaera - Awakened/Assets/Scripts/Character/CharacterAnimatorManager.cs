@@ -158,6 +158,10 @@ namespace Erikduss
             bool canRotate = false,
             bool canMove = false)
         {
+
+            //if the animation string is empty it will break the isperformingaction and rotate rules.
+            if (targetAnimation.Length <= 1) return;
+
             character.characterAnimatorManager.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
 

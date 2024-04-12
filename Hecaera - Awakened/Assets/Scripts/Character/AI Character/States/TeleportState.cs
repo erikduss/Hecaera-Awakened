@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -23,8 +24,8 @@ namespace Erikduss
         private bool teleportFinished = false;
         private bool spawnedDamageIndicator = false;
 
-        [HideInInspector] public GameObject damageIndicatorPrefab;
-        private DamageCollider damageIndicatorCollider;
+        //[HideInInspector] public GameObject damageIndicatorPrefab;
+        //private DamageCollider damageIndicatorCollider;
         public float damageIndicatorSize = 20f;
 
         public AudioClip electrifiedAudio;
@@ -36,6 +37,7 @@ namespace Erikduss
 
             if (teleportFinished)
             {
+                characterManager.isPerformingAction = false;
                 return SwitchState(aiCharacter, aiCharacter.combbatStance);
             }
             else
@@ -57,11 +59,14 @@ namespace Erikduss
                     if (!spawnedDamageIndicator)
                     {
                         spawnedDamageIndicator = true;
-                        damageIndicatorPrefab = Instantiate(damageIndicatorPrefab, teleportDestination, Quaternion.identity);
-                        damageIndicatorPrefab.GetComponent<GroundIndicator>().SetIndicatorSize(damageIndicatorSize);
-                        damageIndicatorCollider = damageIndicatorPrefab.GetComponentInChildren<DamageCollider>();
-                        damageIndicatorCollider.groupOfAttack = CharacterGroup.Team02;
-                        damageIndicatorCollider.DisableDamageCollider();
+
+                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(characterManager.NetworkBehaviourId, (int)PooledObjectType.DamageIndicator, 0, teleportDestination, Quaternion.identity, damageIndicatorSize, null, true, true, teleportDestinationReachedDelay, 2.5f);
+
+                        //damageIndicatorPrefab = Instantiate(damageIndicatorPrefab, teleportDestination, Quaternion.identity);
+                        //damageIndicatorPrefab.GetComponent<GroundIndicator>().SetIndicatorSize(damageIndicatorSize);
+                        //damageIndicatorCollider = damageIndicatorPrefab.GetComponentInChildren<DamageCollider>();
+                        //damageIndicatorCollider.groupOfAttack = CharacterGroup.Team02;
+                        //damageIndicatorCollider.DisableDamageCollider();
                     }
 
                     teleportDelayTimer -= Time.deltaTime;
@@ -74,16 +79,17 @@ namespace Erikduss
                     aiCharacter.transform.position = teleportDestination;
                     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation(teleportStartAnimation, true, false);
                     IxeleceMaterialManagement.Instance.FadeTeleportMaterials(1f, 0f, 1f);
-                    damageIndicatorCollider.EnableDamageCollider();
+                    //damageIndicatorCollider.EnableDamageCollider();
                     characterManager.soundManager.PlaySoundFX(electrifiedAudio);
                 }
                 else if (!aiCharacter.isPerformingAction && teleportingBack)
                 {
-                    damageIndicatorCollider.DisableDamageCollider();
-                    Destroy(damageIndicatorPrefab);
+                    //damageIndicatorCollider.DisableDamageCollider();
+                    //Destroy(damageIndicatorPrefab);
                     IxeleceMaterialManagement.Instance.RevertIxeleceMaterial();
                     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Idle", false, false, true, true);
 
+                    characterManager.isPerformingAction = false;
                     teleportFinished = true;
                     //aiCharacter.navMeshAgent.enabled = true;
                     //aiCharacter.GetComponent<CharacterController>().enabled = true;

@@ -14,6 +14,8 @@ namespace Erikduss
 
         public List<Projectile> projectiles = new List<Projectile>();
 
+        [SerializeField] private float fireFruitIndicatorRadius = 3f;
+
         private void Awake()
         {
             if (Instance == null)
@@ -85,7 +87,7 @@ namespace Erikduss
                     if(type == PooledObjectType.FireFruit)
                     {
                         Vector3 indicatorLocation = new Vector3(spawnLocation.x, 5f, spawnLocation.z);
-                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, 5f, spawnedProjectile, true);
+                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, fireFruitIndicatorRadius, spawnedProjectile, true);
                     }
                 }
                 //spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;

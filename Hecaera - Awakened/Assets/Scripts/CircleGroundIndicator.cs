@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Erikduss
         [SerializeField] private List<MeshRenderer> indicatorRenderers = new List<MeshRenderer>();
 
         private NetworkObject netObj;
+        private DamageCollider damageCollider;
 
         private Projectile currentlyAttachedProjectile;
 
@@ -18,10 +20,26 @@ namespace Erikduss
         {
             netObj = GetComponent<NetworkObject>();
 
-            foreach(var renderer in indicatorRenderers)
+            damageCollider = GetComponentInChildren<DamageCollider>();
+
+            foreach (var renderer in indicatorRenderers)
             {
                 renderer.material = Instantiate(renderer.material); //make a copy to make sure every indicator only modifies temporary materials
             }
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+
+            damageColliderEnabled.OnValueChanged += OnDamageColliderEnabledChange;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+
+            damageColliderEnabled.OnValueChanged -= OnDamageColliderEnabledChange;
         }
 
         protected override void Update()
@@ -43,11 +61,29 @@ namespace Erikduss
             }
         }
 
-        public void StartFadeingIndicator(float size, Projectile attachedProjectile)
+        public void StartFadeingIndicator(float size, Projectile attachedProjectile, bool enableDamageCollider, float damageColliderEnableDelay, float colliderActiveTime)
         {
             currentlyAttachedProjectile = attachedProjectile;
+            networkSize.Value = size;
             SetIndicatorSize(size);
+            objectEnabled.Value = true;
             StartCoroutine(FadeInIndicators(.5f, 0, 1));
+
+            if(enableDamageCollider)
+            {
+                StartCoroutine(EnableDamageColliderWithDelay(damageColliderEnableDelay, colliderActiveTime));
+            }
+        }
+
+        private IEnumerator EnableDamageColliderWithDelay(float delay, float colliderActiveTime)
+        {
+            yield return new WaitForSeconds (delay);
+            damageColliderEnabled.Value = true;
+            damageCollider.EnableDamageCollider();
+            yield return new WaitForSeconds(colliderActiveTime);
+            damageColliderEnabled.Value = false;
+            damageCollider.DisableDamageCollider();
+            ReturnThisProjectileToPool();
         }
 
         private IEnumerator FadeInIndicators(float duration, float startAlpha, float endAlpha)
@@ -87,6 +123,16 @@ namespace Erikduss
             ReturnThisProjectileToPool();
         }
 
+        public void OnDamageColliderEnabledChange(bool oldID, bool newID)
+        {
+            if (newID) damageCollider.EnableDamageCollider();
+            else
+                damageCollider.DisableDamageCollider();
+
+            if (!NetworkManager.Singleton.IsServer)
+                return;
+        }
+
         public void ReturnThisProjectileToPool()
         {
             //projectileCollider.DisableDamageCollider();
@@ -94,6 +140,8 @@ namespace Erikduss
             //startedTimer = false;
             //objectEnabled.Value = false;
             currentlyAttachedProjectile = null;
+            damageColliderEnabled.Value = false;
+            damageCollider.DisableDamageCollider();
             objectEnabled.Value = false;
             WorldNetworkObjectPoolManager.Instance.m_PooledObjects[WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(PooledObjectType.DamageIndicator)].Release(netObj);
         }

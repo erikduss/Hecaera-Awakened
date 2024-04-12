@@ -32,7 +32,7 @@ namespace Erikduss
                 lockOnTransform = GetComponentInChildren<LockOnTransform>().transform;
         }
 
-        public void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
+        public virtual void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
         {
             if (currentTarget != null)
                 return;
