@@ -67,7 +67,8 @@ namespace Erikduss
         LightJumpAttack01,
         //Boss attacks
         SunbeamAttack,
-        DeathFromAbove
+        DeathFromAbove,
+        Shockwave
     }
 
     public enum PooledObjectType
@@ -75,7 +76,8 @@ namespace Erikduss
         NONE,
         Instant_Magic_Spell,
         FireFruit,
-        DamageIndicator
+        DamageIndicator,
+        Shockwave
     }
 
     public enum AttackIndicatorType

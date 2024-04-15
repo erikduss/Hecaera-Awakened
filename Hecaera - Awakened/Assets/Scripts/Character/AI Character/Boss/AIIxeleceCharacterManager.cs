@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -63,6 +64,26 @@ namespace Erikduss
 
         }
 
+        #region General Attack Functions
+        public void ActivateClawsDamage()
+        {
+            combatManager.OpenRightClawDamageCollider();
+            combatManager.OpenLeftClawDamageCollider();
+        }
+
+        public void DeactivateClawsDamage()
+        {
+            combatManager.CloseLeftClawDamageCollider();
+            combatManager.CloseRightClawDamageCollider();
+        }
+
+        public void ShowAttackIndicator(AttackIndicatorType indicatorType)
+        {
+            aIBossUIManager.ActivateAttackIndicator(indicatorType, 0.25f, 0.35f);
+        }
+        #endregion
+
+        #region Sunbeam Activation And Deactivation
         public void StartSunbeam()
         {
             aIBossUIManager.ActivateAttackIndicator(AttackIndicatorType.YELLOW_NORMAL, 0.25f, 0.35f);
@@ -76,17 +97,18 @@ namespace Erikduss
         {
             currentSpawnedSunbeam.ActivateSunbeam();
             combatManager.SetSunbeamDamage();
-            combatManager.OpenRightClawDamageCollider();
-            combatManager.OpenLeftClawDamageCollider();
+            ActivateClawsDamage();
         }
 
         public void DeactivateSunbeamDamage()
         {
             currentSpawnedSunbeam.DeativateSunbeam();
-            combatManager.CloseLeftClawDamageCollider();
-            combatManager.CloseRightClawDamageCollider();
+            DeactivateClawsDamage();
         }
+        #endregion
 
+
+        #region Death From Above Spawn & Despawn
         public void ShowAttackIndicatorDeathFromAbove()
         {
             aIBossUIManager.ActivateAttackIndicator(AttackIndicatorType.RED_INDICATED, 0.35f, 0.75f);
@@ -122,16 +144,6 @@ namespace Erikduss
             spawnedFireFruits++;
         }
 
-        private void SpawnIndicator(Vector3 location, float size)
-        {
-            //var damageIndicatorInst = Instantiate(sphereGroundIndicatorPrefab, location, Quaternion.identity);
-            //damageIndicatorInst.GetComponent<GroundIndicator>().SetIndicatorSize(size);
-            //var damageIndicatorCollider = damageIndicatorInst.GetComponentInChildren<DamageCollider>();
-            //damageIndicatorCollider.groupOfAttack = CharacterGroup.Team02;
-            //damageIndicatorCollider.DisableDamageCollider();
-            //Destroy(damageIndicatorInst, 2f);
-        }
-
         public void StopDeathFromAbove()
         {
             stopDOAAtPercentage = -1f;
@@ -139,5 +151,23 @@ namespace Erikduss
 
             characterAnimatorManager.PlayTargetActionAnimation("Death_From_Above_Stop", true, false);
         }
+        #endregion
+
+        #region Shockwave Activation
+
+        public void SpawnShockwave()
+        {
+            if (!IsOwner) return;
+
+            //apply offsets if needed.
+            Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+            Vector3 relativePos = combatManager.currentTarget.transform.position - transform.position;
+
+            Quaternion spawnRotation = Quaternion.LookRotation(relativePos);
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, spawnRotation, true);
+        }
+
+        #endregion
     }
 }

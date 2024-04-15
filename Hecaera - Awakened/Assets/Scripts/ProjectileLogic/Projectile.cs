@@ -36,6 +36,9 @@ namespace Erikduss
             netObj = GetComponent<NetworkObject>();
             rb = GetComponent<Rigidbody>();
             projectileCollider = GetComponent<ProjectileDamageCollider>();
+
+            if(projectileCollider == null)
+                Debug.LogError("REQUIRED COMPONENT ERROR: Projectile does not have a projectile damage collider!");
         }
 
         protected virtual void Update()
@@ -129,9 +132,9 @@ namespace Erikduss
                 {
                     gameObject.SetActive(false);
                 }
-
-                objectEnabled.OnValueChanged += OnObjectEnabledChange;
             }
+
+            objectEnabled.OnValueChanged += OnObjectEnabledChange;
 
             projectileOwnerNetworkID.OnValueChanged += OnProjectileOwnerNetworkIDChange; //should be done on both the server and the client.
 
@@ -142,13 +145,8 @@ namespace Erikduss
         {
             projectileOwnerNetworkID.OnValueChanged -= OnProjectileOwnerNetworkIDChange;
 
-            if (!NetworkManager.Singleton.IsServer)
-            {
-                objectEnabled.OnValueChanged -= OnObjectEnabledChange;
-                return;
-            }
+            objectEnabled.OnValueChanged -= OnObjectEnabledChange;
                 
-
             base.OnNetworkDespawn();
         }
 
@@ -162,7 +160,7 @@ namespace Erikduss
             base.OnDestroy();
         }
 
-        public void OnObjectEnabledChange(bool oldID, bool newID)
+        protected virtual void OnObjectEnabledChange(bool oldID, bool newID)
         {
             if (newID)
                 projectileCollider.EnableDamageCollider();
@@ -173,9 +171,6 @@ namespace Erikduss
             }
 
             gameObject.SetActive(newID);
-
-            if (!NetworkManager.Singleton.IsServer)
-                return;
         }
 
         private void ResetProjectileOwner()
