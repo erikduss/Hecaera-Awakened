@@ -22,6 +22,9 @@ namespace Erikduss
             }
 
             damageCollider.enabled = false; //damage collider should only be enabled during attack animations.
+
+            //prevent the attack not dealing damage
+            if(instant_Magic_Attack_Modifier == 0) instant_Magic_Attack_Modifier = 1;
         }
 
 

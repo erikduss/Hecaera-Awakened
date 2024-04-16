@@ -78,9 +78,11 @@ namespace Erikduss
         private IEnumerator EnableDamageColliderWithDelay(float delay, float colliderActiveTime)
         {
             yield return new WaitForSeconds (delay);
+            Debug.Log("Damage collider active");
             damageColliderEnabled.Value = true;
             damageCollider.EnableDamageCollider();
             yield return new WaitForSeconds(colliderActiveTime);
+            Debug.Log("Damage collider disabled");
             damageColliderEnabled.Value = false;
             damageCollider.DisableDamageCollider();
             ReturnThisProjectileToPool();

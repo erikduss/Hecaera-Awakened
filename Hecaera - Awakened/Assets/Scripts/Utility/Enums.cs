@@ -68,7 +68,9 @@ namespace Erikduss
         //Boss attacks
         SunbeamAttack,
         DeathFromAbove,
-        Shockwave
+        Shockwave,
+        GroundSlam,
+        GetOutSlam
     }
 
     public enum PooledObjectType

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -165,9 +166,46 @@ namespace Erikduss
             Vector3 relativePos = combatManager.currentTarget.transform.position - transform.position;
 
             Quaternion spawnRotation = Quaternion.LookRotation(relativePos);
+
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, spawnRotation, true);
         }
+        #endregion
 
+        #region Ground Slam And Side Shockwaves
+        public void ExecuteGroundSlam()
+        {
+            Vector3 indicatorLocation = new Vector3(transform.position.x, 5f, transform.position.z);
+            float indicatorSize = 14f;
+
+            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 1.5f, .6f);
+        }
+
+        public void SpawnSideShockwaves()
+        {
+            if (!IsOwner) return;
+
+            Vector3 leftRelativePos = (transform.position - transform.right) - transform.position;
+            Quaternion sideLeft = Quaternion.LookRotation(leftRelativePos);
+
+            Vector3 rightRelativePos = (transform.position + transform.right) - transform.position;
+            Quaternion sideRight = Quaternion.LookRotation(rightRelativePos);
+
+            //apply offsets if needed.
+            Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, sideLeft, true);
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, sideRight, true);
+        }
+        #endregion
+
+        #region Get out Ground Slam
+        public void ExecuteGetOutSlam()
+        {
+            Vector3 indicatorLocation = new Vector3(transform.position.x, 5f, transform.position.z);
+            float indicatorSize = 12f;
+
+            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 1.5f, .6f);
+        }
         #endregion
     }
 }
