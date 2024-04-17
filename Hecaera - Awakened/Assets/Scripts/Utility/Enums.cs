@@ -70,7 +70,8 @@ namespace Erikduss
         DeathFromAbove,
         Shockwave,
         GroundSlam,
-        GetOutSlam
+        GetOutSlam,
+        NatureFury
     }
 
     public enum PooledObjectType

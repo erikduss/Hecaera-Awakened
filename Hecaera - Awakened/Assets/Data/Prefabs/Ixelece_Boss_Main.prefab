@@ -41842,6 +41842,9 @@ MonoBehaviour:
   phaseShiftAnimation: Phase_Change_01
   phase02CombatStanceState: {fileID: 11400000, guid: 2d662a9cf167663478132413e68dbda2, type: 2}
   sleepState: {fileID: 11400000, guid: dc6b106d7b0945c4ca87ee9b13d44314, type: 2}
+  currentlyUsePoise: 0
+  currentPoiseValue: 0
+  poiseDamagePerHitMultiplier: 1
   teleportState: {fileID: 11400000, guid: ac2ab3d3e23cceb44b4fb96de5caf4d1, type: 2}
   soundManager: {fileID: 3942244864916318175}
   aIBossUIManager: {fileID: 0}
@@ -41849,6 +41852,7 @@ MonoBehaviour:
   middleArenaTeleportLocation: {x: 6.34, y: 3.4, z: 87.79}
   sphereGroundIndicatorPrefab: {fileID: 6555105636536880854, guid: 54078205f321f5e489f2113388cd2403, type: 3}
   sunbeamAttackPrefab: {fileID: 5783349659663388356, guid: 7c252caee1497854bba8192f7a4ff3d6, type: 3}
+  natureFuryPrefab: {fileID: 6766657763254462232, guid: cb914c3c7aeee424388fb251b95080e2, type: 3}
 --- !u!114 &3942244864916318175
 MonoBehaviour:
   m_ObjectHideFlags: 0

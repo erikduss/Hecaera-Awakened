@@ -21,15 +21,19 @@ namespace Erikduss
 
             if (aIBossCharacter.IsOwner)
             {
-                if (currentHealth.Value <= 0)
-                    return;
-
                 float healthNeededForShift = maxHealth.Value * (aIBossCharacter.minimumHealthPercentageToShift / 100);
 
                 if (currentHealth.Value <= healthNeededForShift)
                 {
                     aIBossCharacter.PhaseShift();
                 }
+
+                float damageTaken =  oldValue - newValue; //this way around due to this being the health values of the character. For example: 750 - 700, if being dealt 50 dmg
+
+                aIBossCharacter.CheckPoiseBreak(damageTaken);
+
+                if (currentHealth.Value <= 0)
+                    return;
             }
         }
     }

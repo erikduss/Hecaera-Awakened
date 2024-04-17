@@ -7,7 +7,5 @@ namespace Erikduss
 {
     public class AICharacterNetworkManager : CharacterNetworkManager
     {
-
-
     }
 }

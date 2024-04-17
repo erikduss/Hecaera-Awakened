@@ -36,6 +36,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 3d20426b5103a274bbd72dd765b27174, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DecalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -56,6 +60,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmissionTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 8029b2e399ecad64abd073cc0565e809, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -70,6 +82,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
         m_Texture: {fileID: 2800000, guid: 994e51c46f307ae4d9386e5c8022a40b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -94,16 +110,21 @@ Material:
     - _DistortSpeed: 2
     - _DstBlend: 0
     - _DstMode: 10
+    - _EmissionDepth: 10
     - _Glossiness: 0.5
+    - _Height: 0.25
     - _MaskPow: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NoiseDepth: 10
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Scale: 2
     - _Speed: 3
     - _SrcBlend: 1
     - _SrcMode: 5
+    - _Steps: 10
+    - _StepsBin: 10
     - _UVSec: 0
     - _UseAlphaPow: 0
     - _UseCustomLighting: 0
@@ -111,6 +132,7 @@ Material:
     - _UseCutoutTex: 1
     - _UseCutoutThreshold: 0
     - _UseFrameBlending: 0
+    - _UseLight: 0
     - _UseNoiseDistortion: 1
     - _UseWorldSpaceUV: 0
     - _ZTest1: 5
@@ -118,6 +140,8 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CutoutColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _NoiseSpeedScale: {r: 1, g: 1, b: 1, a: 1}
     - _TintColor: {r: 10.1112585, g: 0, b: 0.19601499, a: 1}
   m_BuildTextureStacks: []

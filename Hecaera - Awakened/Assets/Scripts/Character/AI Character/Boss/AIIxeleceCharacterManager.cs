@@ -24,6 +24,9 @@ namespace Erikduss
         [SerializeField] private GameObject sunbeamAttackPrefab;
         private SunBeamLogic currentSpawnedSunbeam;
 
+        [SerializeField] private GameObject natureFuryPrefab;
+        private GameObject currentlySpawnedNatureFury;
+
         //Death From Above Variables
         private int spawnedFireFruits = 0;
         private int minimumAmountOfFireFruitSpawns = 5;
@@ -202,10 +205,26 @@ namespace Erikduss
         public void ExecuteGetOutSlam()
         {
             Vector3 indicatorLocation = new Vector3(transform.position.x, 5f, transform.position.z);
-            float indicatorSize = 12f;
+            float indicatorSize = 24f;
 
-            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 1.5f, .6f);
+            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 2.5f, .6f);
         }
+        #endregion
+
+        #region Nature's Fury Attack
+        public void ExecuteNatureFury()
+        {
+            SetNewPoiseValueToBreak(50);
+        }
+
+        public void DetonateNatureFury()
+        {
+            //prevent poise break if too late.
+            currentlyUsePoise = false;
+            currentlySpawnedNatureFury = Instantiate(natureFuryPrefab, transform.position, Quaternion.identity);
+            Destroy(currentlySpawnedNatureFury, 1.5f);
+        }
+
         #endregion
     }
 }

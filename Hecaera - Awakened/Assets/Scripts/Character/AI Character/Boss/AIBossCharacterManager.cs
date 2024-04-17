@@ -27,6 +27,11 @@ namespace Erikduss
         [Header("States")]
         [SerializeField] BossSleepState sleepState;
 
+        [Header("Poise")]
+        public bool currentlyUsePoise = false;
+        public float currentPoiseValue = 0;
+        public float poiseDamagePerHitMultiplier = 1f; //how much poise per damage value? for example, 10 damage = 10 poise damage.
+
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
@@ -218,6 +223,29 @@ namespace Erikduss
             characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
             combbatStance = Instantiate(phase02CombatStanceState);
             currentState = combbatStance;
+        }
+
+        public void SetNewPoiseValueToBreak(float poiseValueToBreakPerPlayer)
+        {
+            currentlyUsePoise = true;
+
+            currentPoiseValue = poiseValueToBreakPerPlayer * WorldGameSessionManager.Instance.players.Count;
+        }
+
+        public void CheckPoiseBreak(float decreasePoiseBy)
+        {
+            if (!currentlyUsePoise) return;
+
+            currentPoiseValue -= decreasePoiseBy;
+
+            if (currentPoiseValue <= 0)
+            {
+                if(aICharacterCombatManager.currentAttackType == AttackType.NatureFury)
+                {
+                    currentlyUsePoise = false;
+                    characterAnimatorManager.PlayTargetActionAnimation("NatureFury_PoiseCancel", true);
+                }
+            }
         }
     }
 }
