@@ -83,7 +83,7 @@ namespace Aura2API
                         }
                     }
 
-                    if (auraLight != null && auraLight.Type != LightType.Area)
+                    if (auraLight != null && auraLight.Type != LightType.Rectangle)
                     {
                         state = auraLight.enabled;
                         tooltip = (state ? "Disable" : "Enable") + " Aura Light";
