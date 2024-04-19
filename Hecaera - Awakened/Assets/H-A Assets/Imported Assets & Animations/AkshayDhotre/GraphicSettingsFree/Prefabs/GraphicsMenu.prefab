@@ -121,6 +121,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filePath: D:/MyNewGame/
   fileName: MySettingsExampleScene.xml
+  defaultDataContainer:
+    screenWidth: 0
+    screenHeight: 0
+    screenMode: -1
+    qualityLevel: -1
+    mainVolume: 25
+    musicVolume: 25
+    sfxVolume: 50
+    dialogVolume: 50
+    horizontalSensitivity: 0
+    verticalSensitivity: 0
 --- !u!114 &2920691124984626510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +147,24 @@ MonoBehaviour:
   resolutionOption: {fileID: 2920691125814892318}
   screenmodeOption: {fileID: 2920691126924687368}
   qualityLevelOption: {fileID: 2920691125257867331}
+  mainVolumeOption: {fileID: 0}
+  musicVolumeOption: {fileID: 0}
+  sfxVolumeOption: {fileID: 0}
+  dialogVolumeOption: {fileID: 0}
+  horizontalSensitivityOption: {fileID: 0}
+  verticalSensitivityOption: {fileID: 0}
   keyboardApplySettingsKey: 13
+  dataToLoad:
+    screenWidth: 0
+    screenHeight: 0
+    screenMode: -1
+    qualityLevel: -1
+    mainVolume: 25
+    musicVolume: 25
+    sfxVolume: 50
+    dialogVolume: 50
+    horizontalSensitivity: 0
+    verticalSensitivity: 0
 --- !u!114 &2920691124984626509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,6 +919,7 @@ MonoBehaviour:
     indexInList: 0
     vector2Value: {x: 0, y: 0}
     boolVal: 0
+  canCycleBack: 1
 --- !u!1001 &2920691126924687476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1200,6 +1229,7 @@ MonoBehaviour:
     indexInList: 0
     vector2Value: {x: 0, y: 0}
     boolVal: 0
+  canCycleBack: 1
 --- !u!1001 &4509299257105135876
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1502,3 +1532,4 @@ MonoBehaviour:
     indexInList: 0
     vector2Value: {x: 1024, y: 768}
     boolVal: 0
+  canCycleBack: 1
