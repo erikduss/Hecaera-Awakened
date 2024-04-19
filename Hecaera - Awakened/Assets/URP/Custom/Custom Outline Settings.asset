@@ -49,7 +49,7 @@ Material:
     - _NormalThresholdMin: 0
     - _Thickness: 1
     m_Colors:
-    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EdgeColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &11400000
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130791d3e20646d2b6d81688877b0909, type: 3}
   m_Name: Custom Outline Settings
   m_EditorClassIdentifier: 
-  edgeColor: {r: 1, g: 1, b: 1, a: 1}
+  edgeColor: {r: 0, g: 0, b: 0, a: 1}
   thickness: 1
   resolutionInvariant: 0
   fadeWithDistance: 0

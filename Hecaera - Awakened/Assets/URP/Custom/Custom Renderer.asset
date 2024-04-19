@@ -27,8 +27,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cca7768aaaea4b0081f14e7f9d4b5ad, type: 3}
   m_Name: FlatKitOutline
   m_EditorClassIdentifier: 
-  m_Active: 0
-  settings: {fileID: 11400000, guid: ff3dfd77429d64938a26bd54c27dacd8, type: 2}
+  m_Active: 1
+  settings: {fileID: 11400000, guid: 8e185896e2d6eec429ef73271b419ee8, type: 2}
 --- !u!114 &-1344586528338988631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41,8 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770acbaed70db4ad696458511aa3f084, type: 3}
   m_Name: FlatKitFog
   m_EditorClassIdentifier: 
-  m_Active: 0
-  settings: {fileID: 11400000, guid: f68defe9b6889484787a8d20c715e802, type: 2}
+  m_Active: 1
+  settings: {fileID: 11400000, guid: 05128c40e511ef64a832415dc64c9340, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +69,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1344586528338988631}
   - {fileID: -2401278517541482506}
-  m_RendererFeatureMap: a9319428ad1157edf6cf292be9f1acde
+  - {fileID: 4725596183562463377}
+  m_RendererFeatureMap: a9319428ad1157edf6cf292be9f1acde91a82e11b1b09441
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -108,3 +109,26 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+--- !u!114 &4725596183562463377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1614fc811f8f184697d9bee70ab9fe5, type: 3}
+  m_Name: DecalRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  m_Settings:
+    technique: 0
+    maxDrawDistance: 1000
+    decalLayers: 0
+    dBufferSettings:
+      surfaceData: 2
+    screenSpaceSettings:
+      normalBlend: 0
+  m_CopyDepthPS: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
+  m_DBufferClear: {fileID: 4800000, guid: f056d8bd2a1c7e44e9729144b4c70395, type: 3}
