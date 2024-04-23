@@ -45,13 +45,14 @@ namespace Erikduss
             }
 
             GameObject prefab = WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(type);
+            spawnRotation = Quaternion.Euler(90,0,0);
             NetworkObject obj = WorldNetworkObjectPoolManager.Instance.GetNetworkObject(prefab, spawnLocation, spawnRotation);
 
             CircleGroundIndicator indicator = obj.GetComponent<CircleGroundIndicator>();
 
             if(indicator != null)
             {
-                SphereIndicatorDamageCollider collider = indicator.GetComponentInChildren<SphereIndicatorDamageCollider>();
+                SphereIndicatorDamageCollider collider = indicator.GetComponent<SphereIndicatorDamageCollider>();
                 collider.groupOfAttack = CharacterGroup.Team02;
                 collider.DisableDamageCollider();
 
