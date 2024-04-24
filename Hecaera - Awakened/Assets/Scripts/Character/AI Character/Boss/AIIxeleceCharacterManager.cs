@@ -181,6 +181,7 @@ namespace Erikduss
             float indicatorSize = 14f;
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 1.5f, .6f);
+            StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnGetOutRocks(1.5f, indicatorLocation));
         }
 
         public void SpawnSideShockwaves()
@@ -208,6 +209,7 @@ namespace Erikduss
             float indicatorSize = 24f;
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 2.5f, .6f);
+            StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnVines(2.5f, indicatorLocation));
         }
         #endregion
 

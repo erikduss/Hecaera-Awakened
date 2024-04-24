@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ namespace Erikduss
     public class WorldGroundIndicatorManager : MonoBehaviour
     {
         public static WorldGroundIndicatorManager Instance;
+
+        [SerializeField] private GameObject getOutRocksPrefab;
+        [SerializeField] private GameObject vinesPrefab;
 
         //public List<Projectile> projectiles = new List<Projectile>();
 
@@ -68,6 +72,78 @@ namespace Erikduss
 
             SpawnGroundIndicatorFromObjectPool(clientID, indicatorObjectTypeID, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime);
             NotifyTheServerOfSpawnActionClientRpc(clientID, indicatorObjectTypeID);
+        }
+
+        public IEnumerator SpawnGetOutRocks(float spawnDelay, Vector3 spawnLocation)
+        {
+            spawnLocation.y = 0;
+            GameObject spawnedPrefab = Instantiate(getOutRocksPrefab, spawnLocation, Quaternion.identity);
+            yield return new WaitForSeconds(spawnDelay);
+            spawnLocation.y = 3.4f; //end location
+            float elapsedTime = 0;
+            float duration = 0.2f;
+            Vector3 startpos = spawnedPrefab.transform.position;
+
+            while (elapsedTime < duration)
+            {
+                spawnedPrefab.transform.position = Vector3.Lerp(startpos, spawnLocation, (elapsedTime / duration));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            spawnLocation.y = 0f; //end location
+            elapsedTime = 0;
+            duration = 0.2f;
+            startpos = spawnedPrefab.transform.position;
+
+            while (elapsedTime < duration)
+            {
+                spawnedPrefab.transform.position = Vector3.Lerp(startpos, spawnLocation, (elapsedTime / duration));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(.5f);
+
+            Destroy(spawnedPrefab);
+        }
+
+        public IEnumerator SpawnVines(float spawnDelay, Vector3 spawnLocation)
+        {
+            spawnLocation.y = -13f;
+            GameObject spawnedPrefab = Instantiate(vinesPrefab, spawnLocation, Quaternion.identity);
+            yield return new WaitForSeconds(spawnDelay);
+            spawnLocation.y = 3.4f; //end location
+            float elapsedTime = 0;
+            float duration = 0.2f;
+            Vector3 startpos = spawnedPrefab.transform.position;
+
+            while (elapsedTime < duration)
+            {
+                spawnedPrefab.transform.position = Vector3.Lerp(startpos, spawnLocation, (elapsedTime / duration));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            spawnLocation.y = -13f; //end location
+            elapsedTime = 0;
+            duration = 0.2f;
+            startpos = spawnedPrefab.transform.position;
+
+            while (elapsedTime < duration)
+            {
+                spawnedPrefab.transform.position = Vector3.Lerp(startpos, spawnLocation, (elapsedTime / duration));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(.5f);
+
+            Destroy(spawnedPrefab);
         }
 
         [ServerRpc]
