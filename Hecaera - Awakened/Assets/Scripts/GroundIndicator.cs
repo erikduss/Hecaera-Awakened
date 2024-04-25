@@ -23,7 +23,7 @@ namespace Erikduss
         [SerializeField] protected List<DecalProjector> indicatorRenderers = new List<DecalProjector>();
 
         protected NetworkObject netObj;
-        protected DamageCollider damageCollider;
+        public DamageCollider damageCollider;
 
         protected Projectile currentlyAttachedProjectile;
 
@@ -143,7 +143,9 @@ namespace Erikduss
 
         protected virtual IEnumerator EnableDamageColliderWithDelay(float delay, float colliderActiveTime)
         {
+            Debug.Log("Waiting to activate damage collider");
             yield return new WaitForSeconds(delay);
+            Debug.Log("Activating Damage Collider");
             damageColliderEnabled.Value = true;
             damageCollider.EnableDamageCollider();
             yield return new WaitForSeconds(colliderActiveTime);

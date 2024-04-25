@@ -163,6 +163,8 @@ namespace Erikduss
         {
             if (!IsOwner) return;
 
+            Debug.Log("SHockwave spawn");
+
             //apply offsets if needed.
             Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
@@ -197,6 +199,8 @@ namespace Erikduss
             //apply offsets if needed.
             Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
+            Debug.Log("Side SHockwave spawn");
+
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, sideLeft, true);
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, sideRight, true);
         }
@@ -225,6 +229,27 @@ namespace Erikduss
             currentlyUsePoise = false;
             currentlySpawnedNatureFury = Instantiate(natureFuryPrefab, transform.position, Quaternion.identity);
             Destroy(currentlySpawnedNatureFury, 1.5f);
+        }
+
+        #endregion
+
+        #region Light Embrace Attack & combo attack
+        public void ExecuteLightEmbrace()
+        {
+            //Vector3 indicatorLocation = new Vector3(transform.position.x, 5f, transform.position.z);
+            float indicatorSize = 24f;
+
+            //apply offsets if needed.
+            Vector3 spawnLocation = new Vector3(transform.position.x, 5, transform.position.z);
+            spawnLocation += (transform.forward * (indicatorSize/2));
+
+            Vector3 relativePos = combatManager.currentTarget.transform.position - transform.position;
+
+            Quaternion spawnRotation = Quaternion.LookRotation(relativePos);
+
+            Debug.Log("Cone Indicator spawn");
+
+            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
         }
 
         #endregion

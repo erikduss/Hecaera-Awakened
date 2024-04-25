@@ -122,7 +122,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6688807397449860231}
   - component: {fileID: 9106905684892794504}
-  m_Layer: 0
+  - component: {fileID: 3901754650486355841}
+  m_Layer: 13
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +167,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 7adb25d969bc163499d697c2bd0ab595, type: 3}
+--- !u!114 &3901754650486355841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5513065549878871537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da02f0643e829ed48bdb5785feb5b2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 9106905684892794504}
+  physicalDamage: 100
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  charactersDamaged: []
+  groupOfAttack: 2
 --- !u!1 &8192640076660016177
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +255,6 @@ GameObject:
   - component: {fileID: 404104122968477294}
   - component: {fileID: 8147839421766082084}
   - component: {fileID: 3268942422638975979}
-  - component: {fileID: 637938711872576070}
   m_Layer: 0
   m_Name: ConeDamageIndicator
   m_TagString: Untagged
@@ -273,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1417134842
+  GlobalObjectIdHash: 698869991
   InScenePlacedSourceGlobalObjectIdHash: 1429973360
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -335,23 +355,3 @@ MonoBehaviour:
   - {fileID: 2734013393750599445}
   - {fileID: 6955685752206843387}
   - {fileID: 2190769498304537525}
---- !u!114 &637938711872576070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8732529841235304747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da02f0643e829ed48bdb5785feb5b2e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageCollider: {fileID: 9106905684892794504}
-  physicalDamage: 100
-  magicDamage: 0
-  fireDamage: 0
-  lightningDamage: 0
-  holyDamage: 0
-  charactersDamaged: []
-  groupOfAttack: 2

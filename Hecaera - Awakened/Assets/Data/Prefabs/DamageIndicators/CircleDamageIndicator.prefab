@@ -179,9 +179,7 @@ GameObject:
   - component: {fileID: 2753510678528363380}
   - component: {fileID: 4939944264967226676}
   - component: {fileID: 5098150160170270984}
-  - component: {fileID: 693207575917842620}
   - component: {fileID: 5913660383902536962}
-  - component: {fileID: 8613708996578246732}
   m_Layer: 0
   m_Name: CircleDamageIndicator
   m_TagString: Untagged
@@ -205,6 +203,7 @@ Transform:
   - {fileID: 7408484152024757731}
   - {fileID: 7169756430277655327}
   - {fileID: 3744838920336286283}
+  - {fileID: 3358231973848466159}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &4939944264967226676
@@ -219,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 429798379
+  GlobalObjectIdHash: 3705621148
   InScenePlacedSourceGlobalObjectIdHash: 4246520138
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -252,29 +251,6 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.5}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!136 &693207575917842620
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4602025257111765183}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.45
-  m_Height: 1.5
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5913660383902536962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,19 +280,76 @@ MonoBehaviour:
   - {fileID: 8401637049426427525}
   - {fileID: 8709461596772931748}
   - {fileID: 1591333251053096885}
---- !u!114 &8613708996578246732
+  damageCollider: {fileID: 0}
+--- !u!1 &5474242441964615872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3358231973848466159}
+  - component: {fileID: 4245630042873090615}
+  - component: {fileID: 6446000472710155911}
+  m_Layer: 13
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3358231973848466159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5474242441964615872}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.6000001, y: 0.6, z: 0.60000014}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2753510678528363380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4245630042873090615
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5474242441964615872}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.8
+  m_Height: 3
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6446000472710155911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4602025257111765183}
+  m_GameObject: {fileID: 5474242441964615872}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59986e30d8d743747b89c2486ea57fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageCollider: {fileID: 693207575917842620}
+  damageCollider: {fileID: 4245630042873090615}
   physicalDamage: 100
   magicDamage: 0
   fireDamage: 0

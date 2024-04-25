@@ -37,6 +37,8 @@ namespace Erikduss
         {
             PooledObjectType type = (PooledObjectType)indicatorObjectTypeID;
 
+            Debug.Log("Spawning: " + type + " Received: " + indicatorObjectTypeID);
+
             Vector3 spawnLocation = spawnLoc;
             Quaternion spawnRotation = spawnRot;
             PlayerManager indicatorOwner = null;
@@ -49,16 +51,19 @@ namespace Erikduss
             }
 
             GameObject prefab = WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(type);
-            spawnRotation = Quaternion.Euler(90,0,0);
+            Vector3 eulerAngles = spawnRotation.eulerAngles;
+            eulerAngles.x = 90; //Always rotate the projector down towards the ground.
+            spawnRotation.eulerAngles = eulerAngles; //Quaternion.Euler(90,spawnRotation.y,spawnRotation.z);
             NetworkObject obj = WorldNetworkObjectPoolManager.Instance.GetNetworkObject(prefab, spawnLocation, spawnRotation);
 
-            CircleGroundIndicator indicator = obj.GetComponent<CircleGroundIndicator>();
+            GroundIndicator indicator = obj.GetComponent<GroundIndicator>();
 
             if(indicator != null)
             {
-                SphereIndicatorDamageCollider collider = indicator.GetComponent<SphereIndicatorDamageCollider>();
-                collider.groupOfAttack = CharacterGroup.Team02;
-                collider.DisableDamageCollider();
+                if(indicator.damageCollider == null) indicator.damageCollider = indicator.GetComponentInChildren<DamageCollider>();
+
+                indicator.damageCollider.groupOfAttack = CharacterGroup.Team02;
+                indicator.damageCollider.DisableDamageCollider();
 
                 indicator.StartFadeingIndicator(indicatorSize, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime);
             }

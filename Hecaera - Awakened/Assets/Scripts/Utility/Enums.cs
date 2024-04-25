@@ -71,7 +71,9 @@ namespace Erikduss
         Shockwave,
         GroundSlam,
         GetOutSlam,
-        NatureFury
+        NatureFury,
+        LightEmbrace,
+        EmbraceCombo
     }
 
     public enum PooledObjectType
@@ -80,6 +82,7 @@ namespace Erikduss
         Instant_Magic_Spell,
         FireFruit,
         DamageIndicator,
+        ConeDamageIndicator,
         Shockwave
     }
 
