@@ -37,8 +37,6 @@ namespace Erikduss
         {
             PooledObjectType type = (PooledObjectType)indicatorObjectTypeID;
 
-            Debug.Log("Spawning: " + type + " Received: " + indicatorObjectTypeID);
-
             Vector3 spawnLocation = spawnLoc;
             Quaternion spawnRotation = spawnRot;
             PlayerManager indicatorOwner = null;

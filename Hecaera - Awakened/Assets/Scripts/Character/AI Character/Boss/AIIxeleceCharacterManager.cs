@@ -247,8 +247,6 @@ namespace Erikduss
 
             Quaternion spawnRotation = Quaternion.LookRotation(relativePos);
 
-            Debug.Log("Cone Indicator spawn");
-
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
         }
 
