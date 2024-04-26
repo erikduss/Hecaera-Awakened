@@ -13,6 +13,7 @@ namespace Erikduss
 
         [SerializeField] private GameObject getOutRocksPrefab;
         [SerializeField] private GameObject vinesPrefab;
+        [SerializeField] private GameObject lightEmbracePrefab;
 
         //public List<Projectile> projectiles = new List<Projectile>();
 
@@ -146,6 +147,14 @@ namespace Erikduss
 
             yield return new WaitForSeconds(.5f);
 
+            Destroy(spawnedPrefab);
+        }
+
+        public IEnumerator SpawnLightEmbraceVisual(float spawnDelay, Vector3 spawnLocation, quaternion spawnRotation)
+        {
+            yield return new WaitForSeconds(spawnDelay);
+            GameObject spawnedPrefab = Instantiate(lightEmbracePrefab, spawnLocation, spawnRotation);
+            yield return new WaitForSeconds(1.5f);
             Destroy(spawnedPrefab);
         }
 
