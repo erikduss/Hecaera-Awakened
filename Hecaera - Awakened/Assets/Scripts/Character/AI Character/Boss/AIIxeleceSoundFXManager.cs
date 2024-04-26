@@ -8,7 +8,12 @@ namespace Erikduss
     {
         public void PlayIxeleceScream()
         {
-            //PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.ixeleceScreams));
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.ixeleceScreams));
+        }
+
+        public void PlayIxeleceAttackVoice()
+        {
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.ixeleceScreams));
         }
     }
 }

@@ -99,6 +99,8 @@ namespace Erikduss
 
         public void ActivateSunbeamDamage()
         {
+            soundManager.PlayIxeleceAttackVoice();
+
             currentSpawnedSunbeam.ActivateSunbeam();
             combatManager.SetSunbeamDamage();
             ActivateClawsDamage();
@@ -161,6 +163,7 @@ namespace Erikduss
 
         public void SpawnShockwave()
         {
+            soundManager.PlayIxeleceAttackVoice();
             if (!IsOwner) return;
 
             Debug.Log("SHockwave spawn");
@@ -184,10 +187,13 @@ namespace Erikduss
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 1.5f, .6f);
             StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnGetOutRocks(1.5f, indicatorLocation));
+
+            soundManager.PlayIxeleceAttackVoice();
         }
 
         public void SpawnSideShockwaves()
         {
+            soundManager.PlayIxeleceAttackVoice();
             if (!IsOwner) return;
 
             Vector3 leftRelativePos = (transform.position - transform.right) - transform.position;
@@ -214,6 +220,8 @@ namespace Erikduss
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 2.5f, .6f);
             StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnVines(2.5f, indicatorLocation));
+
+            soundManager.PlayIxeleceAttackVoice();
         }
         #endregion
 
@@ -225,6 +233,7 @@ namespace Erikduss
 
         public void DetonateNatureFury()
         {
+            soundManager.PlayIxeleceAttackVoice();
             //prevent poise break if too late.
             currentlyUsePoise = false;
             currentlySpawnedNatureFury = Instantiate(natureFuryPrefab, transform.position, Quaternion.identity);
@@ -249,6 +258,8 @@ namespace Erikduss
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
             StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation));
+
+            soundManager.PlayIxeleceAttackVoice();
         }
 
         #endregion
