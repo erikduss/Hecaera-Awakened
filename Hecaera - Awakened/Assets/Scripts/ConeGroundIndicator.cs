@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConeGroundIndicator : GroundIndicator
+namespace Erikduss
 {
-    
+    public class ConeGroundIndicator : GroundIndicator
+    {
+
+    }
 }

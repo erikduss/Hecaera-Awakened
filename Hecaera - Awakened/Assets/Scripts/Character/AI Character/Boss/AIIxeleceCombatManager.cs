@@ -35,9 +35,17 @@ namespace Erikduss
             //Wont target the same player the whole fight
             //Likelyness to target per player
 
-            int playerToTarget = Random.Range(0, WorldGameSessionManager.Instance.players.Count);
+            List<PlayerManager> alivePlayers = new List<PlayerManager>();
 
-            currentTarget = WorldGameSessionManager.Instance.players[playerToTarget];
+            foreach(PlayerManager player in WorldGameSessionManager.Instance.players)
+            {
+                if(!player.characterNetworkManager.isDead.Value) alivePlayers.Add(player);
+            }
+
+            int playerToTarget = Random.Range(0, alivePlayers.Count);
+
+            SetTarget(alivePlayers[playerToTarget]);
+            //currentTarget = alivePlayers[playerToTarget];
         }
 
         public void SetAttack01Damage()

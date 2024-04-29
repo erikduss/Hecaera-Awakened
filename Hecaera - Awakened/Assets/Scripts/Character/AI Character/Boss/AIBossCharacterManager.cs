@@ -204,6 +204,15 @@ namespace Erikduss
             {
                 animator.SetBool("IsAwakened", true);
 
+                //only do this when the server
+                if (IsOwner)
+                {
+                    //TODO always scale this to at least 2 players, boss cannot be soloed.
+                    //Set the boss's health value based on the amount of players
+                    aICharacterNetworkManager.maxHealth.Value = aICharacterNetworkManager.maxHealth.Value * WorldGameSessionManager.Instance.players.Count;
+                    aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value;
+                }
+
                 GameObject bossHealthBar = Instantiate(PlayerUIManager.instance.playerUIHudManager.bossHealthBarObject,
                 PlayerUIManager.instance.playerUIHudManager.bossHealthBarParent);
 

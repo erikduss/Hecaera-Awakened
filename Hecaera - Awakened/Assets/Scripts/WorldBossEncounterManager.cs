@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Erikduss
 { 
@@ -60,9 +62,9 @@ namespace Erikduss
             }
         }
 
-        public void TeleportPlayerToSpawnPoint(PlayerManager player, int teleportLocationID, int encounterID, bool preventTeleport , bool setSpawnCharges)
+        public void TeleportPlayerToSpawnPoint(PlayerManager player, int teleportLocationID, int encounterID, bool preventTeleport , bool setSpawnCharges, bool overrideSpawnLocation = false)
         {
-            player.playerNetworkManager.NotifyTheServerOfTeleportActionServerRpc(player.NetworkObjectId, teleportLocationID, encounterID, preventTeleport , setSpawnCharges);
+            player.playerNetworkManager.NotifyTheServerOfTeleportActionServerRpc(player.NetworkObjectId, teleportLocationID, encounterID, preventTeleport , setSpawnCharges, overrideSpawnLocation);
         }
 
         public bool DoWeStillHaveRespawnsAvailable()
@@ -80,6 +82,52 @@ namespace Erikduss
             }
 
             amountOfRespawnsLeft -= 1;
+        }
+
+        public void FollowOtherPlayerWithCamera()
+        {
+            if (EveryoneIsDead()) return;
+
+            //Follow another alive player to spectate.
+            PlayerManager playerToFollow = null;
+
+            foreach(PlayerManager player in WorldGameSessionManager.Instance.players)
+            {
+                if (!player.characterNetworkManager.isDead.Value)
+                {
+                    playerToFollow = player;
+                    break; //break out of loop to pick this player
+                }
+            }
+
+            if (playerToFollow == null) Debug.LogError("SOMETHING WENT WRONG, DONT HAVE A PLAYER TO FOLLOW");
+
+            PlayerCamera.instance.SetPlayerToFollowWhileWeAreDead(playerToFollow);
+        }
+
+        public bool EveryoneIsDead()
+        {
+            bool everyoneIsDead = true;
+
+            foreach (PlayerManager player in WorldGameSessionManager.Instance.players)
+            {
+                if (!player.characterNetworkManager.isDead.Value) everyoneIsDead = false;
+            }
+
+            return everyoneIsDead;
+        }
+
+        public void CheckIfEncounterNeedsToBeRestarted()
+        {
+            //only the host should call to reset everything
+            if (!WorldGameSessionManager.Instance.AmITheHost()) return;
+
+            if (EveryoneIsDead())
+            {
+                //TODO: RESET THE ENCOUNTER
+                Debug.Log("EVERYONE IS DEAD, RESET ENCOUNTER");
+                NetworkManager.Singleton.SceneManager.LoadScene("ReloadingWorldScene", LoadSceneMode.Single);
+            }
         }
     }
 }

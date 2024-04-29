@@ -234,6 +234,14 @@ namespace Erikduss
                     ReviveCharacter();
                 }
             }
+            else 
+            {
+                WorldBossEncounterManager.Instance.CheckIfEncounterNeedsToBeRestarted();
+
+                //we only want to switch our camera if we are the owner.
+                if(IsOwner)
+                    WorldBossEncounterManager.Instance.FollowOtherPlayerWithCamera();
+            }
         }
 
         public override void ReviveCharacter()

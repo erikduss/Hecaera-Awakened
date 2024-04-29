@@ -26,6 +26,7 @@ namespace Erikduss
         public DamageCollider damageCollider;
 
         protected Projectile currentlyAttachedProjectile;
+        public PooledObjectType indicatorReturnType = PooledObjectType.DamageIndicator;
 
         protected virtual void Start()
         {
@@ -198,7 +199,7 @@ namespace Erikduss
             damageColliderEnabled.Value = false;
             damageCollider.DisableDamageCollider();
             objectEnabled.Value = false;
-            WorldNetworkObjectPoolManager.Instance.m_PooledObjects[WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(PooledObjectType.DamageIndicator)].Release(netObj);
+            WorldNetworkObjectPoolManager.Instance.m_PooledObjects[WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(indicatorReturnType)].Release(netObj);
         }
     }
 }

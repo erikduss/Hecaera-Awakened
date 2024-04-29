@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,13 +8,18 @@ namespace Erikduss
 {
     public class ResetAndDestroyAllDontDestroys : MonoBehaviour
     {
+        public bool resetInsteadOfDestroy = false;
+
         public bool startedDestroying = false;
         public string sceneNameToLoadTo = "Scene_Main_Menu_01";
 
         // Start is called before the first frame update
         void Start()
         {
-            StartCoroutine(DestroyEverything());
+            if(!resetInsteadOfDestroy)
+                StartCoroutine(DestroyEverything());
+            else
+                StartCoroutine(ResetEverything());
         }
 
         // Update is called once per frame
@@ -22,8 +28,50 @@ namespace Erikduss
             if (!startedDestroying)
             {
                 startedDestroying = true;
-                StartCoroutine(DestroyEverything());
+
+                if (!resetInsteadOfDestroy)
+                    StartCoroutine(DestroyEverything());
+                else
+                    StartCoroutine(ResetEverything());
             }
+        }
+
+        private IEnumerator ResetEverything()
+        {
+            startedDestroying = true;
+
+            if (WorldGameSessionManager.Instance.AmITheHost())
+            {
+                foreach (var player in WorldGameSessionManager.Instance.players)
+                {
+                    //player.characterNetworkManager.networkPosition.Value = Vector3.zero;
+                    player.transform.position = Vector3.zero;
+                    WorldBossEncounterManager.Instance.TeleportPlayerToSpawnPoint(player, 0, 0, false, false, true);
+                }
+            }
+
+            WorldGameSessionManager.Instance.HealLocalPlayerToFull();
+            WorldGameSessionManager.Instance.TeleportLocalPlayerToSpawn();
+
+            yield return new WaitForSeconds(1);
+
+            if (WorldGameSessionManager.Instance.AmITheHost())
+                NetworkManager.Singleton.SceneManager.LoadScene(WorldSaveGameManager.instance.worldSceneName, LoadSceneMode.Single);
+
+            //SceneManager.LoadScene(WorldSaveGameManager.instance.worldSceneName);
+
+            //if (WorldActionManager.Instance == null && ConnectionManager.Instance == null && WorldGameSessionManager.Instance == null
+            //    && PlayerUIManager.instance == null && PlayerInputManager.instance == null && PlayerCamera.instance == null
+            //    && WorldSoundFXManager.instance == null && WorldItemDatabase.Instance == null && WorldProjectilesManager.Instance == null
+            //    && WorldActionManager.Instance == null && PlayerMaterialManagement.Instance == null && WorldSaveGameManager.instance == null)
+            //{
+            //    NetworkManager.Singleton.SceneManager.LoadScene(WorldSaveGameManager.instance.worldSceneName, LoadSceneMode.Single);
+            //}
+            //else
+            //{
+            //    startedDestroying = false;
+            //    yield return null;
+            //}
         }
 
         private IEnumerator DestroyEverything()

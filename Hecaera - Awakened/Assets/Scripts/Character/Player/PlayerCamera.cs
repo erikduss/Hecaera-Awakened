@@ -10,6 +10,7 @@ namespace Erikduss
         public static PlayerCamera instance;
         public Camera cameraObject;
         public PlayerManager player;
+        public PlayerManager currentPlayerToFollowWithCamera; //this is always the client's player unless they're dead.
         [SerializeField] Transform cameraPivotTransform;
 
         [Header("Camera Settings")]
@@ -71,9 +72,18 @@ namespace Erikduss
             }
         }
 
+        public void SetPlayerToFollowWhileWeAreDead(PlayerManager playerToFollow)
+        {
+            ClearLockOnTargets();
+            currentPlayerToFollowWithCamera = playerToFollow;
+        }
+
         private void HandleFollowTarget()
         {
-            Vector3 targetCameraPosition = Vector3.SmoothDamp(transform.position, player.transform.position, ref cameraVelocity, cameraSmoothSpeed * Time.deltaTime);
+            if (!player.characterNetworkManager.isDead.Value) currentPlayerToFollowWithCamera = player; //always follow our player if we are not dead.
+            else if (currentPlayerToFollowWithCamera.playerNetworkManager.isDead.Value) WorldBossEncounterManager.Instance.FollowOtherPlayerWithCamera(); //If the player we follow dies, pick a new person to follow
+
+            Vector3 targetCameraPosition = Vector3.SmoothDamp(transform.position, currentPlayerToFollowWithCamera.transform.position, ref cameraVelocity, cameraSmoothSpeed * Time.deltaTime);
             transform.position = targetCameraPosition;
         }
 

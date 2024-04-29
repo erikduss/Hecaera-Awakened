@@ -245,6 +245,10 @@ namespace Erikduss
         #region Light Embrace Attack & combo attack
         public void ExecuteLightEmbrace()
         {
+            soundManager.PlayIxeleceAttackVoice();
+
+            if (!IsOwner) return;
+
             //Vector3 indicatorLocation = new Vector3(transform.position.x, 5f, transform.position.z);
             float indicatorSize = 24f;
 
@@ -258,8 +262,6 @@ namespace Erikduss
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
             StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation));
-
-            soundManager.PlayIxeleceAttackVoice();
         }
 
         #endregion

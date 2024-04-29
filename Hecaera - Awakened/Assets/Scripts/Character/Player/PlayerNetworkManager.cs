@@ -111,20 +111,26 @@ namespace Erikduss
 
         //Requireownership to false is required to allow the server to force teleport a player.
         [ServerRpc(RequireOwnership = false)]
-        public void NotifyTheServerOfTeleportActionServerRpc(ulong clientID, int teleportLocationID, int encounterID, bool preventTeleport, bool setMaxTeleportValue)
+        public void NotifyTheServerOfTeleportActionServerRpc(ulong clientID, int teleportLocationID, int encounterID, bool preventTeleport, bool setMaxTeleportValue, bool overrideTeleportLocation = false)
         {
             if (IsServer)
             {
-                TeleportActionForAllClientsClientRpc(clientID, teleportLocationID, encounterID, preventTeleport, setMaxTeleportValue);
+                TeleportActionForAllClientsClientRpc(clientID, teleportLocationID, encounterID, preventTeleport, setMaxTeleportValue, overrideTeleportLocation);
             }
         }
 
         [ClientRpc]
-        public void TeleportActionForAllClientsClientRpc(ulong clientID, int teleportLocationID, int encounterID, bool preventTeleport, bool setMaxTeleportValue)
+        public void TeleportActionForAllClientsClientRpc(ulong clientID, int teleportLocationID, int encounterID, bool preventTeleport, bool setMaxTeleportValue, bool overrideTeleportLocation = false)
         {
             if (IsOwner)
             {
-                if (!preventTeleport) transform.position = WorldBossEncounterManager.Instance.bossEncounter.Where(a => a.encounterBossID == encounterID).FirstOrDefault().playerSpawnLocations[teleportLocationID].position;
+                if (!preventTeleport)
+                {
+                    if (!overrideTeleportLocation)
+                        transform.position = WorldBossEncounterManager.Instance.bossEncounter.Where(a => a.encounterBossID == encounterID).FirstOrDefault().playerSpawnLocations[teleportLocationID].position;
+                    else
+                        transform.position = Vector3.zero;
+                }
                 if (setMaxTeleportValue) WorldBossEncounterManager.Instance.SetMaxSpawnAmount();
             }
         }

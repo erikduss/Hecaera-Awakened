@@ -92,6 +92,12 @@ namespace Erikduss
             localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxStamina.Value;
         }
 
+        public void TeleportLocalPlayerToSpawn()
+        {
+            PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
+            localPlayer.playerNetworkManager.networkPosition.Value = Vector3.zero;
+        }
+
         public bool AmITheHost()
         {
             PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();

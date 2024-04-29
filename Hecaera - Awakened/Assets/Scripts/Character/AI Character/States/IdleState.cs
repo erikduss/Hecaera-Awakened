@@ -11,6 +11,14 @@ namespace Erikduss
         {
             if (aiCharacter.characterCombatManager.currentTarget != null)
             {
+                //we also need to switch states if the target is dead.
+                if (aiCharacter.characterCombatManager.currentTarget.characterNetworkManager.isDead.Value)
+                {
+                    //return this state to continually search for a target
+                    aiCharacter.aICharacterCombatManager.FindATargetViaLineOfSight(aiCharacter);
+                    return this;
+                }
+
                 return SwitchState(aiCharacter, aiCharacter.pursueTarget);
             }
             else
@@ -20,6 +28,5 @@ namespace Erikduss
                 return this;
             }
         }
-
     }
 }
