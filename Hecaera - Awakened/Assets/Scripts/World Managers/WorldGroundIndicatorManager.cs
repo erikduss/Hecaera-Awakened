@@ -75,7 +75,7 @@ namespace Erikduss
             yield return new WaitForSeconds(spawnDelay);
 
             SpawnGroundIndicatorFromObjectPool(clientID, indicatorObjectTypeID, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime);
-            NotifyTheServerOfSpawnActionClientRpc(clientID, indicatorObjectTypeID);
+            NotifyTheServerOfSpawnActionClientRpc(clientID, indicatorObjectTypeID, spawnRotation);
         }
 
         public IEnumerator SpawnGetOutRocks(float spawnDelay, Vector3 spawnLocation)
@@ -169,7 +169,7 @@ namespace Erikduss
         }
 
         [ClientRpc]
-        private void NotifyTheServerOfSpawnActionClientRpc(ulong clientID, int projectileObjectTypeID)
+        private void NotifyTheServerOfSpawnActionClientRpc(ulong clientID, int projectileObjectTypeID, quaternion lastRotation)
         {
             //we do not want to play the action again for the character that called the action
             if (clientID != NetworkManager.Singleton.LocalClientId)

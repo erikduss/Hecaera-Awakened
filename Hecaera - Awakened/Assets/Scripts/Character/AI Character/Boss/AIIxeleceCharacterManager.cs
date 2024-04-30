@@ -247,8 +247,6 @@ namespace Erikduss
         {
             soundManager.PlayIxeleceAttackVoice();
 
-            if (!IsOwner) return;
-
             //Vector3 indicatorLocation = new Vector3(transform.position.x, 5f, transform.position.z);
             float indicatorSize = 24f;
 
@@ -256,11 +254,19 @@ namespace Erikduss
             Vector3 spawnLocation = new Vector3(transform.position.x, 5, transform.position.z);
             spawnLocation += (transform.forward * (indicatorSize/2));
 
-            Vector3 relativePos = combatManager.currentTarget.transform.position - transform.position;
+
+            Vector3 relativePos;
+
+            if (IsOwner)
+                relativePos = combatManager.currentTarget.transform.position - transform.position;
+            else
+                relativePos = WorldGameSessionManager.Instance.GetPlayerWithNetworkID(characterNetworkManager.currentTargetNetworkObjectID.Value).transform.position - transform.position;
 
             Quaternion spawnRotation = Quaternion.LookRotation(relativePos);
 
-            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
+            if(IsOwner)
+                WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
+            
             StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation));
         }
 
