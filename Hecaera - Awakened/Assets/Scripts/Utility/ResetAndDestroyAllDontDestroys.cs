@@ -42,18 +42,35 @@ namespace Erikduss
 
             if (WorldGameSessionManager.Instance.AmITheHost())
             {
+                Destroy(WorldObjectManager.Instance.fogWalls[0].gameObject); //force destroy old fogwall
+
                 foreach (var player in WorldGameSessionManager.Instance.players)
                 {
                     //player.characterNetworkManager.networkPosition.Value = Vector3.zero;
                     player.transform.position = Vector3.zero;
                     WorldBossEncounterManager.Instance.TeleportPlayerToSpawnPoint(player, 0, 0, false, false, true);
+                    player.ReviveCharacter();
                 }
             }
 
+            foreach (var player in WorldGameSessionManager.Instance.players)
+            {
+                player.ReviveCharacter(); //set the collider back on for all characters
+            }
+
+            //readd the dictionary entry of the boss being awakened.
+            WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Remove(0);
+            WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(0, false);
+
+            IxeleceMaterialManagement.Instance.ClearMaterialLists();
+
             WorldGameSessionManager.Instance.HealLocalPlayerToFull();
             WorldGameSessionManager.Instance.TeleportLocalPlayerToSpawn();
+            WorldGameSessionManager.Instance.ResetLocalPlayerUI();
 
-            yield return new WaitForSeconds(1);
+            WorldSoundFXManager.instance.StopBossTrack();
+
+            yield return new WaitForSeconds(2.5f);
 
             if (WorldGameSessionManager.Instance.AmITheHost())
                 NetworkManager.Singleton.SceneManager.LoadScene(WorldSaveGameManager.instance.worldSceneName, LoadSceneMode.Single);

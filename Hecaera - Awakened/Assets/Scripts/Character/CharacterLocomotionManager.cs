@@ -88,6 +88,7 @@ namespace Erikduss
                 yVelocity.y += currentGravityForce * Time.deltaTime;
             }
 
+            if (!character.characterController.enabled) return;
             //There should always be some force applied to the character!
             character.characterController.Move(yVelocity * Time.deltaTime);
         }

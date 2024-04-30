@@ -21,7 +21,10 @@ namespace Erikduss
             if (player.characterAnimatorManager.applyRootMotion)
             {
                 Vector3 velocity = player.animator.deltaPosition;
-                player.characterController.Move(velocity);
+
+                if(player.characterController.enabled)
+                    player.characterController.Move(velocity);
+
                 player.transform.rotation *= player.animator.deltaRotation;
             }
         }

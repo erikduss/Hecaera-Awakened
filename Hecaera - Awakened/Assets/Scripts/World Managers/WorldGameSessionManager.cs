@@ -88,8 +88,19 @@ namespace Erikduss
         public void HealLocalPlayerToFull()
         {
             PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
-            localPlayer.playerNetworkManager.currentHealth.Value = localPlayer.playerNetworkManager.maxHealth.Value;
-            localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxStamina.Value;
+
+            localPlayer.ReviveCharacter();
+
+            //localPlayer.playerNetworkManager.currentHealth.Value = localPlayer.playerNetworkManager.maxHealth.Value;
+            //localPlayer.playerNetworkManager.currentStamina.Value = localPlayer.playerNetworkManager.maxStamina.Value;
+            //localPlayer.playerNetworkManager.isDead.Value = false;
+
+            //localPlayer.playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
+        }
+
+        public void ResetLocalPlayerUI()
+        {
+            Destroy(PlayerUIManager.instance.playerUIHudManager.bossHealthBarParent.GetChild(0).gameObject); //destroy the old boss healthbar.
         }
 
         public void TeleportLocalPlayerToSpawn()

@@ -90,6 +90,7 @@ namespace Erikduss
             }
 
             damageColliderEnabled.OnValueChanged += OnDamageColliderEnabledChange;
+            OnDamageColliderEnabledChange(false, damageColliderEnabled.Value);
         }
 
         public override void OnNetworkDespawn()

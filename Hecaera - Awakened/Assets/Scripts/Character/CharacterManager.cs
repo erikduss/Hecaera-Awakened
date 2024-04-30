@@ -105,6 +105,8 @@ namespace Erikduss
 
         public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
+            characterController.enabled = false; //disable collider
+
             if (IsOwner)
             {
                 characterNetworkManager.currentHealth.Value = 0;
@@ -121,7 +123,7 @@ namespace Erikduss
 
         public virtual void ReviveCharacter()
         {
-
+            characterController.enabled = true; //enable collider
         }
 
         public void GrandInvincibility()

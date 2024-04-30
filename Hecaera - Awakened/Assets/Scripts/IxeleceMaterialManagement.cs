@@ -36,6 +36,12 @@ namespace Erikduss
             DontDestroyOnLoad(gameObject);
         }
 
+        public void ClearMaterialLists()
+        {
+            mainBodyRenderers.Clear();
+            propsRenderers.Clear();
+            leftOverRenderers.Clear();
+        }
         public void RevertIxeleceMaterial()
         {
             //Main body materials

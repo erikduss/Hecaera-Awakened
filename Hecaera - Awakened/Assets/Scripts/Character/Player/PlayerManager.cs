@@ -228,11 +228,7 @@ namespace Erikduss
                 //only the server can execute this. But still needed everywhere to keep track of respawn charges.
                 WorldBossEncounterManager.Instance.RespawnPlayerAtEnouncterSpawnPoint(this, 0);
 
-                if (IsOwner)
-                {
-                    //automatically revive
-                    ReviveCharacter();
-                }
+                ReviveCharacter();
             }
             else 
             {
@@ -246,7 +242,7 @@ namespace Erikduss
 
         public override void ReviveCharacter()
         {
-            base.ReviveCharacter();
+            base.ReviveCharacter(); //needs this to disable and enable the collider on both client and server side.
 
             if (IsOwner)
             {
