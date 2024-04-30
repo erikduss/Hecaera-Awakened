@@ -31,6 +31,9 @@ namespace Erikduss
         public ProjectileDamageCollider projectileCollider;
         private AIIxeleceCharacterManager backUpBossCharManager;
 
+        public bool spawnObjectOnCollision = false;
+        public PooledObjectType objectToSpawn = PooledObjectType.NONE;
+
         private void Start()
         {
             netObj = GetComponent<NetworkObject>();

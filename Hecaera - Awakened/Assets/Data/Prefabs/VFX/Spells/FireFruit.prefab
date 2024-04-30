@@ -343,6 +343,8 @@ MonoBehaviour:
   startingPoint: {fileID: 0}
   maxActiveTime: 5
   projectileCollider: {fileID: 8704517799350610700}
+  spawnObjectOnCollision: 1
+  objectToSpawn: 6
   minProjectileSpeed: 15
   maxProjectileSpeed: 30
   projectileSpeed: -10
@@ -364,6 +366,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 1
   characterCausingDamage: {fileID: 0}

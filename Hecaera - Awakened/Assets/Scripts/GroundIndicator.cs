@@ -145,9 +145,7 @@ namespace Erikduss
 
         protected virtual IEnumerator EnableDamageColliderWithDelay(float delay, float colliderActiveTime)
         {
-            Debug.Log("Waiting to activate damage collider");
             yield return new WaitForSeconds(delay);
-            Debug.Log("Activating Damage Collider");
             damageColliderEnabled.Value = true;
             damageCollider.EnableDamageCollider();
             yield return new WaitForSeconds(colliderActiveTime);
@@ -192,6 +190,14 @@ namespace Erikduss
 
         public virtual void ReturnThisProjectileToPool()
         {
+            if(currentlyAttachedProjectile != null)
+            {
+                if (currentlyAttachedProjectile.spawnObjectOnCollision)
+                {
+                    WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)currentlyAttachedProjectile.objectToSpawn, 0, gameObject.transform.position, gameObject.transform.rotation, networkSize.Value * 1.5f, null, true, true, 0f, 7.5f);
+                }
+            }
+
             //projectileCollider.DisableDamageCollider();
             //ResetProjectileOwner();
             //startedTimer = false;

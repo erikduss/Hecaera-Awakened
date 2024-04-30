@@ -83,7 +83,8 @@ namespace Erikduss
         FireFruit,
         DamageIndicator,
         ConeDamageIndicator,
-        Shockwave
+        Shockwave,
+        FireFruitGroundToxin
     }
 
     public enum AttackIndicatorType

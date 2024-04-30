@@ -20,12 +20,23 @@ namespace Erikduss
         protected Vector3 contactPoint;
 
         [Header("Characters Damaged")]
+        public bool canDamageSameCharacterMultipleTimes = false;
         public List<CharacterManager> charactersDamaged = new List<CharacterManager>();
         public CharacterGroup groupOfAttack = CharacterGroup.NONE;
+
+        private float damageDelayTimer = 0;
+        private float damageTickDelay = 0.5f;
 
         protected virtual void Awake()
         {
 
+        }
+
+        protected virtual void OnTriggerStay(Collider other)
+        {
+            if (!canDamageSameCharacterMultipleTimes) return;
+
+            OnTriggerEnter(other);
         }
 
         protected virtual void OnTriggerEnter(Collider other)
@@ -63,8 +74,18 @@ namespace Erikduss
 
         protected virtual void DamageTarget(CharacterManager damageTarget)
         {
-            if (charactersDamaged.Contains(damageTarget))
+            if (charactersDamaged.Contains(damageTarget) && !canDamageSameCharacterMultipleTimes)
                 return;
+
+            if (canDamageSameCharacterMultipleTimes)
+            {
+                if(damageDelayTimer > 0)
+                {
+                    Debug.Log(damageDelayTimer);
+                    damageDelayTimer -= Time.deltaTime;
+                    return;
+                }
+            }
 
             charactersDamaged.Add(damageTarget);
 
@@ -75,7 +96,12 @@ namespace Erikduss
             damageEffect.holyDamage = holyDamage;
             damageEffect.contactPoint = contactPoint;
 
+            damageEffect.playDamageAnimation = !canDamageSameCharacterMultipleTimes;
+            damageEffect.willPlayDamageSFX = !canDamageSameCharacterMultipleTimes;
+
             damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+
+            if (canDamageSameCharacterMultipleTimes) damageDelayTimer = damageTickDelay;
         }
 
         public virtual void EnableDamageCollider()

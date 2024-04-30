@@ -46,9 +46,13 @@ namespace Erikduss
                 return;
 
             CalculateDamage(character);
-            PlayDirectionalBasedDamageAnimation(character);
 
-            PlayDamageSFX(character);
+            if(playDamageAnimation)
+                PlayDirectionalBasedDamageAnimation(character);
+
+            if(willPlayDamageSFX)
+                PlayDamageSFX(character);
+
             PlayDamageVFX(character);
         }
 
