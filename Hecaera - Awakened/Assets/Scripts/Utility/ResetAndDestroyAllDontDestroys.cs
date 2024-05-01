@@ -64,8 +64,11 @@ namespace Erikduss
 
             IxeleceMaterialManagement.Instance.ClearMaterialLists();
 
-            WorldGameSessionManager.Instance.HealLocalPlayerToFull();
+            //ensure the player is back at 0,0,0 before healing and returning them back to life.
             WorldGameSessionManager.Instance.TeleportLocalPlayerToSpawn();
+            yield return new WaitForSeconds(1f);
+
+            WorldGameSessionManager.Instance.HealLocalPlayerToFull();
             WorldGameSessionManager.Instance.ResetLocalPlayerUI();
 
             WorldSoundFXManager.instance.StopBossTrack();

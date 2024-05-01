@@ -9,9 +9,11 @@ using UnityEngine.SceneManagement;
 
 namespace Erikduss
 { 
-    public class WorldBossEncounterManager : MonoBehaviour
+    public class WorldBossEncounterManager : NetworkBehaviour
     {
         public static WorldBossEncounterManager Instance;
+
+        public NetworkVariable<float> bossEmpowerDamageMultiplier = new NetworkVariable<float>(1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         public List<BossEncounter> bossEncounter = new List<BossEncounter>();
 
@@ -19,6 +21,15 @@ namespace Erikduss
 
         public int maxAmountOfRespawns = 3;
         public int amountOfRespawnsLeft = 3;
+
+        public int amountOfPermaDeadPlayers = 0;
+        public float damageUpdateTimer = 0f;
+        public float damageMultiplierUpdateTickDelay = 1f;
+        public float damageUpdateAmountPerTick = 0.025f;
+        public float currentDamageUpdateAmountPerTick = 0.025f;
+        public float bufferTimeBeforeAddingDeadPlayer = 5f;
+
+        public bool amITheHost = false;
 
         private void Awake()
         {
@@ -30,6 +41,60 @@ namespace Erikduss
             {
                 Destroy(this);
             }
+        }
+
+        private void Update()
+        {
+            if (!amITheHost) return;
+
+            if (amountOfPermaDeadPlayers <= 0) return;
+
+            //The value gets updated based on the update delay, making sure its not updated every single update tick.
+            if(damageUpdateTimer <= 0)
+            {
+                //set the correct tick update amount based on player count
+                currentDamageUpdateAmountPerTick = (float)((float)amountOfPermaDeadPlayers / (float)WorldGameSessionManager.Instance.players.Count) * damageUpdateAmountPerTick;
+
+                //using the fixed value of the tick update amount, update the empower value with the new value
+                float newMultiplier = bossEmpowerDamageMultiplier.Value + (amountOfPermaDeadPlayers * currentDamageUpdateAmountPerTick);
+                damageUpdateTimer = damageMultiplierUpdateTickDelay;
+                bossEmpowerDamageMultiplier.Value = newMultiplier;
+            }
+            else
+            {
+                damageUpdateTimer -= Time.deltaTime;
+            }
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+
+            bossEmpowerDamageMultiplier.OnValueChanged += OnBossEmpowerDamageMultiplierChanged;
+            OnBossEmpowerDamageMultiplierChanged(1f, bossEmpowerDamageMultiplier.Value);
+
+            if (WorldGameSessionManager.Instance.AmITheHost())
+            {
+                amITheHost = true;
+            }
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+
+            bossEmpowerDamageMultiplier.OnValueChanged -= OnBossEmpowerDamageMultiplierChanged;
+        }
+
+        public void OnBossEmpowerDamageMultiplierChanged(float oldValue, float newValue)
+        {
+            //in case needed, so far doesnt seem needed due to damage colliders checking the networked value directly.
+        }
+
+        public IEnumerator UpdateBossEmpowerDamageMultiplier(int amountOfNewDeadPlayers)
+        {
+            yield return new WaitForSeconds(bufferTimeBeforeAddingDeadPlayer);
+            amountOfPermaDeadPlayers = amountOfNewDeadPlayers;
         }
 
         public void SetMaxSpawnAmount()
@@ -87,6 +152,7 @@ namespace Erikduss
         public void FollowOtherPlayerWithCamera()
         {
             if (EveryoneIsDead()) return;
+            if (DoWeStillHaveRespawnsAvailable()) return;
 
             //Follow another alive player to spectate.
             PlayerManager playerToFollow = null;
@@ -103,6 +169,25 @@ namespace Erikduss
             if (playerToFollow == null) Debug.LogError("SOMETHING WENT WRONG, DONT HAVE A PLAYER TO FOLLOW");
 
             PlayerCamera.instance.SetPlayerToFollowWhileWeAreDead(playerToFollow);
+        }
+
+        public void UpdateDeadPlayersList()
+        {
+            //only the host needs this
+            if (!WorldGameSessionManager.Instance.AmITheHost()) return;
+
+            if (DoWeStillHaveRespawnsAvailable()) return; //if we still have respawns, we dont add players to this.
+
+            int countedDeadPlayers = 0;
+
+            foreach (PlayerManager player in WorldGameSessionManager.Instance.players)
+            {
+                if (!player.characterNetworkManager.isDead.Value) countedDeadPlayers++;
+            }
+
+            if (!amITheHost) amITheHost = true; //in case the OnNetworkSpawn Misses this.
+
+            StartCoroutine(UpdateBossEmpowerDamageMultiplier(countedDeadPlayers));
         }
 
         public bool EveryoneIsDead()

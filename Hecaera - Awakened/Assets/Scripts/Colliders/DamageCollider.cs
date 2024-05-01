@@ -81,7 +81,6 @@ namespace Erikduss
             {
                 if(damageDelayTimer > 0)
                 {
-                    Debug.Log(damageDelayTimer);
                     damageDelayTimer -= Time.deltaTime;
                     return;
                 }
@@ -89,17 +88,22 @@ namespace Erikduss
 
             charactersDamaged.Add(damageTarget);
 
+            //if this is an attack from group 2, the multiplier is equal to the boss empower multiplier. Otherwise its 1 and wont do anything.
+            float multiplier = groupOfAttack == CharacterGroup.Team02 ? WorldBossEncounterManager.Instance.bossEmpowerDamageMultiplier.Value : 1.0f;
+
             TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.Instance.takeDamageEffect);
-            damageEffect.physicalDamage = physicalDamage;
-            damageEffect.magicDamage = magicDamage;
-            damageEffect.fireDamage = fireDamage;
-            damageEffect.holyDamage = holyDamage;
+            damageEffect.physicalDamage = physicalDamage * multiplier;
+            damageEffect.magicDamage = magicDamage * multiplier;
+            damageEffect.fireDamage = fireDamage * multiplier;
+            damageEffect.holyDamage = holyDamage * multiplier;
             damageEffect.contactPoint = contactPoint;
 
             damageEffect.playDamageAnimation = !canDamageSameCharacterMultipleTimes;
             damageEffect.willPlayDamageSFX = !canDamageSameCharacterMultipleTimes;
 
             damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+
+            if (groupOfAttack == CharacterGroup.Team02) Debug.Log("Empowered Damage: " + physicalDamage + " _ to _ " + damageEffect.physicalDamage);
 
             if (canDamageSameCharacterMultipleTimes) damageDelayTimer = damageTickDelay;
         }

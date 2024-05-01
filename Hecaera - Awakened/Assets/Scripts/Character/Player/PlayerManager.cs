@@ -237,6 +237,9 @@ namespace Erikduss
                 //we only want to switch our camera if we are the owner.
                 if(IsOwner)
                     WorldBossEncounterManager.Instance.FollowOtherPlayerWithCamera();
+
+                //we are dead, we dont have any more respawns. Enrage the boss.
+                WorldBossEncounterManager.Instance.UpdateDeadPlayersList();
             }
         }
 
