@@ -19,7 +19,7 @@ namespace Erikduss
         {
             base.FindATargetViaLineOfSight(aiCharacter);
 
-            if(currentTarget == null)
+            if(currentTarget == null || allowTargetSwitchingWhenAlreadyHavingTarget)
             {
                 SwitchToNewTarget();
             }
@@ -44,7 +44,8 @@ namespace Erikduss
 
             int playerToTarget = Random.Range(0, alivePlayers.Count);
 
-            SetTarget(alivePlayers[playerToTarget]);
+            if(alivePlayers.Count > 0)
+                SetTarget(alivePlayers[playerToTarget]);
             //currentTarget = alivePlayers[playerToTarget];
         }
 

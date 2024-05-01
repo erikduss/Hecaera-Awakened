@@ -9,7 +9,7 @@ namespace Erikduss
     {
         public override AIState Tick(AICharacterManager aiCharacter)
         {
-            if (aiCharacter.characterCombatManager.currentTarget != null)
+            if (aiCharacter.characterCombatManager.currentTarget != null && !aiCharacter.characterCombatManager.currentTarget.characterNetworkManager.isDead.Value)
             {
                 //we also need to switch states if the target is dead.
                 if (aiCharacter.characterCombatManager.currentTarget.characterNetworkManager.isDead.Value)

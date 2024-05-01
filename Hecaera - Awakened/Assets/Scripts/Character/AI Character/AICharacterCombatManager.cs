@@ -12,6 +12,7 @@ namespace Erikduss
         public float actionRecoveryTimer = 0;
 
         [Header("Target Information")]
+        public bool allowTargetSwitchingWhenAlreadyHavingTarget = true;
         public float distanceFromTarget;
         public float viewableAngle;
         public Vector3 targetsDirection;
@@ -34,7 +35,7 @@ namespace Erikduss
 
         public virtual void FindATargetViaLineOfSight(AICharacterManager aiCharacter)
         {
-            if (currentTarget != null)
+            if (currentTarget != null && !allowTargetSwitchingWhenAlreadyHavingTarget)
                 return;
 
             Collider[] colliders = Physics.OverlapSphere(aiCharacter.transform.position, detectionRadius, WorldUtilityManager.Instance.GetCharacterLayers());

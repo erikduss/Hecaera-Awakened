@@ -8,6 +8,7 @@ using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
 using UnityEngine;
+using FIMSpace;
 
 namespace Erikduss
 {
@@ -107,6 +108,14 @@ namespace Erikduss
         {
             PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
             localPlayer.playerNetworkManager.networkPosition.Value = Vector3.zero;
+            localPlayer.playerNetworkManager.networkPositionVelocity = Vector3.zero;
+            localPlayer.playerNetworkManager.horizontalMovement.Value = 0f;
+            localPlayer.playerNetworkManager.verticalMovement.Value = 0f;
+            localPlayer.playerNetworkManager.moveAmount.Value = 0f;
+
+            localPlayer.playerLocomotionManager.verticalMovement = 0;
+            localPlayer.playerLocomotionManager.horizontalMovement = 0;
+            localPlayer.playerLocomotionManager.moveAmount = 0f;
         }
 
         public bool AmITheHost()

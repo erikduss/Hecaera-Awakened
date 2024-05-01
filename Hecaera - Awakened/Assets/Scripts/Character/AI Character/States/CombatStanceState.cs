@@ -13,6 +13,8 @@ namespace Erikduss
         //3. If target is too far, switch to pursue state
         //4. If target is null, back to idle.
         public bool isStationaryBoss = false;
+        public bool canSwitchTargets = true;
+        private float targetSwitchChancePerAttack = 25f;
 
         [Header("Attacks")]
         public List<AICharacterAttackAction> aiCharacterAttacks; //A list of all attacks this character can do.
@@ -48,10 +50,24 @@ namespace Erikduss
 
             aiCharacter.aICharacterCombatManager.RotateTowardsTarget(aiCharacter);
 
+            if (canSwitchTargets)
+            {
+                float targetSwitchRoll = Random.Range(0f, 100f);
+
+                if (targetSwitchRoll <= targetSwitchChancePerAttack)
+                {
+                    //only do this if there are more than 1 player alive.
+                    if(WorldGameSessionManager.Instance.players.Count - WorldBossEncounterManager.Instance.amountOfPermaDeadPlayers > 1)
+                    {
+                        return SwitchState(aiCharacter, aiCharacter.idle);
+                    }
+                }
+            }
+
             //aiCharacter.aICharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
             //if we dont have a target anymore, return to idle.
-            if (aiCharacter.aICharacterCombatManager.currentTarget == null)
+            if (aiCharacter.aICharacterCombatManager.currentTarget == null || aiCharacter.aICharacterCombatManager.currentTarget.characterNetworkManager.isDead.Value)
                 return SwitchState(aiCharacter, aiCharacter.idle);
 
             if (!hasAttack)

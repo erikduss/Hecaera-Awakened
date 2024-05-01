@@ -58,6 +58,22 @@ namespace Erikduss
                 player.characterNetworkManager.verticalMovement.Value = verticalMovement;
                 player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
                 player.characterNetworkManager.moveAmount.Value = moveAmount;
+
+                if(player.characterNetworkManager.networkPosition.Value.y < -10f || transform.position.y < -10f)
+                {
+                    //out of bounds.
+                    verticalMovement = 0;
+                    horizontalMovement = 0;
+                    moveAmount = 0;
+
+                    player.characterNetworkManager.verticalMovement.Value = verticalMovement;
+                    player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
+                    player.characterNetworkManager.moveAmount.Value = moveAmount;
+
+                    Vector3 fixedRespawnPosition = new Vector3(transform.position.x, 7.5f, transform.position.z);
+                    transform.position = fixedRespawnPosition;
+                    player.characterNetworkManager.networkPosition.Value = fixedRespawnPosition;
+                }
             }
             else
             {

@@ -78,6 +78,9 @@ namespace Erikduss
             if (WorldGameSessionManager.Instance.AmITheHost())
                 NetworkManager.Singleton.SceneManager.LoadScene(WorldSaveGameManager.instance.worldSceneName, LoadSceneMode.Single);
 
+            //ensure the player is back at 0,0,0 before healing and returning them back to life.
+            WorldGameSessionManager.Instance.TeleportLocalPlayerToSpawn();
+
             //SceneManager.LoadScene(WorldSaveGameManager.instance.worldSceneName);
 
             //if (WorldActionManager.Instance == null && ConnectionManager.Instance == null && WorldGameSessionManager.Instance == null
