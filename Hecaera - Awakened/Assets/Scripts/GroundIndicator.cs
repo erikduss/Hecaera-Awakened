@@ -194,7 +194,16 @@ namespace Erikduss
             {
                 if (currentlyAttachedProjectile.spawnObjectOnCollision)
                 {
-                    WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)currentlyAttachedProjectile.objectToSpawn, 0, gameObject.transform.position, gameObject.transform.rotation, networkSize.Value * 1.5f, null, true, true, 0f, 7.5f);
+                    if(currentlyAttachedProjectile.objectToSpawn == PooledObjectType.FireFruitGroundToxin)
+                    {
+                        //player has 0.5 seconds to get away from the toxin before taking damage.
+                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)currentlyAttachedProjectile.objectToSpawn, 0, gameObject.transform.position, gameObject.transform.rotation, networkSize.Value * 1.5f, null, true, true, 0.5f, 7.5f);
+                    }
+                    else if(currentlyAttachedProjectile.objectToSpawn == PooledObjectType.SproutingVineToxin)
+                    {
+                        //has a spawn delay to make it fair, if you get hit by the vines you will be stunned for a second.
+                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)currentlyAttachedProjectile.objectToSpawn, 0.75f, gameObject.transform.position, gameObject.transform.rotation, networkSize.Value * 1.5f, null, true, true, 0.5f, 7.5f);
+                    }
                 }
             }
 

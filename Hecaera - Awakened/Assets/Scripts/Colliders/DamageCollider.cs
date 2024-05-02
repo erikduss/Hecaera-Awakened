@@ -103,8 +103,6 @@ namespace Erikduss
 
             damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
 
-            if (groupOfAttack == CharacterGroup.Team02) Debug.Log("Empowered Damage: " + physicalDamage + " _ to _ " + damageEffect.physicalDamage);
-
             if (canDamageSameCharacterMultipleTimes) damageDelayTimer = damageTickDelay;
         }
 

@@ -73,7 +73,8 @@ namespace Erikduss
         GetOutSlam,
         NatureFury,
         LightEmbrace,
-        EmbraceCombo
+        EmbraceCombo,
+        SproutingVines
     }
 
     public enum PooledObjectType
@@ -84,7 +85,9 @@ namespace Erikduss
         DamageIndicator,
         ConeDamageIndicator,
         Shockwave,
-        FireFruitGroundToxin
+        FireFruitGroundToxin,
+        SproutingVine,
+        SproutingVineToxin
     }
 
     public enum AttackIndicatorType

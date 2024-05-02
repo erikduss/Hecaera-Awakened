@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Ixelece Phase 01 Combat Stance State
   m_EditorClassIdentifier: 
   isStationaryBoss: 1
+  canSwitchTargets: 1
   aiCharacterAttacks:
   - {fileID: 11400000, guid: f1f14dda7fd68ff459b9bb87165ebe75, type: 2}
   - {fileID: 11400000, guid: 7e5f20dfa53635941a989d9e2db42d91, type: 2}
@@ -21,6 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c80443cf63f3376479383a5cd6e533b4, type: 2}
   - {fileID: 11400000, guid: 9c4ccd51560b3bd48a7686f60bf5a36d, type: 2}
   - {fileID: 11400000, guid: 7ba856bc6cfe460438989ab19a229f56, type: 2}
-  canPerformCombo: 0
+  - {fileID: 11400000, guid: 084ce743c60768449b5f40be7a612ace, type: 2}
+  canPerformCombo: 1
   chanceToPerformCombo: 66
   maximumEngagementDistance: 50

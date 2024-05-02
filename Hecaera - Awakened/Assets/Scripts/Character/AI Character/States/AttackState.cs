@@ -37,17 +37,6 @@ namespace Erikduss
             //set movement values to 0
             aiCharacter.characterAnimatorManager.UpdateAnimatorMovementParameters(0, 0, false);
 
-            //performa combo
-            if (willPerformCombo && !hasPerformedCombo)
-            {
-                if (currentAttack.comboAction != null)
-                {
-                    //if can combo
-                    //hasPerformedCombo = true;
-                    //currentAttack.comboAction.AttemptToPerformAction(aiCharacter);
-                }
-            }
-
             if (aiCharacter.isPerformingAction)
             {
                 return this;
@@ -70,6 +59,17 @@ namespace Erikduss
             if (pivotAfterAttack)
                 aiCharacter.aICharacterCombatManager.PivotTowardsTarget(aiCharacter);
 
+            //performa combo
+            if (willPerformCombo && !hasPerformedCombo)
+            {
+                if (currentAttack.comboAction != null)
+                {
+                    //if can combo
+                    hasPerformedCombo = true;
+                    currentAttack.comboAction.AttemptToPerformAction(aiCharacter);
+                }
+            }
+
             return SwitchState(aiCharacter, aiCharacter.combbatStance);
         }
 
@@ -86,6 +86,7 @@ namespace Erikduss
 
             hasPerformedAttack = false;
             hasPerformedCombo = false;
+            willPerformCombo = false;
         }
     }
 }

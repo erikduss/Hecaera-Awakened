@@ -15,6 +15,7 @@ namespace Erikduss
         public List<Projectile> projectiles = new List<Projectile>();
 
         [SerializeField] private float fireFruitIndicatorRadius = 3f;
+        [SerializeField] private float sproutingVineIndicatorRadius = 3f;
 
         private void Awake()
         {
@@ -75,19 +76,22 @@ namespace Erikduss
             {
                 if (!isNPC)
                 {
-                    Debug.Log("Being Spawned by player");
                     spawnedProjectile.projectileOwnerNetworkID.Value = projectileOwner.NetworkObjectId;
                     spawnedProjectile.projectileCollider.groupOfAttack = projectileOwner.characterGroup;
                 }
                 else
                 {
-                    Debug.Log("Being Spawned by NPC");
                     spawnedProjectile.projectileOwnerNetworkID.Value = clientID; //on spawning with isNPC this gets set to the npc id instead of client
 
                     if(type == PooledObjectType.FireFruit)
                     {
                         Vector3 indicatorLocation = new Vector3(spawnLocation.x, 5f, spawnLocation.z);
                         WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, fireFruitIndicatorRadius, spawnedProjectile, true);
+                    }
+                    else if(type == PooledObjectType.SproutingVine)
+                    {
+                        Vector3 indicatorLocation = new Vector3(spawnLocation.x, spawnLocation.y + 5.5f, spawnLocation.z);
+                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, sproutingVineIndicatorRadius, spawnedProjectile, true);
                     }
                 }
                 //spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;

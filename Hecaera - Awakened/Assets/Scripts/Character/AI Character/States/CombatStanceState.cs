@@ -79,6 +79,10 @@ namespace Erikduss
                 aiCharacter.attack.currentAttack = chosenAttack;
 
                 //roll for combo chance
+                if (chosenAttack.actionHasComboAction)
+                {
+                    aiCharacter.attack.willPerformCombo = RollForOutcomeChance(chanceToPerformCombo);
+                }
 
                 return SwitchState(aiCharacter, aiCharacter.attack);
             }

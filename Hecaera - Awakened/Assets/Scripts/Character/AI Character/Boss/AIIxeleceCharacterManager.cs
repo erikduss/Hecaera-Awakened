@@ -27,11 +27,18 @@ namespace Erikduss
         [SerializeField] private GameObject natureFuryPrefab;
         private GameObject currentlySpawnedNatureFury;
 
+        //General overtime attacks vaiables
+        private float stopDOAAtPercentage = -1f;
+
         //Death From Above Variables
         private int spawnedFireFruits = 0;
         private int minimumAmountOfFireFruitSpawns = 5;
-        private float stopDOAAtPercentage = -1f;
         private float chanceIncreasePerDOASpawn = 2.5f;
+
+        //sprouting Vines Variables
+        private int spawnedSproutingVines = 0;
+        private int minimumAmountOfSproutingVinesSpawns = 5;
+        private float chanceIncreasePerVineSpawn = 2.5f;
 
         public override void OnNetworkSpawn()
         {
@@ -205,8 +212,6 @@ namespace Erikduss
             //apply offsets if needed.
             Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
-            Debug.Log("Side SHockwave spawn");
-
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, sideLeft, true);
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.Shockwave, 0, spawnLocation, sideRight, true);
         }
@@ -268,6 +273,76 @@ namespace Erikduss
                 WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
             
             StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation));
+        }
+
+        public void ExecuteLightEmbraceCombo()
+        {
+            soundManager.PlayIxeleceAttackVoice();
+
+            //Vector3 indicatorLocation = new Vector3(transform.position.x, 5f, transform.position.z);
+            float indicatorSize = 24f;
+
+            //apply offsets if needed.
+            Vector3 spawnLocation = new Vector3(transform.position.x, 5, transform.position.z);
+            spawnLocation += (transform.forward * (indicatorSize / 2));
+
+
+            Vector3 relativePos;
+
+            if (IsOwner)
+                relativePos = combatManager.currentTarget.transform.position - transform.position;
+            else
+                relativePos = WorldGameSessionManager.Instance.GetPlayerWithNetworkID(characterNetworkManager.currentTargetNetworkObjectID.Value).transform.position - transform.position;
+
+            Quaternion spawnRotation = Quaternion.LookRotation(relativePos);
+
+            if (IsOwner)
+                WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
+
+            StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation));
+        }
+
+        #endregion
+
+        #region Sprouting Vines Attack
+
+        public void ExcecuteSproutingVines()
+        {
+            if (!IsOwner) return;
+
+            if (stopDOAAtPercentage == -1f)
+            {
+                //set the percentage at which to stop attacking at.
+                stopDOAAtPercentage = Random.Range(minimumAmountOfSproutingVinesSpawns * chanceIncreasePerVineSpawn, 100f);
+            }
+
+            float currentPercentage = spawnedSproutingVines * chanceIncreasePerVineSpawn;
+
+            if (currentPercentage > stopDOAAtPercentage)
+            {
+                StopDeathFromAbove();
+                return;
+            }
+
+            float indicatorSize = 4f;
+
+            //spawn vines under every player
+            foreach(var player in WorldGameSessionManager.Instance.players)
+            {
+                //WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, player.playerNetworkManager.networkPosition.Value, Quaternion.identity, indicatorSize, null, true, true, 2.5f, .6f);
+                Vector3 vineSpawnLocation = new Vector3(player.playerNetworkManager.networkPosition.Value.x, player.playerNetworkManager.networkPosition.Value.y - 5.5f, player.playerNetworkManager.networkPosition.Value.z);
+                WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.SproutingVine, 0, vineSpawnLocation, Quaternion.identity, true);
+            }
+
+            spawnedSproutingVines++;
+        }
+
+        public void StopSproutingVines()
+        {
+            stopDOAAtPercentage = -1f;
+            spawnedSproutingVines = 0;
+
+            characterAnimatorManager.PlayTargetActionAnimation("Sprouting_Vines_Stop", true, false);
         }
 
         #endregion
