@@ -13,6 +13,10 @@ namespace Erikduss
         public bool startedDestroying = false;
         public string sceneNameToLoadTo = "Scene_Main_Menu_01";
 
+        private bool forceSkipCredits = false;
+
+        private float timer = 0f;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -33,6 +37,22 @@ namespace Erikduss
                     StartCoroutine(DestroyEverything());
                 else
                     StartCoroutine(ResetEverything());
+            }
+
+            if(timer < 5f)
+            {
+                timer += Time.deltaTime;
+                return;
+            }
+ 
+            if(Input.anyKeyDown)
+                forceSkipCredits = true;
+
+            if (forceSkipCredits)
+            {
+                //prevent it being called every frame
+                forceSkipCredits = false;
+                LoadToNextScene();
             }
         }
 
@@ -127,18 +147,33 @@ namespace Erikduss
 
             yield return new WaitForSeconds(1);
 
+            if(SceneManager.GetActiveScene().name == "LoadingToMainMenuVictory")
+            {
+                yield return new WaitForSeconds(30f);
+            }
+
+            if (!LoadToNextScene()) yield return null;
+        }
+
+        public bool LoadToNextScene()
+        {
+            bool success = false;
+
             if (WorldActionManager.Instance == null && ConnectionManager.Instance == null && WorldGameSessionManager.Instance == null
                 && PlayerUIManager.instance == null && PlayerInputManager.instance == null && PlayerCamera.instance == null
                 && WorldSoundFXManager.instance == null && WorldItemDatabase.Instance == null && WorldProjectilesManager.Instance == null
                 && WorldActionManager.Instance == null && PlayerMaterialManagement.Instance == null && WorldSaveGameManager.instance == null)
             {
+                success = true;
                 SceneManager.LoadScene(sceneNameToLoadTo); //go back to splash screen
             }
             else
             {
+                success = false;
                 startedDestroying = false;
-                yield return null;
             }
+
+            return success;
         }
     }
 }

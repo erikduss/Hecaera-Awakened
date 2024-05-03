@@ -32,6 +32,8 @@ namespace Erikduss
         public float currentPoiseValue = 0;
         public float poiseDamagePerHitMultiplier = 1f; //how much poise per damage value? for example, 10 damage = 10 poise damage.
 
+        public GameObject ragdollObject;
+
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
@@ -125,6 +127,7 @@ namespace Erikduss
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
+            Debug.Log("Boss Death");
             PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("IXELECE DEFEATED");
             if (IsOwner)
             {
@@ -163,7 +166,18 @@ namespace Erikduss
                 WorldSaveGameManager.instance.SaveGame();
             }
 
-            yield return new WaitForSeconds(5f);
+            Debug.Log("Spawn Ragdoll");
+            WorldBossEncounterManager.Instance.SpawnRagdollOfBoss(ragdollObject, transform.position, transform.rotation, 1.5f);
+            WorldBossEncounterManager.Instance.BossDefeated();
+
+            yield return new WaitForSeconds(1.5f);
+
+            if (IsOwner)
+            {
+                //NetworkObject.StopAllCoroutines();
+                //aICharacterNetworkManager.StopAllCoroutines();
+                this.NetworkObject.Despawn();
+            }
         }
 
         public virtual void WakeBoss()

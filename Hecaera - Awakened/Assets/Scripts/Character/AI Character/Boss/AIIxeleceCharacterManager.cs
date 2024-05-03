@@ -169,8 +169,6 @@ namespace Erikduss
             soundManager.PlayIxeleceAttackVoice();
             if (!IsOwner) return;
 
-            Debug.Log("SHockwave spawn");
-
             //apply offsets if needed.
             Vector3 spawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,6 +31,8 @@ namespace Erikduss
         public float bufferTimeBeforeAddingDeadPlayer = 5f;
 
         public bool amITheHost = false;
+        private bool spawnedRagdoll = false;
+        private bool bossIsDead = false;
 
         private void Awake()
         {
@@ -202,10 +205,44 @@ namespace Erikduss
             return everyoneIsDead;
         }
 
+        public void SpawnRagdollOfBoss(GameObject ragdoll, Vector3 position, quaternion rotation, float delay)
+        {
+            //only do this once
+            if (spawnedRagdoll) return;
+            StartCoroutine(SpawnRagdollWithDelay(ragdoll, position, rotation, delay));
+        }
+
+        public IEnumerator SpawnRagdollWithDelay(GameObject ragdoll, Vector3 position, quaternion rotation, float delay)
+        {
+            spawnedRagdoll = true;
+            yield return new WaitForSeconds(delay);
+            Instantiate(ragdoll, position, rotation);
+        }
+
+        public IEnumerator BossDefeatedEndGame()
+        {
+            Debug.Log("We should end the game");
+
+            bossIsDead = true;
+
+            yield return new WaitForSeconds(10);
+
+            NetworkManager.Singleton.SceneManager.LoadScene("LoadingToMainMenuVictory", LoadSceneMode.Single);
+        }
+
+        public void BossDefeated()
+        {
+            if (!WorldGameSessionManager.Instance.AmITheHost()) return;
+            Debug.Log("Got into boss defeated void");
+            StartCoroutine(BossDefeatedEndGame());
+        }
+
         public void CheckIfEncounterNeedsToBeRestarted()
         {
             //only the host should call to reset everything
             if (!WorldGameSessionManager.Instance.AmITheHost()) return;
+
+            if (bossIsDead) return;
 
             if (EveryoneIsDead())
             {

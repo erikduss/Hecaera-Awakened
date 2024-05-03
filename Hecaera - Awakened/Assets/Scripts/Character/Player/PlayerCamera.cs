@@ -27,7 +27,7 @@ namespace Erikduss
         private Vector3 cameraObjectPosition; //Used for camera collisions (moves the camera object to this position)
         [SerializeField] float leftAndRightLookAngle;
         [SerializeField] float upAndDownLookAngle;
-        private float defaultCameraZPosition; //Values used for camera collisions
+        [SerializeField] private float defaultCameraZPosition; //Values used for camera collisions
         private float targetCameraZPosition; //Values used for camera collisions
 
         [Header("Lock On")]

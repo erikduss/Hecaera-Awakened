@@ -178,6 +178,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
@@ -307,6 +308,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   bossCharacter: {fileID: 0}
@@ -5609,6 +5611,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
@@ -5760,6 +5763,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
@@ -8385,6 +8389,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
@@ -34073,6 +34078,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 7630623820236480941}
@@ -41924,6 +41930,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   bossCharacter: {fileID: 0}
@@ -42059,7 +42066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2106045099
+  GlobalObjectIdHash: 2960232928
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -42170,6 +42177,7 @@ MonoBehaviour:
   lockOnTransform: {fileID: 8377964021535360514}
   magicHandTransform: {fileID: 362780123599023705}
   actionRecoveryTimer: 0
+  allowTargetSwitchingWhenAlreadyHavingTarget: 1
   distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
@@ -42233,6 +42241,7 @@ MonoBehaviour:
   currentlyUsePoise: 0
   currentPoiseValue: 0
   poiseDamagePerHitMultiplier: 1
+  ragdollObject: {fileID: 8364617866727426463, guid: f09592b06f55cbb49a0b808c0c76ecd2, type: 3}
   teleportState: {fileID: 11400000, guid: ac2ab3d3e23cceb44b4fb96de5caf4d1, type: 2}
   soundManager: {fileID: 3942244864916318175}
   aIBossUIManager: {fileID: 0}
@@ -42660,6 +42669,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
@@ -42767,6 +42777,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
@@ -43425,6 +43436,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
@@ -43893,6 +43905,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}
@@ -44286,6 +44299,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   mainClawDamageCollider: {fileID: 567467190118210158}

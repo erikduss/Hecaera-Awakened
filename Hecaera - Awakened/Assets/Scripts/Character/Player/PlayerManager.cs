@@ -252,6 +252,7 @@ namespace Erikduss
                 playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
                 playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
                 playerNetworkManager.isDead.Value = false;
+                playerNetworkManager.isLockedOn.Value = false;
 
                 playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
             }

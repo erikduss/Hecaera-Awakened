@@ -29,7 +29,7 @@ namespace Erikduss
         private Coroutine lockOnCoroutine;
 
         [Header("Player action input")]
-        [SerializeField] bool dodge_Input = false;
+        public bool dodge_Input = false;
         [SerializeField] bool sprint_Input = false;
         [SerializeField] bool jump_Input = false;
 

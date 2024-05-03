@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 4516241444995364845}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.5}
+  m_LocalPosition: {x: 0, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 4516241444995364847}
   player: {fileID: 0}
+  currentPlayerToFollowWithCamera: {fileID: 0}
   cameraPivotTransform: {fileID: 5260140014004974425}
   cameraSmoothSpeed: 10
   leftAndRightRotationSpeed: 400
@@ -266,13 +267,14 @@ MonoBehaviour:
     m_Bits: 1
   leftAndRightLookAngle: 0
   upAndDownLookAngle: 0
+  defaultCameraZPosition: 2.5
   lockOnRadius: 20
   minimumViewableAngle: -50
   maximumViewableAngle: 50
   lockOnTargetFollowSpeed: 1
   setCameraHeightSpeed: 0.05
   unlockedCameraHeight: 1.65
-  lockedCameraHeight: 2
+  lockedCameraHeight: 2.25
   nearestLockOnTarget: {fileID: 0}
   leftLockOnTarget: {fileID: 0}
   rightLockOnTarget: {fileID: 0}
