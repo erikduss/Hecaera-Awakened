@@ -4602,6 +4602,7 @@ GameObject:
   m_Component:
   - component: {fileID: 895245290777871206}
   - component: {fileID: 1000548180101898006}
+  - component: {fileID: 8511723895217018261}
   m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
@@ -4636,7 +4637,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.34509805, g: 0.34901962, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 5
+  m_Range: 0.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -4685,6 +4686,29 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &8511723895217018261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893366870677659694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &893862663710687328
 GameObject:
   m_ObjectHideFlags: 0
@@ -4736,7 +4760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3122243497
+  GlobalObjectIdHash: 4286282399
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -4772,6 +4796,8 @@ MonoBehaviour:
   startingPoint: {fileID: 0}
   maxActiveTime: 2.5
   projectileCollider: {fileID: 9112919694721347721}
+  spawnObjectOnCollision: 0
+  objectToSpawn: 0
   projectileSpeed: 15
   downwardsVelocity: 1
 --- !u!114 &9112919694721347721
@@ -4792,6 +4818,7 @@ MonoBehaviour:
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
+  canDamageSameCharacterMultipleTimes: 0
   charactersDamaged: []
   groupOfAttack: 2
   characterCausingDamage: {fileID: 0}
@@ -4852,6 +4879,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 896901808602367220}
     m_Modifications:
+    - target: {fileID: 6083408350337323914, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
+      propertyPath: LightsModule.rangeCurve.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6083408350337323914, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
+      propertyPath: LightsModule.intensityCurve.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6245249519821134740, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
       propertyPath: m_Name
       value: Simple_Magic_Spell_Trail
@@ -4900,13 +4935,48 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6281713180766407334, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
+      propertyPath: m_Range
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6244705134162588544, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2838184247547557396}
   m_SourcePrefab: {fileID: 100100000, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
 --- !u!4 &6197576132825434414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6250182387046786678, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
   m_PrefabInstance: {fileID: 53811663373889368}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6203298746436803800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6244705134162588544, guid: ab5bfde7a0f723d4d8b513da7f165656, type: 3}
+  m_PrefabInstance: {fileID: 53811663373889368}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2838184247547557396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203298746436803800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
