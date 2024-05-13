@@ -7,10 +7,12 @@ namespace Erikduss
 {
     public class UI_Boss_HP_Bar : UI_StatBar
     {
-        [SerializeField] AIBossCharacterManager bossCharacter;
+        public AIBossCharacterManager bossCharacter;
 
-        [SerializeField] TextMeshProUGUI bossNameText;
-        [SerializeField] TextMeshProUGUI bossPhaseText;
+        public TextMeshProUGUI bossNameText;
+        public TextMeshProUGUI bossPhaseText;
+
+        public bool hasAnotherPhase = false;
 
         public void EnableBossHPBar(AIBossCharacterManager boss)
         {
@@ -33,7 +35,35 @@ namespace Erikduss
 
             if (newValue <= 0)
             {
-                RemoveHPBar(2.5f);
+                if(bossCharacter.currentBossPhase.Value >= bossCharacter.amountOfPhases.Value && bossCharacter.aICharacterNetworkManager.isDead.Value)
+                {
+                    RemoveHPBar(2.5f);
+                }
+                else
+                {
+                    StartCoroutine(ChangeToNextPhase());
+                }
+            }
+        }
+
+        public IEnumerator ChangeToNextPhase()
+        {
+            yield return new WaitForSeconds(1);
+
+            if (bossCharacter.currentBossPhase.Value == 2)
+            {
+                SetStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
+                bossPhaseText.text = "Phase 2: Acceptance";
+            }
+            else if (bossCharacter.currentBossPhase.Value == 3)
+            {
+                SetStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
+                bossPhaseText.text = "Phase 3: Sadness";
+            }
+            else if (bossCharacter.currentBossPhase.Value == 4)
+            {
+                SetStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
+                bossPhaseText.text = "Phase 4: Hatred";
             }
         }
 

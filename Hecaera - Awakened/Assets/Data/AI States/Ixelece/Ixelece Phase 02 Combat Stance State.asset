@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: Ixelece Phase 02 Combat Stance State
   m_EditorClassIdentifier: 
   isStationaryBoss: 1
+  canSwitchTargets: 1
   aiCharacterAttacks:
-  - {fileID: 11400000, guid: 965789eb0d5fc97429378734bf887d8e, type: 2}
-  - {fileID: 11400000, guid: aadc877703a74fb469c1a314a61c6cfc, type: 2}
-  canPerformCombo: 0
-  chanceToPerformCombo: 25
-  maximumEngagementDistance: 5
+  - {fileID: 11400000, guid: 6cd5584a122944445929bae5fe5034c3, type: 2}
+  - {fileID: 11400000, guid: 246c04712bfbf7246a60efb281a501ca, type: 2}
+  - {fileID: 11400000, guid: c9f0d140d6cd6794982484d2c0456a85, type: 2}
+  - {fileID: 11400000, guid: f7fe2e4c2630cf34bad83be50e7f4eaa, type: 2}
+  - {fileID: 11400000, guid: 5ec603120b428544fb0cf80bf8c15fbd, type: 2}
+  - {fileID: 11400000, guid: 56ff93ab025620541b193b06f2a850d2, type: 2}
+  - {fileID: 11400000, guid: ad70ed8e770f41d4f817cf2f2f18794b, type: 2}
+  - {fileID: 11400000, guid: ca27ffbb0522e7949b33cf6d77ae279d, type: 2}
+  - {fileID: 11400000, guid: 3baa3910e5279984b8763e6de09f7ca6, type: 2}
+  - {fileID: 11400000, guid: 46a0b51dc750a7e4787a31372ab4446c, type: 2}
+  canPerformCombo: 1
+  chanceToPerformCombo: 66
+  maximumEngagementDistance: 50

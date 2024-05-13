@@ -340,5 +340,24 @@ namespace Erikduss
         }
 
         #endregion
+
+        #region Uthanors Wrath
+
+        public void StartExecutingUthanorsWrath()
+        {
+            if (!IsOwner) return;
+
+            Vector3 spawnLocation = transform.position;
+            Quaternion spawnRotation = Quaternion.identity;
+
+            WorldSyncedObjectsManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.UthanorWrathPillar, 0, spawnLocation, spawnRotation);
+        }
+
+        public void ExecuteUthanorsWrath()
+        {
+
+        }
+
+        #endregion
     }
 }

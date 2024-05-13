@@ -74,7 +74,8 @@ namespace Erikduss
         NatureFury,
         LightEmbrace,
         EmbraceCombo,
-        SproutingVines
+        SproutingVines,
+        UthanorsWrath
     }
 
     public enum PooledObjectType
@@ -87,7 +88,11 @@ namespace Erikduss
         Shockwave,
         FireFruitGroundToxin,
         SproutingVine,
-        SproutingVineToxin
+        SproutingVineToxin,
+        UthanorWrathPillar,
+        GetOutRocks,
+        LightEmbraceEffect,
+        NatureFuryVisual
     }
 
     public enum AttackIndicatorType
@@ -97,5 +102,4 @@ namespace Erikduss
         RED_INDICATED,
         BLUE_CHARGE
     }
-
 }

@@ -15,6 +15,8 @@ namespace Erikduss
         public NetworkVariable<bool> bossFightIsActive = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> hasBeenDefeated = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> hasBeenAwakened = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<int> currentBossPhase = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<int> amountOfPhases = new NetworkVariable<int>(4, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         [SerializeField] List<FogWallInteractable> fogWalls;
         [SerializeField] string sleepAnimation;
         [SerializeField] string awakenAnimation;
@@ -23,6 +25,8 @@ namespace Erikduss
         public float minimumHealthPercentageToShift = 0;
         [SerializeField] string phaseShiftAnimation = "Phase_Change_01";
         [SerializeField] CombatStanceState phase02CombatStanceState;
+        [SerializeField] CombatStanceState phase03CombatStanceState;
+        [SerializeField] CombatStanceState phase04CombatStanceState;
 
         [Header("States")]
         [SerializeField] BossSleepState sleepState;
@@ -127,57 +131,62 @@ namespace Erikduss
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
-            Debug.Log("Boss Death");
-            PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("IXELECE DEFEATED");
-            if (IsOwner)
+            if (currentBossPhase.Value >= amountOfPhases.Value)
             {
-                characterNetworkManager.currentHealth.Value = 0;
-                characterNetworkManager.isDead.Value = true;
-
-                bossFightIsActive.Value = false;
-
-                foreach(var fogWall in fogWalls)
+                Debug.Log("Boss Death");
+                PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("IXELECE DEFEATED");
+                if (IsOwner)
                 {
-                    fogWall.isActive.Value = false;
+                    characterNetworkManager.currentHealth.Value = 0;
+                    characterNetworkManager.isDead.Value = true;
+
+                    bossFightIsActive.Value = false;
+
+                    foreach (var fogWall in fogWalls)
+                    {
+                        fogWall.isActive.Value = false;
+                    }
+
+                    if (!manuallySelectDeathAnimation)
+                    {
+                        characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+                    }
+
+                    hasBeenDefeated.Value = true;
+
+                    if (!WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.ContainsKey(bossID))
+                    {
+                        WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
+                        WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
+                    }
+                    else
+                    {
+                        //we re-add it to the dictionary with the true value.
+                        WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Remove(bossID);
+                        WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Remove(bossID);
+                        WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
+                        WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
+                    }
+
+                    //autosave the progress
+                    WorldSaveGameManager.instance.SaveGame();
                 }
 
-                if (!manuallySelectDeathAnimation)
-                {
-                    characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
-                }
+                Debug.Log("Spawn Ragdoll");
+                WorldBossEncounterManager.Instance.SpawnRagdollOfBoss(ragdollObject, transform.position, transform.rotation, 1.5f);
+                WorldBossEncounterManager.Instance.BossDefeated();
 
-                hasBeenDefeated.Value = true;
+                yield return new WaitForSeconds(1.5f);
 
-                if (!WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.ContainsKey(bossID))
+                if (IsOwner)
                 {
-                    WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
-                    WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
+                    //NetworkObject.StopAllCoroutines();
+                    //aICharacterNetworkManager.StopAllCoroutines();
+                    this.NetworkObject.Despawn();
                 }
-                else
-                {
-                    //we re-add it to the dictionary with the true value.
-                    WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Remove(bossID);
-                    WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Remove(bossID);
-                    WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
-                    WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
-                }
-
-                //autosave the progress
-                WorldSaveGameManager.instance.SaveGame();
             }
 
-            Debug.Log("Spawn Ragdoll");
-            WorldBossEncounterManager.Instance.SpawnRagdollOfBoss(ragdollObject, transform.position, transform.rotation, 1.5f);
-            WorldBossEncounterManager.Instance.BossDefeated();
-
-            yield return new WaitForSeconds(1.5f);
-
-            if (IsOwner)
-            {
-                //NetworkObject.StopAllCoroutines();
-                //aICharacterNetworkManager.StopAllCoroutines();
-                this.NetworkObject.Despawn();
-            }
+            yield return null;
         }
 
         public virtual void WakeBoss()
@@ -225,6 +234,8 @@ namespace Erikduss
                     //Set the boss's health value based on the amount of players
                     aICharacterNetworkManager.maxHealth.Value = aICharacterNetworkManager.maxHealth.Value * WorldGameSessionManager.Instance.players.Count;
                     aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value;
+
+                    currentBossPhase.Value = 1; //set to active phase
                 }
 
                 GameObject bossHealthBar = Instantiate(PlayerUIManager.instance.playerUIHudManager.bossHealthBarObject,
@@ -232,6 +243,7 @@ namespace Erikduss
 
                 UI_Boss_HP_Bar bossHPBar = bossHealthBar.GetComponentInChildren<UI_Boss_HP_Bar>();
                 bossHPBar.EnableBossHPBar(this);
+                bossHPBar.hasAnotherPhase = true;
 
                 WorldSoundFXManager.instance.PlayBossTrack(WorldSoundFXManager.instance.ixeleceBossFightIntroMusic, WorldSoundFXManager.instance.ixeleceBossFightPhase1Music);
             }
@@ -243,9 +255,39 @@ namespace Erikduss
 
         public void PhaseShift()
         {
-            characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
-            combbatStance = Instantiate(phase02CombatStanceState);
-            currentState = combbatStance;
+            Debug.Log("Phase shift!");
+
+            //switch to second phase
+            if(currentBossPhase.Value == 1)
+            {
+                characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
+                combbatStance = Instantiate(phase02CombatStanceState);
+                currentState = combbatStance;
+
+                aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+
+                currentBossPhase.Value = currentBossPhase.Value + 1;
+            }
+            else if (currentBossPhase.Value == 2)
+            {
+                characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
+                combbatStance = Instantiate(phase03CombatStanceState);
+                currentState = combbatStance;
+
+                aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+
+                currentBossPhase.Value = currentBossPhase.Value + 1;
+            }
+            else if (currentBossPhase.Value == 3)
+            {
+                characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
+                combbatStance = Instantiate(phase04CombatStanceState);
+                currentState = combbatStance;
+
+                aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+
+                currentBossPhase.Value = currentBossPhase.Value + 1;
+            }
         }
 
         public void SetNewPoiseValueToBreak(float poiseValueToBreakPerPlayer)

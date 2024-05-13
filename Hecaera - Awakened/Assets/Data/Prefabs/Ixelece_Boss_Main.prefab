@@ -42114,7 +42114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2106045099
+  GlobalObjectIdHash: 2960232928
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -42279,12 +42279,18 @@ MonoBehaviour:
     m_InternalValue: 0
   hasBeenAwakened:
     m_InternalValue: 0
+  currentBossPhase:
+    m_InternalValue: 0
+  amountOfPhases:
+    m_InternalValue: 4
   fogWalls: []
   sleepAnimation: Not_Woken_Idle
   awakenAnimation: Awaken_01
   minimumHealthPercentageToShift: 0
   phaseShiftAnimation: Phase_Change_01
-  phase02CombatStanceState: {fileID: 11400000, guid: 2d662a9cf167663478132413e68dbda2, type: 2}
+  phase02CombatStanceState: {fileID: 11400000, guid: 0d20fcff7f8ddf94ba279ac3b41a498b, type: 2}
+  phase03CombatStanceState: {fileID: 11400000, guid: 9999a6fbe711f054a98a8b3c68a6d292, type: 2}
+  phase04CombatStanceState: {fileID: 11400000, guid: 97d9c158551ce464c8b37a6ff4077a19, type: 2}
   sleepState: {fileID: 11400000, guid: dc6b106d7b0945c4ca87ee9b13d44314, type: 2}
   currentlyUsePoise: 0
   currentPoiseValue: 0
