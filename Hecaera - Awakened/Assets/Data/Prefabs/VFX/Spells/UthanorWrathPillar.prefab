@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1949820455482910713}
   - component: {fileID: 4941315718798776931}
   - component: {fileID: -7165844502508169528}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UthanorWrathPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,3 +143,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3b8798cec19eb4bb140eb9d87ee891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectEnabled:
+    m_InternalValue: 0
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkRotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
+  networkPositionVelocity: {x: 0, y: 0, z: 0}
+  networkPositionSmoothTime: 0.1
+  networkRotationSmoothTime: 0.1
+  maxActiveTime: 10
+  targetLocation: {x: 0, y: 0, z: 0}

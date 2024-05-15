@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -35,6 +36,8 @@ namespace Erikduss
         private int spawnedSproutingVines = 0;
         private int minimumAmountOfSproutingVinesSpawns = 5;
         private float chanceIncreasePerVineSpawn = 2.5f;
+
+        public LayerMask uthanorWrathBlockLayer;
 
         public override void OnNetworkSpawn()
         {
@@ -347,15 +350,103 @@ namespace Erikduss
         {
             if (!IsOwner) return;
 
-            Vector3 spawnLocation = transform.position;
-            Quaternion spawnRotation = Quaternion.identity;
+            Vector3 indicatorLocation = transform.position;
+            indicatorLocation.y += 2f;
 
-            WorldSyncedObjectsManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.UthanorWrathPillar, 0, spawnLocation, spawnRotation);
+            float indicatorSize = 75f;
+
+            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true);
+
+            for (int i = 0; i < 4; i++)
+            {
+                Vector3 spawnLocation = transform.position;
+                spawnLocation.y = -10f;
+
+                if(i == 0)
+                {
+                    spawnLocation.x = transform.position.x + 7.5f;
+                    spawnLocation.z = transform.position.z + 7.5f;
+                }
+                else if (i == 1)
+                {
+                    spawnLocation.x = transform.position.x + -10f;
+                    spawnLocation.z = transform.position.z + -10f;
+                }
+                else if (i == 2)
+                {
+                    spawnLocation.x = transform.position.x + -7.5f;
+                    spawnLocation.z = transform.position.z + 7.5f;
+                }
+                else if (i == 3)
+                {
+                    spawnLocation.x = transform.position.x + 10f;
+                    spawnLocation.z = transform.position.z + -10f;
+                }
+
+                Quaternion spawnRotation = Quaternion.identity;
+
+                WorldSyncedObjectsManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.UthanorWrathPillar, 0, spawnLocation, spawnRotation);
+            }
         }
 
         public void ExecuteUthanorsWrath()
         {
+            if(!IsOwner) return;
 
+            Vector3 spawnLocation = transform.position;
+            Quaternion spawnRotation = Quaternion.identity;
+
+            WorldSyncedObjectsManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.UthanorsWrathVisual, 0, spawnLocation, spawnRotation);
+            
+            StartCoroutine(DamageEveryPlayerInEncounterIfNotBehindCover(99999));
+        }
+
+        public IEnumerator DamageEveryPlayerInEncounterIfNotBehindCover(float damage)
+        {
+            yield return new WaitForSeconds(.5f);
+
+            foreach(PlayerManager player in WorldGameSessionManager.Instance.players)
+            {
+                RaycastHit hit;
+                
+                Vector3 fromPos = transform.position;
+                fromPos.y += 1f;
+
+                Vector3 toPos = player.transform.position;
+                toPos.y += 1f;
+
+                Vector3 dir =  toPos - fromPos;
+
+                // Does the ray hit the pillar?
+                if (Physics.Raycast(fromPos, dir, out hit, Mathf.Infinity, uthanorWrathBlockLayer))
+                {
+                    continue;
+                }
+
+                //can it be dodged?
+                //if (damageTarget != null && !damageTarget.characterNetworkManager.isInvincible.Value)
+                //{
+                //    contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+
+                //    DamageTarget(damageTarget);
+                //}
+
+                //if this is an attack from group 2, the multiplier is equal to the boss empower multiplier. Otherwise its 1 and wont do anything.
+                float multiplier = WorldBossEncounterManager.Instance.bossEmpowerDamageMultiplier.Value;
+                Vector3 contactPoint = player.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+
+                TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.Instance.takeDamageEffect);
+                damageEffect.physicalDamage = damage * multiplier;
+                damageEffect.magicDamage = 0 * multiplier;
+                damageEffect.fireDamage = 0 * multiplier;
+                damageEffect.holyDamage = 0 * multiplier;
+                damageEffect.contactPoint = contactPoint;
+
+                damageEffect.playDamageAnimation = true;
+                damageEffect.willPlayDamageSFX = true;
+
+                player.characterEffectsManager.ProcessInstantEffect(damageEffect);
+            }
         }
 
         #endregion

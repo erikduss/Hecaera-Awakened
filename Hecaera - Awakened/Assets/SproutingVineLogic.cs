@@ -23,29 +23,6 @@ namespace Erikduss
             }
         }
 
-        private void MoveShockwave()
-        {
-            transform.position += (transform.forward * (initialVineSpeed + addedVineSpeed)) * Time.deltaTime;
-            addedVineSpeed = addedSpeedRate * Time.deltaTime;
-        }
-
-        private IEnumerator StartSpawningVine(float surfacingTime)
-        {
-            Vector3 startingPos = transform.position;
-            Vector3 finalPos = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
-
-            float elapsedTime = 0;
-
-            while (elapsedTime < surfacingTime)
-            {
-                transform.position = Vector3.Lerp(startingPos, finalPos, (elapsedTime / surfacingTime));
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            moveVine = true;
-        }
-
         public IEnumerator SpawnVine(float spawnDelay)
         {
             yield return new WaitForSeconds(spawnDelay);

@@ -35,7 +35,7 @@ namespace Erikduss
             if (teleportFinished)
             {
                 characterManager.isPerformingAction = false;
-                return SwitchState(aiCharacter, aiCharacter.combbatStance);
+                return SwitchState(aiCharacter, aiCharacter.combatStance);
             }
             else
             {
@@ -90,7 +90,7 @@ namespace Erikduss
                     teleportFinished = true;
                     //aiCharacter.navMeshAgent.enabled = true;
                     //aiCharacter.GetComponent<CharacterController>().enabled = true;
-                    return SwitchState(aiCharacter, aiCharacter.combbatStance);
+                    return SwitchState(aiCharacter, aiCharacter.combatStance);
                 }
                 return this;
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Erikduss
 {
@@ -27,6 +28,7 @@ namespace Erikduss
         [SerializeField] CombatStanceState phase02CombatStanceState;
         [SerializeField] CombatStanceState phase03CombatStanceState;
         [SerializeField] CombatStanceState phase04CombatStanceState;
+        public AICharacterAttackAction bossSpecialPhaseAttack;
 
         [Header("States")]
         [SerializeField] BossSleepState sleepState;
@@ -257,36 +259,68 @@ namespace Erikduss
         {
             Debug.Log("Phase shift!");
 
+            currentState = idle;
+
             //switch to second phase
             if(currentBossPhase.Value == 1)
             {
                 characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
-                combbatStance = Instantiate(phase02CombatStanceState);
-                currentState = combbatStance;
+                combatStance = Instantiate(phase02CombatStanceState);
+                //currentState = combatStance;
 
                 aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                aICharacterNetworkManager.isDead.Value = false;
+                isPerformingAction = false;
+                aICharacterCombatManager.actionRecoveryTimer = 0;
 
                 currentBossPhase.Value = currentBossPhase.Value + 1;
+
+                if (bossSpecialPhaseAttack != null)
+                {
+                    base.attack.currentAttack = bossSpecialPhaseAttack;
+                    attack.hasPerformedAttack = false;
+                    currentState = attack;
+                }
             }
             else if (currentBossPhase.Value == 2)
             {
                 characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
-                combbatStance = Instantiate(phase03CombatStanceState);
-                currentState = combbatStance;
+                combatStance = Instantiate(phase03CombatStanceState);
+                //currentState = combatStance;
 
                 aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                aICharacterNetworkManager.isDead.Value = false;
+                isPerformingAction = false;
+                aICharacterCombatManager.actionRecoveryTimer = 0;
 
                 currentBossPhase.Value = currentBossPhase.Value + 1;
+
+                if (bossSpecialPhaseAttack != null)
+                {
+                    base.attack.currentAttack = bossSpecialPhaseAttack;
+                    attack.hasPerformedAttack = false;
+                    currentState = attack;
+                }
             }
             else if (currentBossPhase.Value == 3)
             {
                 characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true);
-                combbatStance = Instantiate(phase04CombatStanceState);
-                currentState = combbatStance;
+                combatStance = Instantiate(phase04CombatStanceState);
+                //currentState = combatStance;
 
                 aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                aICharacterNetworkManager.isDead.Value = false;
+                isPerformingAction = false;
+                aICharacterCombatManager.actionRecoveryTimer = 0;
 
                 currentBossPhase.Value = currentBossPhase.Value + 1;
+
+                if (bossSpecialPhaseAttack != null)
+                {
+                    base.attack.currentAttack = bossSpecialPhaseAttack;
+                    attack.hasPerformedAttack = false;
+                    currentState = attack;
+                }
             }
         }
 

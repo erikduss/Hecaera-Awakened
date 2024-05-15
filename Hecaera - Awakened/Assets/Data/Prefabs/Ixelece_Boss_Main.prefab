@@ -42270,7 +42270,7 @@ MonoBehaviour:
   currentState: {fileID: 0}
   idle: {fileID: 11400000, guid: a1c83cba42cdef04b894e49ea5f1b617, type: 2}
   pursueTarget: {fileID: 11400000, guid: 5e72c6fb3b78ac6468cdfb3f1eb5d318, type: 2}
-  combbatStance: {fileID: 11400000, guid: 52c50314a566a624792f3973a77ba7f1, type: 2}
+  combatStance: {fileID: 11400000, guid: 52c50314a566a624792f3973a77ba7f1, type: 2}
   attack: {fileID: 11400000, guid: af7a60a1470f50449b981d23a05c503e, type: 2}
   bossID: 0
   bossFightIsActive:
@@ -42291,6 +42291,7 @@ MonoBehaviour:
   phase02CombatStanceState: {fileID: 11400000, guid: 0d20fcff7f8ddf94ba279ac3b41a498b, type: 2}
   phase03CombatStanceState: {fileID: 11400000, guid: 9999a6fbe711f054a98a8b3c68a6d292, type: 2}
   phase04CombatStanceState: {fileID: 11400000, guid: 97d9c158551ce464c8b37a6ff4077a19, type: 2}
+  bossSpecialPhaseAttack: {fileID: 11400000, guid: 46a0b51dc750a7e4787a31372ab4446c, type: 2}
   sleepState: {fileID: 11400000, guid: dc6b106d7b0945c4ca87ee9b13d44314, type: 2}
   currentlyUsePoise: 0
   currentPoiseValue: 0
@@ -42304,6 +42305,9 @@ MonoBehaviour:
   sphereGroundIndicatorPrefab: {fileID: 6555105636536880854, guid: 54078205f321f5e489f2113388cd2403, type: 3}
   sunbeamAttackPrefab: {fileID: 5783349659663388356, guid: 7c252caee1497854bba8192f7a4ff3d6, type: 3}
   natureFuryPrefab: {fileID: 6766657763254462232, guid: cb914c3c7aeee424388fb251b95080e2, type: 3}
+  uthanorWrathBlockLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &3942244864916318175
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ namespace Erikduss
         [Header("States")]
         public IdleState idle;
         public PursueTargetState pursueTarget;
-        public CombatStanceState combbatStance;
+        public CombatStanceState combatStance;
         public AttackState attack;
 
         protected override void Awake()
@@ -45,7 +45,7 @@ namespace Erikduss
                 //use a copy so the original is not modified.
                 idle = Instantiate(idle);
                 pursueTarget = Instantiate(pursueTarget);
-                combbatStance = Instantiate(combbatStance);
+                combatStance = Instantiate(combatStance);
                 attack = Instantiate(attack);
 
                 currentState = idle;

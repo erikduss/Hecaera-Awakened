@@ -19,9 +19,9 @@ namespace Erikduss
         [Header("Attacks")]
         public List<AICharacterAttackAction> aiCharacterAttacks; //A list of all attacks this character can do.
         protected List<AICharacterAttackAction> potentialAttacks; //possible attacks at the moment based on distance, angle, etc
-        private AICharacterAttackAction chosenAttack;
+        [HideInInspector] public AICharacterAttackAction chosenAttack;
         private AICharacterAttackAction previousAttack;
-        protected bool hasAttack = false;
+        [HideInInspector] public bool hasAttack = false;
 
         [Header("Combo")]
         [SerializeField] protected bool canPerformCombo = false;

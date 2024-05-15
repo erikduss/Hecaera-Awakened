@@ -37,6 +37,17 @@ namespace Erikduss
 
             GameObject prefab = WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(type);
             NetworkObject obj = WorldNetworkObjectPoolManager.Instance.GetNetworkObject(prefab, spawnLocation, spawnRotation);
+
+            SyncedObject syncedObj = obj.GetComponent<SyncedObject>();
+            syncedObj.syncedObjectType = type; //to ensure it gets put back into the correct pool
+            syncedObj.objectEnabled.Value = true;
+
+            if (type == PooledObjectType.UthanorWrathPillar)
+            {
+                UthanorWrathPillarLogic pillarLogic = obj.GetComponent<UthanorWrathPillarLogic>();
+                
+                pillarLogic.targetLocation = new Vector3(spawnLoc.x, spawnLoc.y + 18.4f, spawnLoc.z);
+            }
         }
 
         private IEnumerator SpawnSyncedObjectWithDelay(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation)

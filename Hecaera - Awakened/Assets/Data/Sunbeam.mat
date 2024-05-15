@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sunbeam
   m_Shader: {fileID: 4800000, guid: 18cc8fe7d50c89741b56c1ae6a5baa66, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _FADING_ON
   m_InvalidKeywords:
@@ -24,6 +26,7 @@ Material:
   m_CustomRenderQueue: 3002
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -83,7 +86,7 @@ Material:
     - _CutoutThreshold: 0.015
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _DstMode: 1
+    - _DstMode: 10
     - _FogColorMultiplier: 0
     - _FresnelFadeFactor: 3
     - _FresnelPow: 5
@@ -121,3 +124,4 @@ Material:
     - _Tiling: {r: 800, g: 800, b: 8, a: 8}
     - _TintColor: {r: 1.2, g: 1.1898139, b: 0.34554973, a: 0.75}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

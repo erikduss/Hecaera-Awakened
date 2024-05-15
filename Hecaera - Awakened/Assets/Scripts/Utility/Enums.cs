@@ -92,7 +92,8 @@ namespace Erikduss
         UthanorWrathPillar,
         GetOutRocks,
         LightEmbraceEffect,
-        NatureFuryVisual
+        NatureFuryVisual,
+        UthanorsWrathVisual
     }
 
     public enum AttackIndicatorType

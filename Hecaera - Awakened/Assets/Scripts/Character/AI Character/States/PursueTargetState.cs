@@ -32,7 +32,7 @@ namespace Erikduss
 
             if (aiCharacter.aICharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance)
             {
-                return SwitchState(aiCharacter, aiCharacter.combbatStance);
+                return SwitchState(aiCharacter, aiCharacter.combatStance);
             }
 
             //Pursue the target by calculating a new path.

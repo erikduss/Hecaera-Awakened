@@ -13,7 +13,7 @@ namespace Erikduss
         [HideInInspector] public bool willPerformCombo = false;
 
         [Header("State Flags")]
-        protected bool hasPerformedAttack = false;
+        public bool hasPerformedAttack = false;
         protected bool hasPerformedCombo = false;
 
         [Header("Pivot After Attack")]
@@ -26,10 +26,10 @@ namespace Erikduss
                 return SwitchState(aiCharacter, aiCharacter.idle);
             }
 
-            if (aiCharacter.aICharacterCombatManager.currentTarget.characterNetworkManager.isDead.Value)
-            {
-                return SwitchState(aiCharacter, aiCharacter.idle);
-            }
+            //if (aiCharacter.aICharacterCombatManager.currentTarget.characterNetworkManager.isDead.Value)
+            //{
+            //    return SwitchState(aiCharacter, aiCharacter.idle);
+            //}
 
             //rotate to target while attacking.
             aiCharacter.aICharacterCombatManager.RotateTowardsTargetWhilstAttacking(aiCharacter);
@@ -70,7 +70,7 @@ namespace Erikduss
                 }
             }
 
-            return SwitchState(aiCharacter, aiCharacter.combbatStance);
+            return SwitchState(aiCharacter, aiCharacter.combatStance);
         }
 
         protected void PerformAttack(AICharacterManager aiCharacter)
