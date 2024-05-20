@@ -75,7 +75,8 @@ namespace Erikduss
         LightEmbrace,
         EmbraceCombo,
         SproutingVines,
-        UthanorsWrath
+        UthanorsWrath,
+        MoreTrouble
     }
 
     public enum PooledObjectType

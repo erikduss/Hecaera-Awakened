@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Erikduss
 {
     public class IxeleceMaterialManagement : MonoBehaviour
     {
-        public static IxeleceMaterialManagement Instance;
-
         [Header("Body Parts To Fade")]
         public List<SkinnedMeshRenderer> mainBodyRenderers = new List<SkinnedMeshRenderer>();
         public List<SkinnedMeshRenderer> propsRenderers = new List<SkinnedMeshRenderer>();
@@ -17,18 +16,10 @@ namespace Erikduss
         [SerializeField] Material mainBodyMaterial;
         [SerializeField] Material propsMaterial;
         [SerializeField] Material teleportMaterial;
- 
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
+
+        [Header("Clone Material Colors")]
+        [ColorUsage(true, true)]
+        [SerializeField] Color cloneColor;
 
 
         private void Start()
@@ -79,6 +70,31 @@ namespace Erikduss
             foreach (SkinnedMeshRenderer ren in propsRenderers)
             {
                 ren.material = teleportMaterial;
+            }
+        }
+
+        public void SetCloneMaterial()
+        {
+            Material body = Instantiate(mainBodyMaterial);
+            body.color = cloneColor;
+
+            Material props = Instantiate(propsMaterial);
+            props.color = cloneColor;
+
+            foreach (SkinnedMeshRenderer ren in mainBodyRenderers)
+            {
+                ren.material = body;
+            }
+
+            foreach (MeshRenderer ren in leftOverRenderers)
+            {
+                ren.material = body;
+            }
+
+            //Props materials
+            foreach (SkinnedMeshRenderer ren in propsRenderers)
+            {
+                ren.material = props;
             }
         }
 

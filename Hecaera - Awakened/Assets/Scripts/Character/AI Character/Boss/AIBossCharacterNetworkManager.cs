@@ -21,7 +21,6 @@ namespace Erikduss
 
             if (aIBossCharacter.IsOwner)
             {
-                //TODO: Actually implement phase shifting
                 float healthNeededForShift = maxHealth.Value * (aIBossCharacter.minimumHealthPercentageToShift / 100);
 
                 if (currentHealth.Value <= healthNeededForShift)

@@ -42013,6 +42013,7 @@ GameObject:
   - component: {fileID: 4541099756095534005}
   - component: {fileID: 775596362238093271}
   - component: {fileID: 7103346325821213037}
+  - component: {fileID: 834715922804088670}
   m_Layer: 9
   m_Name: Ixelece_Boss_Main
   m_TagString: Untagged
@@ -42283,6 +42284,8 @@ MonoBehaviour:
     m_InternalValue: 0
   amountOfPhases:
     m_InternalValue: 4
+  bossIsClone:
+    m_InternalValue: 0
   fogWalls: []
   sleepAnimation: Not_Woken_Idle
   awakenAnimation: Awaken_01
@@ -42291,6 +42294,7 @@ MonoBehaviour:
   phase02CombatStanceState: {fileID: 11400000, guid: 0d20fcff7f8ddf94ba279ac3b41a498b, type: 2}
   phase03CombatStanceState: {fileID: 11400000, guid: 9999a6fbe711f054a98a8b3c68a6d292, type: 2}
   phase04CombatStanceState: {fileID: 11400000, guid: 97d9c158551ce464c8b37a6ff4077a19, type: 2}
+  cloneCombatStanceState: {fileID: 11400000, guid: e2efa65298c4a2a4ea28ada34c906f18, type: 2}
   bossSpecialPhaseAttack: {fileID: 11400000, guid: 46a0b51dc750a7e4787a31372ab4446c, type: 2}
   sleepState: {fileID: 11400000, guid: dc6b106d7b0945c4ca87ee9b13d44314, type: 2}
   currentlyUsePoise: 0
@@ -42301,6 +42305,7 @@ MonoBehaviour:
   soundManager: {fileID: 3942244864916318175}
   aIBossUIManager: {fileID: 0}
   combatManager: {fileID: 0}
+  ixeleceMaterialManagement: {fileID: 834715922804088670}
   middleArenaTeleportLocation: {x: 6.34, y: 3.4, z: 87.79}
   sphereGroundIndicatorPrefab: {fileID: 6555105636536880854, guid: 54078205f321f5e489f2113388cd2403, type: 3}
   sunbeamAttackPrefab: {fileID: 5783349659663388356, guid: 7c252caee1497854bba8192f7a4ff3d6, type: 3}
@@ -42569,6 +42574,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &834715922804088670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629088378785764308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe594b23915ac8c4ab3b89b445dcd5e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainBodyRenderers: []
+  propsRenderers: []
+  leftOverRenderers: []
+  mainBodyMaterial: {fileID: 2100000, guid: f317f0228d2405242871f55f7476c980, type: 2}
+  propsMaterial: {fileID: 8748892135801146194, guid: 37cf2ba8cbbaa374fb58b8024efd87ab, type: 3}
+  teleportMaterial: {fileID: 2100000, guid: e858c1a3f2a488b4ea7bd618ec9a7ff0, type: 2}
+  cloneColor: {r: 0.87422657, g: 1, b: 0, a: 0}
 --- !u!1 &7652824055540532481
 GameObject:
   m_ObjectHideFlags: 0

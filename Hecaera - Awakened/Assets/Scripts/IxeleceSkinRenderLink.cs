@@ -12,13 +12,15 @@ namespace Erikduss
         {
             SkinnedMeshRenderer renderer = GetComponent<SkinnedMeshRenderer>();
 
+            AIIxeleceCharacterManager characterToLinkTo = transform.GetComponentInParent<AIIxeleceCharacterManager>();
+
             if (renderer == null ) 
             {
                 MeshRenderer ren = GetComponent<MeshRenderer>();
 
                 if ( ren != null)
                 {
-                    IxeleceMaterialManagement.Instance.leftOverRenderers.Add(ren);
+                    characterToLinkTo.ixeleceMaterialManagement.leftOverRenderers.Add(ren);
                     return;
                 }
 
@@ -26,8 +28,8 @@ namespace Erikduss
                 return;
             }
 
-            if (hasMainBodyMaterial) IxeleceMaterialManagement.Instance.mainBodyRenderers.Add(renderer);
-            else IxeleceMaterialManagement.Instance.propsRenderers.Add(renderer);
+            if (hasMainBodyMaterial) characterToLinkTo.ixeleceMaterialManagement.mainBodyRenderers.Add(renderer);
+            else characterToLinkTo.ixeleceMaterialManagement.propsRenderers.Add(renderer);
         }
     }
 }

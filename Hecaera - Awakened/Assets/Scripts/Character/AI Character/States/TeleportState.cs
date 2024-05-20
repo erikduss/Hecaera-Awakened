@@ -48,8 +48,8 @@ namespace Erikduss
                     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation(teleportStartAnimation, true, false);
                     characterManager.soundManager.PlaySoundFX(electrifiedAudio);
                     characterManager.aIBossUIManager.ActivateAttackIndicator(AttackIndicatorType.RED_INDICATED, 0.5f, 0.25f);
-                    IxeleceMaterialManagement.Instance.SetIxeleceTeleportMaterial();
-                    IxeleceMaterialManagement.Instance.FadeTeleportMaterials(2f, 1f, 0f);
+                    characterManager.ixeleceMaterialManagement.SetIxeleceTeleportMaterial();
+                    characterManager.ixeleceMaterialManagement.FadeTeleportMaterials(2f, 1f, 0f);
                 }
                 else if (teleportDelayTimer >= 0 && !aiCharacter.isPerformingAction)
                 {
@@ -75,7 +75,7 @@ namespace Erikduss
                     teleportingBack = true;
                     aiCharacter.transform.position = teleportDestination;
                     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation(teleportStartAnimation, true, false);
-                    IxeleceMaterialManagement.Instance.FadeTeleportMaterials(1f, 0f, 1f);
+                    characterManager.ixeleceMaterialManagement.FadeTeleportMaterials(1f, 0f, 1f);
                     //damageIndicatorCollider.EnableDamageCollider();
                     characterManager.soundManager.PlaySoundFX(electrifiedAudio);
                 }
@@ -83,7 +83,7 @@ namespace Erikduss
                 {
                     //damageIndicatorCollider.DisableDamageCollider();
                     //Destroy(damageIndicatorPrefab);
-                    IxeleceMaterialManagement.Instance.RevertIxeleceMaterial();
+                    characterManager.ixeleceMaterialManagement.RevertIxeleceMaterial();
                     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("Idle", false, false, true, true);
 
                     characterManager.isPerformingAction = false;

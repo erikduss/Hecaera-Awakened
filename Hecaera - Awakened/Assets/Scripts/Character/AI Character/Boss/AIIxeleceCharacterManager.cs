@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -11,6 +12,8 @@ namespace Erikduss
         [SerializeField] public AIIxeleceSoundFXManager soundManager;
         [SerializeField] public AIBossUIManager aIBossUIManager;
         public AIIxeleceCombatManager combatManager;
+
+        public IxeleceMaterialManagement ixeleceMaterialManagement;
 
         [Header("Ixelece Specific")]
         [SerializeField] private Vector3 middleArenaTeleportLocation;
@@ -39,9 +42,13 @@ namespace Erikduss
 
         public LayerMask uthanorWrathBlockLayer;
 
+        bool spawnedClones = false;
+
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
+
+            if (ixeleceMaterialManagement == null) ixeleceMaterialManagement = GetComponent<IxeleceMaterialManagement>();
 
             if (IsOwner)
             {
@@ -50,14 +57,22 @@ namespace Erikduss
                 teleportState.teleportDestination = middleArenaTeleportLocation;
                 teleportState.characterManager = this;
 
-                aICharacterNetworkManager.maxStamina.Value = 500;
-                aICharacterNetworkManager.currentStamina.Value = 500;
-                aICharacterNetworkManager.maxHealth.Value = 1000;
-                aICharacterNetworkManager.currentHealth.Value = 1000;
+                if (!bossIsClone.Value)
+                {
+                    aICharacterNetworkManager.maxStamina.Value = 500;
+                    aICharacterNetworkManager.currentStamina.Value = 500;
+                    aICharacterNetworkManager.maxHealth.Value = 1000;
+                    aICharacterNetworkManager.currentHealth.Value = 1000;
+                }
             }
 
             combatManager = GetComponent<AIIxeleceCombatManager>();
             aIBossUIManager = GetComponent<AIBossUIManager>();
+
+            if (bossIsClone.Value)
+            {
+                ixeleceMaterialManagement.SetCloneMaterial();
+            }
         }
 
         public override void WakeBoss()
@@ -446,6 +461,63 @@ namespace Erikduss
                 damageEffect.willPlayDamageSFX = true;
 
                 player.characterEffectsManager.ProcessInstantEffect(damageEffect);
+            }
+        }
+
+        #endregion
+
+        #region More Trouble
+
+        public void InitializeMoreTrouble()
+        {
+            if (!IsOwner) return;
+
+            //prevent spawning a lot of clones for now for testing
+            if (spawnedClones) return;
+
+            //how many clones to spawn?
+            int amountOfClonesToSpawn = 3;
+
+            //clones spawn positions?
+
+            //spawn delays?
+
+            //clones alternate colors?
+
+            Transform parentOfClones = this.transform.parent;
+
+            StartCoroutine(spawnClones(1.5f, amountOfClonesToSpawn, parentOfClones));
+        }
+
+        public IEnumerator spawnClones(float spawnDelay, int amountOfClonesToSpawn, Transform parentOfClones)
+        {
+            spawnedClones = true;
+            for (int i = 0; i < amountOfClonesToSpawn; i++)
+            {
+                Vector3 spawnPosition;
+
+                if (i == 0)
+                {
+                    spawnPosition = new Vector3(transform.position.x - (10), transform.position.y, transform.position.z - 10);
+                }
+                else if(i == 1)
+                {
+                    spawnPosition = new Vector3(transform.position.x + (10), transform.position.y, transform.position.z - 10);
+                }
+                else
+                {
+                    spawnPosition = new Vector3(transform.position.x - (0), transform.position.y, transform.position.z - 15);
+                }
+
+                GameObject clone = Instantiate(this.gameObject, spawnPosition, Quaternion.identity, parentOfClones);
+                AIBossCharacterManager cloneManager = clone.GetComponent<AIBossCharacterManager>();
+                cloneManager.bossIsClone.Value = true;
+                cloneManager.aICharacterNetworkManager.maxHealth.Value = 1;
+                cloneManager.aICharacterNetworkManager.currentHealth.Value = 1;
+                cloneManager.aICharacterNetworkManager.CheckHP(1,1);
+                clone.GetComponent<NetworkObject>().Spawn();
+
+                yield return new WaitForSeconds(spawnDelay);
             }
         }
 

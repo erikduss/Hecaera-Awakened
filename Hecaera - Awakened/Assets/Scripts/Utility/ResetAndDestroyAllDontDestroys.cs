@@ -82,7 +82,7 @@ namespace Erikduss
             WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Remove(0);
             WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(0, false);
 
-            IxeleceMaterialManagement.Instance.ClearMaterialLists();
+            //IxeleceMaterialManagement.Instance.ClearMaterialLists();
 
             //ensure the player is back at 0,0,0 before healing and returning them back to life.
             WorldGameSessionManager.Instance.TeleportLocalPlayerToSpawn();

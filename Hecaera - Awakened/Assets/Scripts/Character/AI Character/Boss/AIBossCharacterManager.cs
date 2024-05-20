@@ -18,6 +18,7 @@ namespace Erikduss
         public NetworkVariable<bool> hasBeenAwakened = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<int> currentBossPhase = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<int> amountOfPhases = new NetworkVariable<int>(4, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<bool> bossIsClone = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         [SerializeField] List<FogWallInteractable> fogWalls;
         [SerializeField] string sleepAnimation;
         [SerializeField] string awakenAnimation;
@@ -28,6 +29,7 @@ namespace Erikduss
         [SerializeField] CombatStanceState phase02CombatStanceState;
         [SerializeField] CombatStanceState phase03CombatStanceState;
         [SerializeField] CombatStanceState phase04CombatStanceState;
+        [SerializeField] CombatStanceState cloneCombatStanceState;
         public AICharacterAttackAction bossSpecialPhaseAttack;
 
         [Header("States")]
@@ -44,44 +46,67 @@ namespace Erikduss
         {
             base.OnNetworkSpawn();
 
-            bossFightIsActive.OnValueChanged += OnBossFightIsActiveChanged;
-            OnBossFightIsActiveChanged(false, bossFightIsActive.Value);
+            bossIsClone.OnValueChanged += OnBossIsCloneValueChanged;
+
+            if (!bossIsClone.Value)
+            {
+                bossFightIsActive.OnValueChanged += OnBossFightIsActiveChanged;
+                OnBossFightIsActiveChanged(false, bossFightIsActive.Value);
+            }
 
             if (IsOwner)
             {
                 sleepState = Instantiate(sleepState);
 
-                currentState = sleepState;
+                if (!bossIsClone.Value)
+                    currentState = sleepState;
+                else
+                {
+                    currentState = idle;
+                    combatStance = cloneCombatStanceState;
+
+                    aICharacterNetworkManager.currentHealth.Value = 1;
+                    aICharacterNetworkManager.maxHealth.Value = 1;
+
+                    aICharacterNetworkManager.CheckHP(1, 1);
+                }
             }
 
-            if (IsServer)
+            if (!bossIsClone.Value)
             {
-                //if our save data does not contain information on this boss, add it now.
-                if (!WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.ContainsKey(bossID))
+                if (IsServer)
                 {
-                    WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, false);
-                    WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, false); //cant defeat a boss that isnt awakened.
-                }
-                else //load the data
-                {
-                    hasBeenDefeated.Value = WorldSaveGameManager.instance.currentCharacterData.bossesDefeated[bossID];
-                    hasBeenAwakened.Value = WorldSaveGameManager.instance.currentCharacterData.bossesAwakened[bossID];
+                    //if our save data does not contain information on this boss, add it now.
+                    if (!WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.ContainsKey(bossID))
+                    {
+                        WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, false);
+                        WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, false); //cant defeat a boss that isnt awakened.
+                    }
+                    else //load the data
+                    {
+                        hasBeenDefeated.Value = WorldSaveGameManager.instance.currentCharacterData.bossesDefeated[bossID];
+                        hasBeenAwakened.Value = WorldSaveGameManager.instance.currentCharacterData.bossesAwakened[bossID];
+                    }
+
+                    //the fogwalls are active in the build, shouldnt happen.
+                    //Besides, this only happens when joining into the game scene. So it should ALWAYS be false when joining the game scene.
+                    hasBeenAwakened.Value = false;
+                    hasBeenDefeated.Value = false;
+
+                    StartCoroutine(GetFogWallsFromWorldObjectManager());
+
+                    if (!hasBeenAwakened.Value)
+                    {
+                        characterAnimatorManager.PlayTargetActionAnimation(sleepAnimation, true);
+                    }
                 }
 
-                //the fogwalls are active in the build, shouldnt happen.
-                //Besides, this only happens when joining into the game scene. So it should ALWAYS be false when joining the game scene.
-                hasBeenAwakened.Value = false;
-                hasBeenDefeated.Value = false;
-
-                StartCoroutine(GetFogWallsFromWorldObjectManager());
-
-                if (!hasBeenAwakened.Value)
-                {
-                    characterAnimatorManager.PlayTargetActionAnimation(sleepAnimation, true);
-                }
+                animator.SetBool("IsAwakened", hasBeenAwakened.Value);
             }
-
-            animator.SetBool("IsAwakened", hasBeenAwakened.Value);
+            else
+            {
+                animator.SetBool("IsAwakened", true);
+            }
         }
 
         public override void OnNetworkDespawn()
@@ -133,50 +158,57 @@ namespace Erikduss
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
-            if (currentBossPhase.Value >= amountOfPhases.Value)
+            if (currentBossPhase.Value >= amountOfPhases.Value || bossIsClone.Value)
             {
-                Debug.Log("Boss Death");
-                PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("IXELECE DEFEATED");
+                if(!bossIsClone.Value)
+                    PlayerUIManager.instance.playerUIPopUpManager.SendBossDefeatedPopUp("IXELECE DEFEATED");
+
                 if (IsOwner)
                 {
                     characterNetworkManager.currentHealth.Value = 0;
                     characterNetworkManager.isDead.Value = true;
 
-                    bossFightIsActive.Value = false;
-
-                    foreach (var fogWall in fogWalls)
+                    if (!bossIsClone.Value)
                     {
-                        fogWall.isActive.Value = false;
+                        bossFightIsActive.Value = false;
+
+                        foreach (var fogWall in fogWalls)
+                        {
+                            fogWall.isActive.Value = false;
+                        }
+
+                        hasBeenDefeated.Value = true;
+
+                        if (!WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.ContainsKey(bossID))
+                        {
+                            WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
+                            WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
+                        }
+                        else
+                        {
+                            //we re-add it to the dictionary with the true value.
+                            WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Remove(bossID);
+                            WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Remove(bossID);
+                            WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
+                            WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
+                        }
+
+                        //autosave the progress
+                        WorldSaveGameManager.instance.SaveGame();
                     }
+                    
 
                     if (!manuallySelectDeathAnimation)
                     {
                         characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
                     }
-
-                    hasBeenDefeated.Value = true;
-
-                    if (!WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.ContainsKey(bossID))
-                    {
-                        WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
-                        WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
-                    }
-                    else
-                    {
-                        //we re-add it to the dictionary with the true value.
-                        WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Remove(bossID);
-                        WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Remove(bossID);
-                        WorldSaveGameManager.instance.currentCharacterData.bossesAwakened.Add(bossID, true);
-                        WorldSaveGameManager.instance.currentCharacterData.bossesDefeated.Add(bossID, true);
-                    }
-
-                    //autosave the progress
-                    WorldSaveGameManager.instance.SaveGame();
                 }
 
-                Debug.Log("Spawn Ragdoll");
-                WorldBossEncounterManager.Instance.SpawnRagdollOfBoss(ragdollObject, transform.position, transform.rotation, 1.5f);
-                WorldBossEncounterManager.Instance.BossDefeated();
+                if (!bossIsClone.Value)
+                {
+                    WorldBossEncounterManager.Instance.SpawnRagdollOfBoss(ragdollObject, transform.position, transform.rotation, 1.5f);
+                    WorldBossEncounterManager.Instance.BossDefeated();
+                }
 
                 yield return new WaitForSeconds(1.5f);
 
@@ -195,8 +227,6 @@ namespace Erikduss
         {
             if (IsOwner)
             {
-                Debug.Log("Boss is being woken up");
-
                 if (!hasBeenAwakened.Value)
                 {
                     characterAnimatorManager.PlayTargetActionAnimation(awakenAnimation, true);
@@ -257,9 +287,9 @@ namespace Erikduss
 
         public void PhaseShift()
         {
-            Debug.Log("Phase shift!");
-
             currentState = idle;
+
+            if (bossIsClone.Value) return;
 
             //switch to second phase
             if(currentBossPhase.Value == 1)
@@ -344,6 +374,31 @@ namespace Erikduss
                     currentlyUsePoise = false;
                     characterAnimatorManager.PlayTargetActionAnimation("NatureFury_PoiseCancel", true);
                 }
+            }
+        }
+
+        private void OnBossIsCloneValueChanged(bool oldStatus, bool newStatus)
+        {
+            if (newStatus)
+            {
+                if (IsOwner)
+                {
+                    currentState = idle;
+                    combatStance = cloneCombatStanceState;
+
+                    aICharacterNetworkManager.currentHealth.Value = 1;
+                    aICharacterNetworkManager.maxHealth.Value = 1;
+
+                    aICharacterNetworkManager.CheckHP(1, 1);
+                }
+
+                if (IsServer)
+                {
+                    hasBeenAwakened.Value = true;
+                    hasBeenDefeated.Value = true;
+                }
+
+                animator.SetBool("IsAwakened", true);
             }
         }
     }
