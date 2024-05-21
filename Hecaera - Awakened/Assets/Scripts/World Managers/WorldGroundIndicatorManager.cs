@@ -78,7 +78,12 @@ namespace Erikduss
             NotifyTheServerOfSpawnActionClientRpc(clientID, indicatorObjectTypeID, spawnRotation);
         }
 
-        public IEnumerator SpawnGetOutRocks(float spawnDelay, Vector3 spawnLocation)
+        public void SpawnGetOutRocks(float spawnDelay, Vector3 spawnLocation)
+        {
+            StartCoroutine(StartGetOutRocks(spawnDelay, spawnLocation));
+        }
+
+        public IEnumerator StartGetOutRocks(float spawnDelay, Vector3 spawnLocation)
         {
             spawnLocation.y = 0;
             GameObject spawnedPrefab = Instantiate(getOutRocksPrefab, spawnLocation, Quaternion.identity);
@@ -114,7 +119,12 @@ namespace Erikduss
             Destroy(spawnedPrefab);
         }
 
-        public IEnumerator SpawnVines(float spawnDelay, Vector3 spawnLocation)
+        public void SpawnVines(float spawnDelay, Vector3 spawnLocation)
+        {
+            StartCoroutine(StartSpawnVines(spawnDelay, spawnLocation));
+        }
+
+        public IEnumerator StartSpawnVines(float spawnDelay, Vector3 spawnLocation)
         {
             spawnLocation.y = -13f;
             GameObject spawnedPrefab = Instantiate(vinesPrefab, spawnLocation, Quaternion.identity);
@@ -150,7 +160,12 @@ namespace Erikduss
             Destroy(spawnedPrefab);
         }
 
-        public IEnumerator SpawnLightEmbraceVisual(float spawnDelay, Vector3 spawnLocation, quaternion spawnRotation)
+        public void SpawnLightEmbraceVisual(float spawnDelay, Vector3 spawnLocation, quaternion spawnRotation)
+        {
+            StartCoroutine(StartSpawnLightEmbraceVisual(spawnDelay, spawnLocation, spawnRotation));
+        }
+
+        public IEnumerator StartSpawnLightEmbraceVisual(float spawnDelay, Vector3 spawnLocation, quaternion spawnRotation)
         {
             yield return new WaitForSeconds(spawnDelay);
             GameObject spawnedPrefab = Instantiate(lightEmbracePrefab, spawnLocation, spawnRotation);

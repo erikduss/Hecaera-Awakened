@@ -205,7 +205,7 @@ namespace Erikduss
             float indicatorSize = 14f;
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 1.5f, .6f);
-            StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnGetOutRocks(1.5f, indicatorLocation));
+            WorldGroundIndicatorManager.Instance.SpawnGetOutRocks(1.5f, indicatorLocation);
 
             soundManager.PlayIxeleceAttackVoice();
         }
@@ -236,7 +236,7 @@ namespace Erikduss
             float indicatorSize = 24f;
 
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, indicatorSize, null, true, true, 2.5f, .6f);
-            StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnVines(2.5f, indicatorLocation));
+            WorldGroundIndicatorManager.Instance.SpawnVines(2.5f, indicatorLocation);
 
             soundManager.PlayIxeleceAttackVoice();
         }
@@ -284,7 +284,7 @@ namespace Erikduss
             if(IsOwner)
                 WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
             
-            StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation));
+            WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation);
         }
 
         public void ExecuteLightEmbraceCombo()
@@ -311,7 +311,7 @@ namespace Erikduss
             if (IsOwner)
                 WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ConeDamageIndicator, 0, spawnLocation, spawnRotation, indicatorSize, null, true, true, 1.5f, .6f);
 
-            StartCoroutine(WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation));
+            WorldGroundIndicatorManager.Instance.SpawnLightEmbraceVisual(1.5f, transform.position, spawnRotation);
         }
 
         #endregion
