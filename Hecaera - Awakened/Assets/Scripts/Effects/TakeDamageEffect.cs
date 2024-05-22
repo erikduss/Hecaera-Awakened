@@ -37,7 +37,7 @@ namespace Erikduss
         public float angleHitFrom;
         public Vector3 contactPoint; //Used to determine where the blood fx will appear.
 
-        public override void ProcessEffect(CharacterManager character)
+        public override void ProcessEffect(CharacterManager character, bool forceDamageFromServer = false)
         {
             base.ProcessEffect(character);
 
@@ -45,7 +45,7 @@ namespace Erikduss
             if (character.characterNetworkManager.isDead.Value)
                 return;
 
-            CalculateDamage(character);
+            CalculateDamage(character, forceDamageFromServer);
 
             if(playDamageAnimation)
                 PlayDirectionalBasedDamageAnimation(character);
@@ -56,10 +56,15 @@ namespace Erikduss
             PlayDamageVFX(character);
         }
 
-        private void CalculateDamage(CharacterManager character)
+        private void CalculateDamage(CharacterManager character, bool forceDamageFromServer = false)
         {
-            if (!character.IsOwner)
-                return;
+            if (!WorldGameSessionManager.Instance.AmITheHost())
+            {
+                if (!character.IsOwner)
+                    return;
+            }
+
+            if (!forceDamageFromServer && !character.IsOwner) return;
 
             if (characterCausingDamage != null)
             {
@@ -73,7 +78,30 @@ namespace Erikduss
                 finalDamageDealt = 1;
             }
 
-            character.characterNetworkManager.currentHealth.Value -= finalDamageDealt;
+            if(WorldGameSessionManager.Instance.AmITheHost() && forceDamageFromServer && !character.IsOwner) 
+            {
+                Debug.Log("Dealing: " + this.physicalDamage + " Damage");
+
+                //damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+
+                if (characterCausingDamage.IsOwner)
+                {
+                    character.characterNetworkManager.NotifyTheServerOfCharacterDamageServerRpc(
+                        character.NetworkObjectId,
+                        characterCausingDamage.NetworkObjectId,
+                        this.physicalDamage,
+                        this.magicDamage,
+                        this.fireDamage,
+                        this.holyDamage,
+                        this.poiseDamage,
+                        this.angleHitFrom,
+                        this.contactPoint.x,
+                        this.contactPoint.y,
+                        this.contactPoint.z);
+                }
+            }
+            else
+                character.characterNetworkManager.currentHealth.Value -= finalDamageDealt;
         }
 
         private void PlayDamageVFX(CharacterManager character)

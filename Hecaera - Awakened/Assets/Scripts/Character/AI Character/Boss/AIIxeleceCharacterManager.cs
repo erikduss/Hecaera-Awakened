@@ -42,8 +42,6 @@ namespace Erikduss
 
         public LayerMask uthanorWrathBlockLayer;
 
-        bool spawnedClones = false;
-
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
@@ -61,8 +59,17 @@ namespace Erikduss
                 {
                     aICharacterNetworkManager.maxStamina.Value = 500;
                     aICharacterNetworkManager.currentStamina.Value = 500;
+
                     aICharacterNetworkManager.maxHealth.Value = 1000;
-                    aICharacterNetworkManager.currentHealth.Value = 1000;
+
+                    if (!WorldGameSessionManager.Instance.skipPhase1)
+                    {
+                        aICharacterNetworkManager.currentHealth.Value = 1000;
+                    }
+                    else
+                    {
+                        aICharacterNetworkManager.currentHealth.Value = 1;
+                    }
                 }
             }
 
@@ -438,6 +445,8 @@ namespace Erikduss
                     continue;
                 }
 
+                Debug.Log("Hit Player!" + player.NetworkBehaviourId);
+
                 //can it be dodged?
                 //if (damageTarget != null && !damageTarget.characterNetworkManager.isInvincible.Value)
                 //{
@@ -451,6 +460,7 @@ namespace Erikduss
                 Vector3 contactPoint = player.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
                 TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.Instance.takeDamageEffect);
+                damageEffect.characterCausingDamage = this;
                 damageEffect.physicalDamage = damage * multiplier;
                 damageEffect.magicDamage = 0 * multiplier;
                 damageEffect.fireDamage = 0 * multiplier;
@@ -460,7 +470,7 @@ namespace Erikduss
                 damageEffect.playDamageAnimation = true;
                 damageEffect.willPlayDamageSFX = true;
 
-                player.characterEffectsManager.ProcessInstantEffect(damageEffect);
+                player.characterEffectsManager.ProcessInstantEffect(damageEffect, true);
             }
         }
 
@@ -471,9 +481,6 @@ namespace Erikduss
         public void InitializeMoreTrouble()
         {
             if (!IsOwner) return;
-
-            //prevent spawning a lot of clones for now for testing
-            if (spawnedClones) return;
 
             //how many clones to spawn?
             int amountOfClonesToSpawn = 3;
@@ -491,7 +498,6 @@ namespace Erikduss
 
         public IEnumerator spawnClones(float spawnDelay, int amountOfClonesToSpawn, Transform parentOfClones)
         {
-            spawnedClones = true;
             for (int i = 0; i < amountOfClonesToSpawn; i++)
             {
                 Vector3 spawnPosition;

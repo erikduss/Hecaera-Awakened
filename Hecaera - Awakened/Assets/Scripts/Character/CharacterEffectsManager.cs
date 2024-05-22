@@ -16,9 +16,9 @@ namespace Erikduss
             character = GetComponent<CharacterManager>();
         }
 
-        public virtual void ProcessInstantEffect(InstantCharacterEffect effect)
+        public virtual void ProcessInstantEffect(InstantCharacterEffect effect, bool forceEffectFromServer = false)
         {
-            effect.ProcessEffect(character);
+            effect.ProcessEffect(character, forceEffectFromServer);
         }
 
         public void PlayBloodSplatterVFX(Vector3 contactPoint)

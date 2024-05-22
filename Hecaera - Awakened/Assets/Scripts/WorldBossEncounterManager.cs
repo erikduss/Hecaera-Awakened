@@ -233,7 +233,6 @@ namespace Erikduss
         public void BossDefeated()
         {
             if (!WorldGameSessionManager.Instance.AmITheHost()) return;
-            Debug.Log("Got into boss defeated void");
             StartCoroutine(BossDefeatedEndGame());
         }
 

@@ -9,7 +9,7 @@ namespace Erikduss
         [Header("EffectI ID")]
         public int instantEffectID;
 
-        public virtual void ProcessEffect(CharacterManager character)
+        public virtual void ProcessEffect(CharacterManager character, bool forceDamageFromServer = false)
         {
 
         }

@@ -8,7 +8,7 @@ namespace Erikduss
     public class TakeStaminaDamageEffect : InstantCharacterEffect
     {
         public float staminaDamage;
-        public override void ProcessEffect(CharacterManager character)
+        public override void ProcessEffect(CharacterManager character, bool forceDamageFromServer = false)
         {
             CalculateStaminaDamage(character);
         }

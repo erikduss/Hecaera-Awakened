@@ -12,6 +12,9 @@ namespace Erikduss
         private float maxLifeTime = 2.75f;
         private float currentLifeTime = 0;
 
+        private float maxLifeTotalTime = 5f;
+        private float currentTotalLifeTime = 0;
+
         [SerializeField] private GameObject sunbeamChildGameobject;
 
         private void Update()
@@ -24,6 +27,13 @@ namespace Erikduss
                 {
                     DeativateSunbeam();
                 }
+            }
+
+            currentTotalLifeTime += Time.deltaTime;
+
+            if (currentTotalLifeTime > maxLifeTotalTime)
+            {
+                DeativateSunbeam();
             }
 
             transform.position = new Vector3(objectToFollow.transform.position.x, objectToFollow.transform.position.y - 1f, objectToFollow.transform.position.z);

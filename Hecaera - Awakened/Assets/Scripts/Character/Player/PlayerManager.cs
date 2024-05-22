@@ -227,8 +227,6 @@ namespace Erikduss
             {
                 //only the server can execute this. But still needed everywhere to keep track of respawn charges.
                 WorldBossEncounterManager.Instance.RespawnPlayerAtEnouncterSpawnPoint(this, 0);
-
-                ReviveCharacter();
             }
             else 
             {

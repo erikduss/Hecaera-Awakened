@@ -23,6 +23,12 @@ namespace Erikduss
 
         public static Allocation AllocationInstance;
 
+        [Header("Testing Options")]
+        public bool skipPhase1 = false;
+        public bool skipPhase2 = false;
+        public bool skipPhase3 = false;
+        public bool skipPhase4 = false;
+
         private void Awake()
         {
             if (Instance == null)

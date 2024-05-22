@@ -52,6 +52,12 @@ namespace Erikduss
         [Header("Character Slots")]
         public CharacterSlot currentSeletedSlot = CharacterSlot.NO_SLOT;
 
+        [Header("PhaseSkipToggles")]
+        [SerializeField] Toggle phase1SkipToggle;
+        [SerializeField] Toggle phase2SkipToggle;
+        [SerializeField] Toggle phase3SkipToggle;
+        [SerializeField] Toggle phase4SkipToggle;
+
         public bool continuedPastSplashScreen = false;
         [SerializeField] private SettingsMenuManager settingsMenuManager;
 
@@ -98,6 +104,11 @@ namespace Erikduss
 
         public void StartNewGame()
         {
+            WorldGameSessionManager.Instance.skipPhase1 = phase1SkipToggle.isOn;
+            WorldGameSessionManager.Instance.skipPhase2 = phase2SkipToggle.isOn;
+            WorldGameSessionManager.Instance.skipPhase3 = phase3SkipToggle.isOn;
+            WorldGameSessionManager.Instance.skipPhase4 = phase4SkipToggle.isOn;
+
             ConnectionManager.Instance.StartLoadingIntoGameAsHost();
         }
 

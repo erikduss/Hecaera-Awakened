@@ -17,6 +17,8 @@ namespace Erikduss
         {
             base.Update();
 
+            if (!IsServer) return;
+
             transform.position = Vector3.Lerp(transform.position, targetLocation, (elapsedTime / 2f));
             elapsedTime += Time.deltaTime;
         }

@@ -265,7 +265,11 @@ namespace Erikduss
                     //TODO always scale this to at least 2 players, boss cannot be soloed.
                     //Set the boss's health value based on the amount of players
                     aICharacterNetworkManager.maxHealth.Value = aICharacterNetworkManager.maxHealth.Value * WorldGameSessionManager.Instance.players.Count;
-                    aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value;
+
+                    if(!WorldGameSessionManager.Instance.skipPhase1)
+                        aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value;
+                    else
+                        aICharacterNetworkManager.currentHealth.Value = 1;
 
                     currentBossPhase.Value = 1; //set to active phase
                 }
@@ -298,7 +302,11 @@ namespace Erikduss
                 combatStance = Instantiate(phase02CombatStanceState);
                 //currentState = combatStance;
 
-                aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                if(!WorldGameSessionManager.Instance.skipPhase2)
+                    aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                else
+                    aICharacterNetworkManager.currentHealth.Value = 1;
+
                 aICharacterNetworkManager.isDead.Value = false;
                 isPerformingAction = false;
                 aICharacterCombatManager.actionRecoveryTimer = 0;
@@ -318,7 +326,11 @@ namespace Erikduss
                 combatStance = Instantiate(phase03CombatStanceState);
                 //currentState = combatStance;
 
-                aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                if (!WorldGameSessionManager.Instance.skipPhase3)
+                    aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                else
+                    aICharacterNetworkManager.currentHealth.Value = 1;
+
                 aICharacterNetworkManager.isDead.Value = false;
                 isPerformingAction = false;
                 aICharacterCombatManager.actionRecoveryTimer = 0;
@@ -338,7 +350,11 @@ namespace Erikduss
                 combatStance = Instantiate(phase04CombatStanceState);
                 //currentState = combatStance;
 
-                aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                if (!WorldGameSessionManager.Instance.skipPhase4)
+                    aICharacterNetworkManager.currentHealth.Value = aICharacterNetworkManager.maxHealth.Value; //retore health
+                else
+                    aICharacterNetworkManager.currentHealth.Value = 1;
+
                 aICharacterNetworkManager.isDead.Value = false;
                 isPerformingAction = false;
                 aICharacterCombatManager.actionRecoveryTimer = 0;

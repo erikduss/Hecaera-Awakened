@@ -127,9 +127,13 @@ namespace Erikduss
                 if (!preventTeleport)
                 {
                     if (!overrideTeleportLocation)
+                    {
                         transform.position = WorldBossEncounterManager.Instance.bossEncounter.Where(a => a.encounterBossID == encounterID).FirstOrDefault().playerSpawnLocations[teleportLocationID].position;
+                    }
                     else
                         transform.position = Vector3.zero;
+
+                    player.ReviveCharacter();
                 }
                 if (setMaxTeleportValue) WorldBossEncounterManager.Instance.SetMaxSpawnAmount();
             }
