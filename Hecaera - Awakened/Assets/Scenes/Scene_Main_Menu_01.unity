@@ -15972,6 +15972,7 @@ MonoBehaviour:
   dodge_Input: 0
   sprint_Input: 0
   jump_Input: 0
+  useItem_Input: 0
   RB_Input: 0
   LB_Input: 0
   RT_Input: 0
@@ -48822,6 +48823,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4817885074269299228, guid: 171f3e4ffce98104887f1b7157d57505, type: 3}
+      propertyPath: weapons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817885074269299228, guid: 171f3e4ffce98104887f1b7157d57505, type: 3}
+      propertyPath: 'weapons.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3f830249c0ecfd34db892ae3b7af3bd9, type: 2}
     - target: {fileID: 4817885074269299229, guid: 171f3e4ffce98104887f1b7157d57505, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

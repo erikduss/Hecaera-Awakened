@@ -142,6 +142,8 @@ namespace Erikduss
                 //Possibly fixes issue of client starting without stats.
                 WorldSaveGameManager.instance.LoadGame();
             }
+
+            playerInventoryManager.currentAmountOfHealingItems = playerInventoryManager.amountOfHealingItems;
         }
 
         public override void OnNetworkDespawn()

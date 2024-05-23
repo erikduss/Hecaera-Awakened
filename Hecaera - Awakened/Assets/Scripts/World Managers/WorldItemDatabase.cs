@@ -14,6 +14,9 @@ namespace Erikduss
         [Header("Weapon")]
         [SerializeField] List<WeaponItem> weapons = new List<WeaponItem>();
 
+        [Header("Quick Use Items")]
+        [SerializeField] List<HealingQuickUseItem> healingQuickUseItems = new List<HealingQuickUseItem>();
+
         //List of every item in the game with unique IDs
         private List<Item> items = new List<Item>();
 
@@ -46,6 +49,11 @@ namespace Erikduss
         public WeaponItem GetWeaponByID(int ID)
         {
             return weapons.FirstOrDefault(weapon => weapon.itemID == ID);
+        }
+
+        public HealingQuickUseItem GetHealingQuickUseItemByID(int ID)
+        {
+            return healingQuickUseItems.FirstOrDefault(quickItem => quickItem.itemID == ID);
         }
     }
 }

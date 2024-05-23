@@ -362,6 +362,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use Item"",
+                    ""type"": ""Button"",
+                    ""id"": ""b174bc6d-5e49-4660-be34-3316518781c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -670,6 +679,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Que LB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a225625-3b4a-4c8b-a782-e09f75a9b141"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Use Item"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b63d755-bb38-48aa-bf27-3372b8b8f5a7"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Use Item"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -982,6 +1013,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_SeekLeftLockOnTarget = m_PlayerActions.FindAction("Seek Left Lock On Target", throwIfNotFound: true);
         m_PlayerActions_SeekRightLockOnTarget = m_PlayerActions.FindAction("Seek Right Lock On Target", throwIfNotFound: true);
         m_PlayerActions_OpenButtonsMenu = m_PlayerActions.FindAction("OpenButtonsMenu", throwIfNotFound: true);
+        m_PlayerActions_UseItem = m_PlayerActions.FindAction("Use Item", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_XInteract = m_UI.FindAction("XInteract", throwIfNotFound: true);
@@ -1157,6 +1189,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_SeekLeftLockOnTarget;
     private readonly InputAction m_PlayerActions_SeekRightLockOnTarget;
     private readonly InputAction m_PlayerActions_OpenButtonsMenu;
+    private readonly InputAction m_PlayerActions_UseItem;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -1175,6 +1208,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SeekLeftLockOnTarget => m_Wrapper.m_PlayerActions_SeekLeftLockOnTarget;
         public InputAction @SeekRightLockOnTarget => m_Wrapper.m_PlayerActions_SeekRightLockOnTarget;
         public InputAction @OpenButtonsMenu => m_Wrapper.m_PlayerActions_OpenButtonsMenu;
+        public InputAction @UseItem => m_Wrapper.m_PlayerActions_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1226,6 +1260,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenButtonsMenu.started += instance.OnOpenButtonsMenu;
             @OpenButtonsMenu.performed += instance.OnOpenButtonsMenu;
             @OpenButtonsMenu.canceled += instance.OnOpenButtonsMenu;
+            @UseItem.started += instance.OnUseItem;
+            @UseItem.performed += instance.OnUseItem;
+            @UseItem.canceled += instance.OnUseItem;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -1272,6 +1309,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenButtonsMenu.started -= instance.OnOpenButtonsMenu;
             @OpenButtonsMenu.performed -= instance.OnOpenButtonsMenu;
             @OpenButtonsMenu.canceled -= instance.OnOpenButtonsMenu;
+            @UseItem.started -= instance.OnUseItem;
+            @UseItem.performed -= instance.OnUseItem;
+            @UseItem.canceled -= instance.OnUseItem;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -1399,6 +1439,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSeekLeftLockOnTarget(InputAction.CallbackContext context);
         void OnSeekRightLockOnTarget(InputAction.CallbackContext context);
         void OnOpenButtonsMenu(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

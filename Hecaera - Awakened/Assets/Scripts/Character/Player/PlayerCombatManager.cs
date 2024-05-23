@@ -36,6 +36,39 @@ namespace Erikduss
             }
         }
 
+        public void PerformUseItemAction(HealingQuickUseItem healingItemToUse)
+        {
+            if (player.IsOwner)
+            {
+                if (player.playerInventoryManager.currentAmountOfHealingItems <= 0) return;
+
+                if (healingItemToUse.useAnimationForActivation)
+                {
+                    player.playerAnimatorManager.PlayTargetActionAnimation(healingItemToUse.onUseAnimation, true, false, true, true);
+                }
+
+                player.playerInventoryManager.currentAmountOfHealingItems--;
+
+                StartCoroutine(HealingDelay(1f));
+
+                //weaponAction.AttemptToPerformAction(player, weaponPerformingAction);
+
+                //if (weaponAction.pooledObjectType != PooledObjectType.NONE)
+                //{
+                //    WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkManager.Singleton.LocalClientId, (int)weaponAction.pooledObjectType, weaponAction.objectSpawnDelay);
+                //}
+
+                //player.playerNetworkManager.NotifyTheServerOfWeaponActionServerRpc(NetworkManager.Singleton.LocalClientId, weaponAction.actionID, weaponPerformingAction.itemID);
+            }
+        }
+
+        private IEnumerator HealingDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            player.playerNetworkManager.CheckHP(player.playerNetworkManager.currentHealth.Value, player.playerNetworkManager.maxHealth.Value);
+            player.playerNetworkManager.currentHealth.Value = player.playerNetworkManager.maxHealth.Value;
+        }
+
         public virtual void DrainStaminaBasedOnAttack()
         {
             if (!player.IsOwner)

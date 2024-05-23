@@ -528,5 +528,40 @@ namespace Erikduss
         }
 
         #endregion
+
+        #region Avoid This Attack
+
+        public void ExecuteAvoidThisAttack()
+        {
+            if (!IsOwner) return;
+
+            int randomSpawn = Random.Range(0,4);
+
+            Vector3 spawnOffSet = Vector3.zero;
+
+            if(randomSpawn == 0)
+            {
+                spawnOffSet = new Vector3(15,0,0);
+            }
+            if (randomSpawn == 1)
+            {
+                spawnOffSet = new Vector3(-15, 0, 0);
+            }
+            if (randomSpawn == 2)
+            {
+                spawnOffSet = new Vector3(0, 0, 15);
+            }
+            if (randomSpawn == 3)
+            {
+                spawnOffSet = new Vector3(0, 0, -15);
+            }
+
+            //apply offsets if needed.
+            Vector3 spawnLocation = transform.position + spawnOffSet;
+
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.AvoidThisProjectile, 0, spawnLocation, Quaternion.identity, true);
+        }
+
+        #endregion
     }
 }

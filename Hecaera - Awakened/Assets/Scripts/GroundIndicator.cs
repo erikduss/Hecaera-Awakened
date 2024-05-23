@@ -28,6 +28,8 @@ namespace Erikduss
         protected Projectile currentlyAttachedProjectile;
         public PooledObjectType indicatorReturnType = PooledObjectType.DamageIndicator;
 
+        public float maxActiveTime = 5f;
+
         protected virtual void Start()
         {
             netObj = GetComponent<NetworkObject>();
@@ -184,7 +186,7 @@ namespace Erikduss
                 projector.fadeFactor = endAlpha;
             }
 
-            yield return new WaitForSeconds(5f); //max time for an indicator to stay around
+            yield return new WaitForSeconds(maxActiveTime); //max time for an indicator to stay around
             ReturnThisProjectileToPool();
         }
 

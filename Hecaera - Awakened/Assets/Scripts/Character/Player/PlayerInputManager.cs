@@ -32,6 +32,7 @@ namespace Erikduss
         public bool dodge_Input = false;
         [SerializeField] bool sprint_Input = false;
         [SerializeField] bool jump_Input = false;
+        public bool useItem_Input = false;
 
         [Header("Bumper Inputs")]
         [SerializeField] bool RB_Input = false;
@@ -121,6 +122,7 @@ namespace Erikduss
                 playerControls.PlayerCamera.Movement.performed += i => camera_Input = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodge_Input = true;
                 playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
+                playerControls.PlayerActions.UseItem.performed += i => useItem_Input = true;
 
                 //Bumpers (top (main) bumper of controller)
                 playerControls.PlayerActions.RB.performed += i => RB_Input = true;
@@ -196,6 +198,7 @@ namespace Erikduss
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
+            HandleUseItemInput();
             HandleSprintingInput();
             HandleJumpInput();
             HandleRBInput();
@@ -208,6 +211,7 @@ namespace Erikduss
         private void ResetInputBoolsWhileMenuIsOpen()
         {
             dodge_Input = false;
+            useItem_Input = false;
             jump_Input = false;
 
             RB_Input = false;
@@ -373,6 +377,16 @@ namespace Erikduss
                 dodge_Input = false;
 
                 player.playerLocomotionManager.AttemptToPerformDodge();
+            }
+        }
+
+        private void HandleUseItemInput()
+        {
+            if (useItem_Input)
+            {
+                useItem_Input = false;
+
+                player.playerCombatManager.PerformUseItemAction(player.playerInventoryManager.currentQuickUseHealingItem);
             }
         }
 

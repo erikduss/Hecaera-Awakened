@@ -340,6 +340,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Use Item",
+                    "type": "Button",
+                    "id": "b174bc6d-5e49-4660-be34-3316518781c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -648,6 +657,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Que LB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a225625-3b4a-4c8b-a782-e09f75a9b141",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b63d755-bb38-48aa-bf27-3372b8b8f5a7",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use Item",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

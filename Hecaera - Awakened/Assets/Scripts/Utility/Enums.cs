@@ -76,7 +76,8 @@ namespace Erikduss
         EmbraceCombo,
         SproutingVines,
         UthanorsWrath,
-        MoreTrouble
+        MoreTrouble,
+        AvoidThis
     }
 
     public enum PooledObjectType
@@ -94,7 +95,9 @@ namespace Erikduss
         GetOutRocks,
         LightEmbraceEffect,
         NatureFuryVisual,
-        UthanorsWrathVisual
+        UthanorsWrathVisual,
+        AvoidThisProjectile,
+        RectangleDamageIndicator
     }
 
     public enum AttackIndicatorType
