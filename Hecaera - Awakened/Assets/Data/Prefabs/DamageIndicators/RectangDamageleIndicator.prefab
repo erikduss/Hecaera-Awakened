@@ -48,7 +48,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageCollider: {fileID: 6039777771484321248}
-  physicalDamage: 100
+  physicalDamage: 40
   magicDamage: 0
   fireDamage: 0
   lightningDamage: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2266625153
+  GlobalObjectIdHash: 1775588170
   InScenePlacedSourceGlobalObjectIdHash: 429798379
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -182,3 +182,4 @@ MonoBehaviour:
   indicatorRenderers: []
   damageCollider: {fileID: 7282530948794274436}
   indicatorReturnType: 15
+  maxActiveTime: 5

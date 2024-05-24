@@ -144,6 +144,13 @@ namespace Erikduss
             }
 
             playerInventoryManager.currentAmountOfHealingItems = playerInventoryManager.amountOfHealingItems;
+
+            PlayerUIManager.instance.playerUIHudManager.amountOfAvailabeHealingItemsText.text = playerInventoryManager.currentAmountOfHealingItems + "x";
+            PlayerUIManager.instance.playerUIHudManager.amountOfAvailabeHealingItemsBackgroundText.text = playerInventoryManager.currentAmountOfHealingItems + "x";
+
+            PlayerUIManager.instance.playerUIHudManager.healingItemImage.sprite = playerInventoryManager.currentQuickUseHealingItem.itemIcon;
+
+            //if (playerInventoryManager.currentAmountOfHealingItems <= 0) PlayerUIManager.instance.playerUIHudManager.healingItemImage.color = Color.red;
         }
 
         public override void OnNetworkDespawn()
@@ -253,6 +260,13 @@ namespace Erikduss
                 playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
                 playerNetworkManager.isDead.Value = false;
                 playerNetworkManager.isLockedOn.Value = false;
+
+                playerInventoryManager.currentAmountOfHealingItems = playerInventoryManager.amountOfHealingItems;
+
+                PlayerUIManager.instance.playerUIHudManager.amountOfAvailabeHealingItemsText.text = playerInventoryManager.currentAmountOfHealingItems + "x";
+                PlayerUIManager.instance.playerUIHudManager.amountOfAvailabeHealingItemsBackgroundText.text = playerInventoryManager.currentAmountOfHealingItems + "x";
+
+                PlayerUIManager.instance.playerUIHudManager.healingItemImage.color = Color.white;
 
                 playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
             }

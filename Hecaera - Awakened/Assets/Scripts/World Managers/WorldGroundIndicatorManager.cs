@@ -34,7 +34,7 @@ namespace Erikduss
             DontDestroyOnLoad(gameObject);
         }
 
-        private void SpawnGroundIndicatorFromObjectPool(ulong clientID, int indicatorObjectTypeID, Vector3 spawnLoc, Quaternion spawnRot, float indicatorSize, bool isNPC, Projectile attachedProjectile, bool enableDamageCollider, float damageColliderEnableDelay, float colliderActiveTime, float maxActiveTime)
+        private void SpawnGroundIndicatorFromObjectPool(ulong clientID, int indicatorObjectTypeID, Vector3 spawnLoc, Quaternion spawnRot, float indicatorSize, bool isNPC, Projectile attachedProjectile, bool enableDamageCollider, float damageColliderEnableDelay, float colliderActiveTime, float maxActiveTime, bool rotateIndicator, int rotateDirection)
         {
             PooledObjectType type = (PooledObjectType)indicatorObjectTypeID;
 
@@ -61,6 +61,11 @@ namespace Erikduss
 
             GroundIndicator indicator = obj.GetComponent<GroundIndicator>();
 
+            if(type == PooledObjectType.RectangleDamageIndicator)
+            {
+                obj.GetComponent<RectangleGroundIndicator>().SetRotatingIndicator(rotateDirection);
+            }
+
             if(indicator != null)
             {
                 if(indicator.damageCollider == null) indicator.damageCollider = indicator.GetComponentInChildren<DamageCollider>();
@@ -73,13 +78,13 @@ namespace Erikduss
             }
         }
 
-        private IEnumerator SpawnIndicatorWithDelay(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, bool isNPC, Projectile attachedProjectile, bool enableDamageCollider, float damageColliderEnableDelay, float colliderActiveTime, float maxActiveTime)
+        private IEnumerator SpawnIndicatorWithDelay(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, bool isNPC, Projectile attachedProjectile, bool enableDamageCollider, float damageColliderEnableDelay, float colliderActiveTime, float maxActiveTime, bool rotateOvertime, int rotateDirection)
         {
             //This is used to make sure the indicator spawns exactly when we want it to.
             //Could change this into a synced animation event.
             yield return new WaitForSeconds(spawnDelay);
 
-            SpawnGroundIndicatorFromObjectPool(clientID, indicatorObjectTypeID, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime, maxActiveTime);
+            SpawnGroundIndicatorFromObjectPool(clientID, indicatorObjectTypeID, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime, maxActiveTime, rotateOvertime, rotateDirection);
             NotifyTheServerOfSpawnActionClientRpc(clientID, indicatorObjectTypeID, spawnRotation);
         }
 
@@ -179,12 +184,12 @@ namespace Erikduss
         }
 
         [ServerRpc]
-        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, Projectile attachedProjectile, bool isNPC = false, bool enableDamageCollider = false, float damageColliderEnableDelay = 0f, float colliderActiveTime = 3f, float maxActiveTime = 5f)
+        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, Projectile attachedProjectile, bool isNPC = false, bool enableDamageCollider = false, float damageColliderEnableDelay = 0f, float colliderActiveTime = 3f, float maxActiveTime = 5f, bool rotateIndicator = false, int rotationDirection = 0)
         {
             //can only be called by the server.
             if (NetworkManager.Singleton.IsServer)
             {
-                StartCoroutine(SpawnIndicatorWithDelay(clientID, indicatorObjectTypeID, spawnDelay, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime, maxActiveTime));
+                StartCoroutine(SpawnIndicatorWithDelay(clientID, indicatorObjectTypeID, spawnDelay, spawnLocation, spawnRotation, indicatorSize, isNPC, attachedProjectile, enableDamageCollider, damageColliderEnableDelay, colliderActiveTime, maxActiveTime, rotateIndicator, rotationDirection));
             }
         }
 

@@ -20,6 +20,11 @@ namespace Erikduss
         public Transform bossHealthBarParent;
         public GameObject bossHealthBarObject;
 
+        [Header("Healing QuickUse Item")]
+        public TextMeshProUGUI amountOfAvailabeHealingItemsText;
+        public TextMeshProUGUI amountOfAvailabeHealingItemsBackgroundText;
+        public Image healingItemImage;
+
         private void Start()
         {
             stamina_Low_Panel.SetActive(false);

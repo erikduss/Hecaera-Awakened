@@ -77,7 +77,8 @@ namespace Erikduss
         SproutingVines,
         UthanorsWrath,
         MoreTrouble,
-        AvoidThis
+        AvoidThis,
+        SheddingLight
     }
 
     public enum PooledObjectType

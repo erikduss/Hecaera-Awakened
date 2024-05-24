@@ -563,5 +563,25 @@ namespace Erikduss
         }
 
         #endregion
+
+        #region Shedding Light
+
+        public void ExecuteSheddingLight()
+        {
+            //decide of we rotate clockwise or counter clockwise
+
+            int rand = Random.Range(0,2);
+            //rotation direction = 0, left -> 1, right.
+
+            for(int i = 0; i < 4; i++)
+            {
+                Quaternion rotation = Quaternion.Euler(0, i * 90, 0); ;
+                //spawn in rectangle damage colliders which damage after spawning
+                WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.RectangleDamageIndicator, 0, transform.position, rotation, 20, null, true, true, 1f, 5f, 5f, true, rand);
+            }
+            //rotate them overtime.
+        }
+
+        #endregion
     }
 }

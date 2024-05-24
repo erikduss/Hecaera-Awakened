@@ -42,12 +42,18 @@ namespace Erikduss
             {
                 if (player.playerInventoryManager.currentAmountOfHealingItems <= 0) return;
 
+                if (player.characterNetworkManager.isDead.Value) return;
+
                 if (healingItemToUse.useAnimationForActivation)
                 {
                     player.playerAnimatorManager.PlayTargetActionAnimation(healingItemToUse.onUseAnimation, true, false, true, true);
                 }
 
                 player.playerInventoryManager.currentAmountOfHealingItems--;
+                PlayerUIManager.instance.playerUIHudManager.amountOfAvailabeHealingItemsText.text = player.playerInventoryManager.currentAmountOfHealingItems + "x";
+                PlayerUIManager.instance.playerUIHudManager.amountOfAvailabeHealingItemsBackgroundText.text = player.playerInventoryManager.currentAmountOfHealingItems + "x";
+
+                if (player.playerInventoryManager.currentAmountOfHealingItems <= 0) PlayerUIManager.instance.playerUIHudManager.healingItemImage.color = Color.red;
 
                 StartCoroutine(HealingDelay(1f));
 
@@ -65,8 +71,12 @@ namespace Erikduss
         private IEnumerator HealingDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
-            player.playerNetworkManager.CheckHP(player.playerNetworkManager.currentHealth.Value, player.playerNetworkManager.maxHealth.Value);
-            player.playerNetworkManager.currentHealth.Value = player.playerNetworkManager.maxHealth.Value;
+
+            if(!player.characterNetworkManager.isDead.Value)
+            {
+                player.playerNetworkManager.CheckHP(player.playerNetworkManager.currentHealth.Value, player.playerNetworkManager.maxHealth.Value);
+                player.playerNetworkManager.currentHealth.Value = player.playerNetworkManager.maxHealth.Value;
+            }
         }
 
         public virtual void DrainStaminaBasedOnAttack()
