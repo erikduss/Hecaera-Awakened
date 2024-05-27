@@ -22,6 +22,7 @@ namespace Erikduss
         [Header("Characters Damaged")]
         public bool canDamageSameCharacterMultipleTimes = false;
         public List<CharacterManager> charactersDamaged = new List<CharacterManager>();
+        public List<IDamageable> iDamageablesDamaged = new List<IDamageable>();
         public CharacterGroup groupOfAttack = CharacterGroup.NONE;
 
         private float damageDelayTimer = 0;
@@ -114,6 +115,7 @@ namespace Erikduss
         public virtual void DisableDamageCollider()
         {
             damageCollider.enabled = false;
+            iDamageablesDamaged.Clear();
             charactersDamaged.Clear();
         }
     }

@@ -63,7 +63,8 @@ namespace Erikduss
 
             if(type == PooledObjectType.RectangleDamageIndicator)
             {
-                obj.GetComponent<RectangleGroundIndicator>().SetRotatingIndicator(rotateDirection);
+                if(rotateDirection != -1)
+                    obj.GetComponent<RectangleGroundIndicator>().SetRotatingIndicator(rotateDirection);
             }
 
             if(indicator != null)
@@ -184,7 +185,7 @@ namespace Erikduss
         }
 
         [ServerRpc]
-        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, Projectile attachedProjectile, bool isNPC = false, bool enableDamageCollider = false, float damageColliderEnableDelay = 0f, float colliderActiveTime = 3f, float maxActiveTime = 5f, bool rotateIndicator = false, int rotationDirection = 0)
+        public void NotifyTheServerOfSpawnActionServerRpc(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation, float indicatorSize, Projectile attachedProjectile, bool isNPC = false, bool enableDamageCollider = false, float damageColliderEnableDelay = 0f, float colliderActiveTime = 3f, float maxActiveTime = 5f, bool rotateIndicator = false, int rotationDirection = -1)
         {
             //can only be called by the server.
             if (NetworkManager.Singleton.IsServer)

@@ -583,5 +583,41 @@ namespace Erikduss
         }
 
         #endregion
+
+        #region Assist Me Attack
+
+        public void ExecuteAssistMe()
+        {
+            if (!IsOwner) return;
+
+            for(int i= 0; i < 4; i++)
+            {
+                Vector3 spawnOffSet = Vector3.zero;
+
+                if (i == 0)
+                {
+                    spawnOffSet = new Vector3(15, 0, 0);
+                }
+                if (i == 1)
+                {
+                    spawnOffSet = new Vector3(-15, 0, 0);
+                }
+                if (i == 2)
+                {
+                    spawnOffSet = new Vector3(0, 0, 15);
+                }
+                if (i == 3)
+                {
+                    spawnOffSet = new Vector3(0, 0, -15);
+                }
+
+                //apply offsets if needed.
+                Vector3 spawnLocation = transform.position + spawnOffSet;
+
+                WorldSyncedObjectsManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.AssistMeOrb, 0, spawnLocation, Quaternion.identity);
+            }
+        }
+
+        #endregion
     }
 }

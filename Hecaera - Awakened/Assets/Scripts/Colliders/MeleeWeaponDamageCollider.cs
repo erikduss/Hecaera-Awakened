@@ -52,6 +52,66 @@ namespace Erikduss
 
                 DamageTarget(damageTarget);
             }
+
+            IDamageable damageable = other.GetComponent<IDamageable>();
+
+            if(damageable != null)
+            {
+                DamageObject(damageable);
+            }
+        }
+
+        protected virtual void DamageObject(IDamageable damageObject)
+        {
+            if (iDamageablesDamaged.Contains(damageObject))
+                return;
+
+            iDamageablesDamaged.Add(damageObject);
+
+            TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.Instance.takeDamageEffect);
+            damageEffect.physicalDamage = physicalDamage;
+            damageEffect.magicDamage = magicDamage;
+            damageEffect.fireDamage = fireDamage;
+            damageEffect.holyDamage = holyDamage;
+            damageEffect.contactPoint = contactPoint;
+            //damageEffect.angleHitFrom = Vector3.SignedAngle(characterCausingDamage.transform.forward, damageObject.transform.forward, Vector3.up);
+
+            switch (characterCausingDamage.characterCombatManager.currentAttackType)
+            {
+                case AttackType.LightAttack01:
+                    ApplyAttackDamageModifiers(light_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.LightAttack02:
+                    ApplyAttackDamageModifiers(light_Attack_02_Modifier, damageEffect);
+                    break;
+                case AttackType.LightAttack03:
+                    ApplyAttackDamageModifiers(light_Attack_03_Modifier, damageEffect);
+                    break;
+                case AttackType.LightJumpAttack01:
+                    ApplyAttackDamageModifiers(jump_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.HeavyAttack01:
+                    ApplyAttackDamageModifiers(heavy_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.HeavyAttack02:
+                    ApplyAttackDamageModifiers(heavy_Attack_02_Modifier, damageEffect);
+                    break;
+                case AttackType.ChargedAttack01:
+                    ApplyAttackDamageModifiers(charged_Heavy_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.ChargedAttack02:
+                    ApplyAttackDamageModifiers(charged_Heavy_Attack_02_Modifier, damageEffect);
+                    break;
+                default:
+                    Debug.LogError("DAMAGE MODIFIER NOT IMPLEMENTED " + characterCausingDamage.characterCombatManager.currentAttackType);
+                    break;
+            }
+
+            Debug.Log("Dealing: " + damageEffect.physicalDamage + " Damage");
+
+            //damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+
+            damageObject.TakeDamage(damageEffect.physicalDamage);
         }
 
         protected override void DamageTarget(CharacterManager damageTarget)

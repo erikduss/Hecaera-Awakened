@@ -78,7 +78,8 @@ namespace Erikduss
         UthanorsWrath,
         MoreTrouble,
         AvoidThis,
-        SheddingLight
+        SheddingLight,
+        AssistMe
     }
 
     public enum PooledObjectType
@@ -98,7 +99,8 @@ namespace Erikduss
         NatureFuryVisual,
         UthanorsWrathVisual,
         AvoidThisProjectile,
-        RectangleDamageIndicator
+        RectangleDamageIndicator,
+        AssistMeOrb
     }
 
     public enum AttackIndicatorType
