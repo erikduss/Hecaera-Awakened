@@ -596,19 +596,19 @@ namespace Erikduss
 
                 if (i == 0)
                 {
-                    spawnOffSet = new Vector3(15, 0, 0);
+                    spawnOffSet = new Vector3(10, 0, 0);
                 }
                 if (i == 1)
                 {
-                    spawnOffSet = new Vector3(-15, 0, 0);
+                    spawnOffSet = new Vector3(-10, 0, 0);
                 }
                 if (i == 2)
                 {
-                    spawnOffSet = new Vector3(0, 0, 15);
+                    spawnOffSet = new Vector3(0, 0, 10);
                 }
                 if (i == 3)
                 {
-                    spawnOffSet = new Vector3(0, 0, -15);
+                    spawnOffSet = new Vector3(0, 0, -10);
                 }
 
                 //apply offsets if needed.

@@ -68,6 +68,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3d811fd93ae9d4e901b0ab121b60d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectEnabled:
+    m_InternalValue: 0
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkRotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
+  syncedObjectType: 13
+  networkPositionVelocity: {x: 0, y: 0, z: 0}
+  networkPositionSmoothTime: 0.1
+  networkRotationSmoothTime: 0.1
+  maxActiveTime: 8.5
 --- !u!1 &5442492599598811170
 GameObject:
   m_ObjectHideFlags: 0

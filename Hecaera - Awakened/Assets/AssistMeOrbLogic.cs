@@ -12,6 +12,8 @@ public class AssistMeOrbLogic : SyncedObject, IDamageable
     private float elapsedTime;
     private bool dealtDamage = false;
 
+    public GameObject visualDamageObject;
+
     protected override void Update()
     {
         //Projectiles are being handles by the server only!, assign its network position to the position of our transform.
@@ -93,6 +95,8 @@ public class AssistMeOrbLogic : SyncedObject, IDamageable
         dealtDamage = true;
 
         elapsedTime = 0;
+
+        GameObject.Instantiate(visualDamageObject, transform.position, Quaternion.identity);
 
         if (!NetworkManager.Singleton.IsServer) return;
 
