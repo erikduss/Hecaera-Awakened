@@ -6,6 +6,8 @@ namespace Erikduss
 {
     public class ProjectileDamageCollider : DamageCollider
     {
+        public bool useTriggerDetection = true;
+
         [Header("Attacking Character")]
         public CharacterManager characterCausingDamage; //when calculating damage, this is used to process buffs etc into calculation
 
@@ -30,6 +32,8 @@ namespace Erikduss
 
         protected override void OnTriggerEnter(Collider other)
         {
+            if (!useTriggerDetection) return;
+
             if (other.gameObject.layer == WorldUtilityManager.Instance.GetEnvironmentLayers())
             {
                 Debug.Log("PROJECTILE HIT ENVIRONMENT");

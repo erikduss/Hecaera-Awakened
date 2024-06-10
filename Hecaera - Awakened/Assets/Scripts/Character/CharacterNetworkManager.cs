@@ -176,11 +176,13 @@ namespace Erikduss
             float angleHitFrom,
             float contactPointX,
             float contactPointY,
-            float contactPointZ)
+            float contactPointZ,
+            bool playAnimation = true,
+            bool playSFX = true)
         {
             if (IsServer)
             {
-                NotifyTheServerOfCharacterDamageClientRpc(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+                NotifyTheServerOfCharacterDamageClientRpc(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ, playAnimation, playSFX);
             }
         }
 
@@ -196,9 +198,11 @@ namespace Erikduss
             float angleHitFrom,
             float contactPointX,
             float contactPointY,
-            float contactPointZ)
+            float contactPointZ,
+            bool playAnimation = true,
+            bool playSFX = true)
         {
-            ProcessCharacterDamageFromServer(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+            ProcessCharacterDamageFromServer(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ, playAnimation, playSFX);
         }
 
         public void ProcessCharacterDamageFromServer(
@@ -212,7 +216,9 @@ namespace Erikduss
             float angleHitFrom,
             float contactPointX,
             float contactPointY,
-            float contactPointZ)
+            float contactPointZ,
+            bool playAnimation = true,
+            bool playSFX = true)
         {
             CharacterManager damagedCharacter = NetworkManager.Singleton.SpawnManager.SpawnedObjects[damagedCharacterID].gameObject.GetComponent<CharacterManager>();
             CharacterManager characterCausingDamage = NetworkManager.Singleton.SpawnManager.SpawnedObjects[characterCausingDamageID].gameObject.GetComponent<CharacterManager>();
@@ -227,6 +233,9 @@ namespace Erikduss
             damageEffect.angleHitFrom = angleHitFrom;
             damageEffect.contactPoint = new Vector3(contactPointX, contactPointY, contactPointZ);
             damageEffect.characterCausingDamage = characterCausingDamage;
+
+            damageEffect.playDamageAnimation = playAnimation;
+            damageEffect.willPlayDamageSFX = playSFX;
 
             damagedCharacter.characterEffectsManager.ProcessInstantEffect(damageEffect);
         }

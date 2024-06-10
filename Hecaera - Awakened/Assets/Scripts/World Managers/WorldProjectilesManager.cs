@@ -60,11 +60,21 @@ namespace Erikduss
             Quaternion spawnRotation = spawnRot;
             PlayerManager projectileOwner = null;
 
+            PlayerManager playerWeAttachTo = null;
+
             if (!isNPC)
             {
                 projectileOwner = WorldGameSessionManager.Instance.players.Where(a => a.OwnerClientId == clientID).FirstOrDefault();
                 spawnLocation = projectileOwner.characterCombatManager.magicHandTransform.position;
                 spawnRotation = projectileOwner.transform.rotation;
+            }
+
+            if(type == PooledObjectType.EmotionSorrow)
+            {
+                int rand = UnityEngine.Random.Range(0, WorldGameSessionManager.Instance.players.Count-1);
+                playerWeAttachTo = WorldGameSessionManager.Instance.players[rand];
+                spawnLocation = playerWeAttachTo.transform.position;
+                Debug.Log("We chose " + playerWeAttachTo.NetworkBehaviourId);
             }
 
             GameObject prefab = WorldNetworkObjectPoolManager.Instance.GetGameObjectWithPoolType(type);
@@ -91,6 +101,16 @@ namespace Erikduss
                     {
                         Vector3 indicatorLocation = new Vector3(spawnLocation.x, spawnLocation.y + 5.5f, spawnLocation.z);
                         WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, sproutingVineIndicatorRadius, spawnedProjectile, true);
+                    }
+                    else if(type == PooledObjectType.EmotionSorrow)
+                    {
+                        PlayOnEmotionsLogic POELogic = obj.GetComponent<PlayOnEmotionsLogic>();
+
+                        if(playerWeAttachTo != null)
+                        {
+                            POELogic.attachedPlayer = playerWeAttachTo;
+                            Debug.Log("Attached player");
+                        }
                     }
                 }
                 //spawnedProjectile.projectileCollider.characterCausingDamage = projectileOwner;

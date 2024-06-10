@@ -619,5 +619,19 @@ namespace Erikduss
         }
 
         #endregion
+
+        #region Play On Emotions Attacks
+
+        public void ExecutePlayOnEmotionsSorrow()
+        {
+            if (!IsOwner)
+                return;
+
+            //we will pick the person that this attaches to in the world projectiles manager script to make it easier.
+
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.EmotionSorrow, 0, Vector3.zero, Quaternion.identity, true);
+        }
+
+        #endregion
     }
 }
