@@ -121,6 +121,9 @@ namespace Erikduss
 
             if (amountOfTimesMoved >= amountOfTimesThisMoves)
             {
+                amountOfTimesMoved = 0;
+                projectileCollider.charactersDamaged.Clear();
+
                 ReturnThisProjectileToPool();
                 return;
             }

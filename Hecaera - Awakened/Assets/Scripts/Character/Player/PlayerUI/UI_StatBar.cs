@@ -32,7 +32,12 @@ namespace Erikduss
 
             if (scaleBarLengthWithStats)
             {
-                rectTransform.sizeDelta = new Vector2(maxValue * widthScaleMultiplier, rectTransform.sizeDelta.y);
+                float newBarSizeValue = maxValue * widthScaleMultiplier;
+
+                //make sure the bar doesnt become huge.
+                if (newBarSizeValue > 300) newBarSizeValue = 300;
+
+                rectTransform.sizeDelta = new Vector2(newBarSizeValue, rectTransform.sizeDelta.y);
                 //Resets the position of the bars based on their layout settings.
                 PlayerUIManager.instance.playerUIHudManager.RefreshHUD();
             }

@@ -57,6 +57,7 @@ namespace Erikduss
         [SerializeField] Toggle phase2SkipToggle;
         [SerializeField] Toggle phase3SkipToggle;
         [SerializeField] Toggle phase4SkipToggle;
+        [SerializeField] Toggle hasInfiniteHealthToggle;
 
         public bool continuedPastSplashScreen = false;
         [SerializeField] private SettingsMenuManager settingsMenuManager;
@@ -108,6 +109,7 @@ namespace Erikduss
             WorldGameSessionManager.Instance.skipPhase2 = phase2SkipToggle.isOn;
             WorldGameSessionManager.Instance.skipPhase3 = phase3SkipToggle.isOn;
             WorldGameSessionManager.Instance.skipPhase4 = phase4SkipToggle.isOn;
+            WorldGameSessionManager.Instance.hasInfiniteHealth = hasInfiniteHealthToggle.isOn;
 
             ConnectionManager.Instance.StartLoadingIntoGameAsHost();
         }

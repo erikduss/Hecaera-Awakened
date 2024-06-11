@@ -29,6 +29,12 @@ namespace Erikduss
             base.Awake();
 
             player = GetComponent<PlayerManager>();
+
+            if (IsOwner && WorldGameSessionManager.Instance.hasInfiniteHealth) 
+            { 
+                maxHealth.Value = 2147483647;
+                vitality.Value = 143165576;
+            }
         }
 
         public void SetCharacterActionHand(bool rightHandedAction)

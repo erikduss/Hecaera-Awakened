@@ -18,6 +18,8 @@ namespace Erikduss
         {
             bossCharacter = boss;
             bossCharacter.aICharacterNetworkManager.currentHealth.OnValueChanged += OnBossHPChanged;
+            bossCharacter.currentBossPhase.OnValueChanged += BossPhaseOnValueChanged;
+
             SetMaxStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
             SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
 
@@ -27,6 +29,7 @@ namespace Erikduss
         private void OnDestroy()
         {
             bossCharacter.aICharacterNetworkManager.currentHealth.OnValueChanged -= OnBossHPChanged;
+            bossCharacter.currentBossPhase.OnValueChanged -= BossPhaseOnValueChanged;
         }
 
         private void OnBossHPChanged(int oldValue, int newValue)
@@ -46,23 +49,29 @@ namespace Erikduss
             }
         }
 
+        public void BossPhaseOnValueChanged(int oldValue, int newValue)
+        {
+            //we need to make sure this is called for both the client and server
+            StartCoroutine(ChangeToNextPhase());
+        }
+
         public IEnumerator ChangeToNextPhase()
         {
             yield return new WaitForSeconds(1);
 
             if (bossCharacter.currentBossPhase.Value == 2)
             {
-                SetStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
+                SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
                 bossPhaseText.text = "Phase 2: Acceptance";
             }
             else if (bossCharacter.currentBossPhase.Value == 3)
             {
-                SetStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
+                SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
                 bossPhaseText.text = "Phase 3: Sadness";
             }
             else if (bossCharacter.currentBossPhase.Value == 4)
             {
-                SetStat(bossCharacter.aICharacterNetworkManager.maxHealth.Value);
+                SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
                 bossPhaseText.text = "Phase 4: Hatred";
             }
         }

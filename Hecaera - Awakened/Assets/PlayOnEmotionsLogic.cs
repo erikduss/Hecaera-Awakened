@@ -120,13 +120,16 @@ namespace Erikduss
 
         protected override void OnObjectEnabledChange(bool oldID, bool newID)
         {
-            base.OnObjectEnabledChange(oldID, newID);
-
             startUpTimer = 0f;
 
             //only clear this when disabling.
-            if(!newID)
+            if (!newID)
                 attachedPlayer = null;
+
+            if(IsServer)
+                isDamaging.Value = false;
+
+            base.OnObjectEnabledChange(oldID, newID);
         }
 
         private void OnIsDamagingValueChanged(bool oldVal, bool newVal)

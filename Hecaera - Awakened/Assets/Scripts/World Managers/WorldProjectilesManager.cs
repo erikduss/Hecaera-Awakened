@@ -69,7 +69,7 @@ namespace Erikduss
                 spawnRotation = projectileOwner.transform.rotation;
             }
 
-            if(type == PooledObjectType.EmotionSorrow)
+            if(type == PooledObjectType.EmotionSorrow || type == PooledObjectType.ShareSorrow)
             {
                 int rand = UnityEngine.Random.Range(0, WorldGameSessionManager.Instance.players.Count-1);
                 playerWeAttachTo = WorldGameSessionManager.Instance.players[rand];
@@ -109,6 +109,16 @@ namespace Erikduss
                         if(playerWeAttachTo != null)
                         {
                             POELogic.attachedPlayer = playerWeAttachTo;
+                            Debug.Log("Attached player");
+                        }
+                    }
+                    else if (type == PooledObjectType.ShareSorrow)
+                    {
+                        ShareMySorrowLogic SorrowShareLogic = obj.GetComponent<ShareMySorrowLogic>();
+
+                        if (playerWeAttachTo != null)
+                        {
+                            SorrowShareLogic.attachedPlayer = playerWeAttachTo;
                             Debug.Log("Attached player");
                         }
                     }

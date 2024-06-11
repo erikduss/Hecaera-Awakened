@@ -209,6 +209,8 @@ namespace Erikduss
                         bool useCustomColor = false;
                         //if (playerNetworkManager.playerMaterialID.Value == -1) useCustomColor = true;
 
+                        player.playerNetworkManager.SetNewMaxHealthValue(0, WorldGameSessionManager.Instance.players[0].playerNetworkManager.vitality.Value);
+
                         PlayerMaterialManagement.Instance.SetMaterial(this, playerNetworkManager.playerMaterialID.Value, playerNetworkManager.playerCustomMaterialColor.Value, useCustomColor);
                     }
                 }

@@ -633,5 +633,18 @@ namespace Erikduss
         }
 
         #endregion
+
+        #region Share my emotions attacks
+        public void ExecuteShareMySorrow()
+        {
+            if (!IsOwner)
+                return;
+
+            //we will pick the person that this attaches to in the world projectiles manager script to make it easier.
+
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ShareSorrow, 0, Vector3.zero, Quaternion.identity, true);
+        }
+
+        #endregion
     }
 }

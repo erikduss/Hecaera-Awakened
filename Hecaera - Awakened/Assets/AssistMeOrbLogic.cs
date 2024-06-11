@@ -46,11 +46,13 @@ public class AssistMeOrbLogic : SyncedObject, IDamageable
         }
 
 
+        //check if the orb is destroyed.
         if(currentObjectHealth.Value <= 0)
         {
             DestroyOrb();
         }
 
+        //logic for detonation of the orb.
         if (objectEnabled.Value)
         {
             if (activeTime <= 0 && startedTimer)
@@ -83,10 +85,17 @@ public class AssistMeOrbLogic : SyncedObject, IDamageable
 
     protected override void ReturnThisObjectToPool()
     {
-        base.ReturnThisObjectToPool();
+        if (!dealtDamage && currentObjectHealth.Value > 0) DetonateOrb();
 
         elapsedTime = 0;
         dealtDamage = false;
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            currentObjectHealth.Value = objectMaxHealth.Value;
+        }
+        
+        base.ReturnThisObjectToPool();
     }
 
     public void DetonateOrb()

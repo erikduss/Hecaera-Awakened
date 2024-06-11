@@ -80,7 +80,8 @@ namespace Erikduss
         AvoidThis,
         SheddingLight,
         AssistMe,
-        PlayOnEmotions_Sorrow
+        PlayOnEmotions_Sorrow,
+        ShareMySorrow
     }
 
     public enum PooledObjectType
@@ -102,7 +103,9 @@ namespace Erikduss
         AvoidThisProjectile,
         RectangleDamageIndicator,
         AssistMeOrb,
-        EmotionSorrow
+        EmotionSorrow,
+        ShareSorrow,
+        ShareMyEmotionToxin
     }
 
     public enum AttackIndicatorType

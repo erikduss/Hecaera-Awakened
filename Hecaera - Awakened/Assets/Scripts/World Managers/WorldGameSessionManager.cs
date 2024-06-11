@@ -28,6 +28,7 @@ namespace Erikduss
         public bool skipPhase2 = false;
         public bool skipPhase3 = false;
         public bool skipPhase4 = false;
+        public bool hasInfiniteHealth = false;
 
         private void Awake()
         {

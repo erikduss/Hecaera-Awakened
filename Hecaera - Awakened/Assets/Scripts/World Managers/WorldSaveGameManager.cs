@@ -252,8 +252,16 @@ namespace Erikduss
 
         private void NewGame()
         {
-            player.playerNetworkManager.vitality.Value = 15;
-            player.playerNetworkManager.endurance.Value = 10;
+            if (WorldGameSessionManager.Instance.hasInfiniteHealth)
+            {
+                player.playerNetworkManager.vitality.Value = 14316;
+                player.playerNetworkManager.endurance.Value = 10;
+            }
+            else
+            {
+                player.playerNetworkManager.vitality.Value = 15;
+                player.playerNetworkManager.endurance.Value = 10;
+            }
 
             SaveGame();
             StartCoroutine(LoadWorldScene());
