@@ -42,6 +42,10 @@ namespace Erikduss
 
         public LayerMask uthanorWrathBlockLayer;
 
+        public float thisEndsNowProjectileDelay = 1f;
+        private float thisEndsNowSpawnTimer = 0;
+        public bool spawnThisEndsNowProjectiles = false;
+
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
@@ -80,6 +84,49 @@ namespace Erikduss
             {
                 ixeleceMaterialManagement.SetCloneMaterial();
             }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (!IsServer) return;
+
+            if (spawnThisEndsNowProjectiles && !aICharacterNetworkManager.isDead.Value)
+            {
+                if (thisEndsNowSpawnTimer <= 0)
+                {
+                    //spawn
+                    thisEndsNowSpawnTimer = thisEndsNowProjectileDelay;
+                    SpawnThisEndsNowProjectile();
+                }
+                else
+                    thisEndsNowSpawnTimer -= Time.deltaTime;
+            }
+        }
+
+        public override void PhaseShift()
+        {
+            base.PhaseShift();
+
+            if(currentBossPhase.Value == 4)
+            {
+                //Set a delay for when the boss is still phasing.
+                thisEndsNowSpawnTimer = 10f;
+
+                spawnThisEndsNowProjectiles = true;
+            }
+        }
+
+        public void SpawnThisEndsNowProjectile()
+        {
+            float randomX = Random.Range(-maxArenaLengthFromMiddle, maxArenaLengthFromMiddle);
+            float randomY = Random.Range(30f, 60f);
+            float randomZ = Random.Range(-maxArenaLengthFromMiddle, maxArenaLengthFromMiddle);
+
+            Vector3 spawnLocation = new Vector3(middleArenaTeleportLocation.x + randomX, middleArenaTeleportLocation.y + randomY, middleArenaTeleportLocation.z + randomZ);
+
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.ThisEndsNow, 0, spawnLocation, Quaternion.identity, true);
         }
 
         public override void WakeBoss()
@@ -630,6 +677,16 @@ namespace Erikduss
             //we will pick the person that this attaches to in the world projectiles manager script to make it easier.
 
             WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.EmotionSorrow, 0, Vector3.zero, Quaternion.identity, true);
+        }
+
+        public void ExecutePlayOnEmotionsHatred()
+        {
+            if (!IsOwner)
+                return;
+
+            //we will pick the person that this attaches to in the world projectiles manager script to make it easier.
+
+            WorldProjectilesManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)PooledObjectType.EmotionHatred, 0, Vector3.zero, Quaternion.identity, true);
         }
 
         #endregion

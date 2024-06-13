@@ -289,7 +289,7 @@ namespace Erikduss
             }
         }
 
-        public void PhaseShift()
+        public virtual void PhaseShift()
         {
             currentState = idle;
 

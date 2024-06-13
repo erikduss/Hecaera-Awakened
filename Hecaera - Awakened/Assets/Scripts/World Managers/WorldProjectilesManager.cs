@@ -69,7 +69,7 @@ namespace Erikduss
                 spawnRotation = projectileOwner.transform.rotation;
             }
 
-            if(type == PooledObjectType.EmotionSorrow || type == PooledObjectType.ShareSorrow)
+            if(type == PooledObjectType.EmotionSorrow || type == PooledObjectType.ShareSorrow || type == PooledObjectType.EmotionHatred)
             {
                 int rand = UnityEngine.Random.Range(0, WorldGameSessionManager.Instance.players.Count-1);
                 playerWeAttachTo = WorldGameSessionManager.Instance.players[rand];
@@ -97,6 +97,11 @@ namespace Erikduss
                         Vector3 indicatorLocation = new Vector3(spawnLocation.x, 5f, spawnLocation.z);
                         WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, fireFruitIndicatorRadius, spawnedProjectile, true);
                     }
+                    else if (type == PooledObjectType.ThisEndsNow)
+                    {
+                        Vector3 indicatorLocation = new Vector3(spawnLocation.x, 5f, spawnLocation.z);
+                        WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(clientID, (int)PooledObjectType.DamageIndicator, 0, indicatorLocation, Quaternion.identity, fireFruitIndicatorRadius, spawnedProjectile, true);
+                    }
                     else if(type == PooledObjectType.SproutingVine)
                     {
                         Vector3 indicatorLocation = new Vector3(spawnLocation.x, spawnLocation.y + 5.5f, spawnLocation.z);
@@ -107,6 +112,16 @@ namespace Erikduss
                         PlayOnEmotionsLogic POELogic = obj.GetComponent<PlayOnEmotionsLogic>();
 
                         if(playerWeAttachTo != null)
+                        {
+                            POELogic.attachedPlayer = playerWeAttachTo;
+                            Debug.Log("Attached player");
+                        }
+                    }
+                    else if (type == PooledObjectType.EmotionHatred)
+                    {
+                        PlayOnEmotionsLogic POELogic = obj.GetComponent<PlayOnEmotionsLogic>();
+
+                        if (playerWeAttachTo != null)
                         {
                             POELogic.attachedPlayer = playerWeAttachTo;
                             Debug.Log("Attached player");

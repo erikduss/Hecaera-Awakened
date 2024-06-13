@@ -66,19 +66,39 @@ namespace Erikduss
                 return;
             }
 
-            //startup time is over, we damage now
-            if (amountOfNearbyPlayers <= 0)
+            if(projectileType == PooledObjectType.EmotionSorrow)
             {
-                if (!isDamaging.Value) isDamaging.Value = true;
+                //startup time is over, we damage now
+                if (amountOfNearbyPlayers <= 0)
+                {
+                    if (!isDamaging.Value) isDamaging.Value = true;
 
-                if(damageTimer <= 0)
-                    DamageAttachedCharacter();
+                    if (damageTimer <= 0)
+                        DamageAttachedCharacter();
+                    else
+                        damageTimer -= Time.deltaTime;
+                }
                 else
-                    damageTimer -= Time.deltaTime;
+                {
+                    if (isDamaging.Value) isDamaging.Value = false;
+                }
             }
-            else
+            else if(projectileType == PooledObjectType.EmotionHatred)
             {
-                if (isDamaging.Value) isDamaging.Value = false;
+                //startup time is over, we damage now
+                if (amountOfNearbyPlayers > 0)
+                {
+                    if (!isDamaging.Value) isDamaging.Value = true;
+
+                    if (damageTimer <= 0)
+                        DamageAttachedCharacter();
+                    else
+                        damageTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    if (isDamaging.Value) isDamaging.Value = false;
+                }
             }
         }
 

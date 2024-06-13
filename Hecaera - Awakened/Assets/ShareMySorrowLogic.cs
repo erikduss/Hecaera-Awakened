@@ -50,7 +50,7 @@ namespace Erikduss
 
         protected override void Update()
         {
-            if (IsServer)
+            if (IsServer && !isDamaging.Value)
             {
                 transform.position = attachedPlayer.transform.position;
             }
@@ -75,6 +75,8 @@ namespace Erikduss
 
         private IEnumerator DamageClosebyCharacters(float delay)
         {
+            Vector3 explosionLocation = transform.position;
+
             yield return new WaitForSeconds(delay);
 
             //we dont need to damage anything
@@ -117,7 +119,7 @@ namespace Erikduss
 
             //spawn toxin.
             //player has 1 second to get away from the toxin before taking damage.
-            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)objectToSpawn, 0, gameObject.transform.position, gameObject.transform.rotation, 10, null, true, true, 1f, 7.5f);
+            WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)objectToSpawn, 0, explosionLocation, Quaternion.identity, 10, null, true, true, 1f, 7.5f);
         }
 
         protected override void OnObjectEnabledChange(bool oldID, bool newID)
