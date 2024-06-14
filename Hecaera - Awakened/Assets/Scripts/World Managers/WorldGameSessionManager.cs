@@ -127,8 +127,12 @@ namespace Erikduss
 
         public bool AmITheHost()
         {
-            PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
-            return localPlayer.AmITheHost();
+            if (players.Count > 0)
+            {
+                PlayerManager localPlayer = players.Where(a => a.IsLocalPlayer).FirstOrDefault();
+                return localPlayer.AmITheHost();
+            }
+            else return false;
         }
 
         private void ConnectionApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)

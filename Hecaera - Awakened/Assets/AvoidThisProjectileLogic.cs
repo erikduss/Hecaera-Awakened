@@ -115,6 +115,8 @@ namespace Erikduss
 
         private void PickNewEndLocation()
         {
+            if (!IsServer) return;
+
             currentEndLocation = Vector3.zero;
             moveDelayTimer = 0;
             addedProjectileSpeed = 0;

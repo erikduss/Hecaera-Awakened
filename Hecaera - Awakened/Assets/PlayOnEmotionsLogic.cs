@@ -66,6 +66,7 @@ namespace Erikduss
                 return;
             }
 
+            //same logic but reversed for both effects.
             if(projectileType == PooledObjectType.EmotionSorrow)
             {
                 //startup time is over, we damage now
@@ -100,6 +101,19 @@ namespace Erikduss
                     if (isDamaging.Value) isDamaging.Value = false;
                 }
             }
+        }
+
+        public override void ReturnThisProjectileToPool()
+        {
+            amountOfNearbyPlayers = 0;
+            damageTimer = damageDelayAfterHit;
+
+            if (IsServer)
+            {
+                isDamaging.Value = false;
+            }
+
+            base.ReturnThisProjectileToPool();
         }
 
         private void DamageAttachedCharacter()

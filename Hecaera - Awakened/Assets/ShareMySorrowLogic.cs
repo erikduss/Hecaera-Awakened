@@ -122,6 +122,19 @@ namespace Erikduss
             WorldGroundIndicatorManager.Instance.NotifyTheServerOfSpawnActionServerRpc(NetworkObjectId, (int)objectToSpawn, 0, explosionLocation, Quaternion.identity, 10, null, true, true, 1f, 7.5f);
         }
 
+        public override void ReturnThisProjectileToPool()
+        {
+            detonationTimer = 0;
+            playersThatWillbeDamaged.Clear();
+
+            if (IsServer)
+            {
+                isDamaging.Value = false;
+            }
+
+            base.ReturnThisProjectileToPool();
+        }
+
         protected override void OnObjectEnabledChange(bool oldID, bool newID)
         {
             detonationTimer = 0f;

@@ -71,7 +71,7 @@ namespace Erikduss
 
             if(type == PooledObjectType.EmotionSorrow || type == PooledObjectType.ShareSorrow || type == PooledObjectType.EmotionHatred)
             {
-                int rand = UnityEngine.Random.Range(0, WorldGameSessionManager.Instance.players.Count-1);
+                int rand = UnityEngine.Random.Range(0, WorldGameSessionManager.Instance.players.Count);
                 playerWeAttachTo = WorldGameSessionManager.Instance.players[rand];
                 spawnLocation = playerWeAttachTo.transform.position;
                 Debug.Log("We chose " + playerWeAttachTo.NetworkBehaviourId);

@@ -102,7 +102,7 @@ namespace Erikduss
             projectileCollider.EnableDamageCollider();
         }
 
-        public void ReturnThisProjectileToPool()
+        public virtual void ReturnThisProjectileToPool()
         {
             projectileCollider.DisableDamageCollider();
             ResetProjectileOwner();

@@ -48,6 +48,12 @@ namespace Erikduss
                 
                 pillarLogic.targetLocation = new Vector3(spawnLoc.x, spawnLoc.y + 18.4f, spawnLoc.z);
             }
+            else if(type == PooledObjectType.AssistMeOrb)
+            {
+                AssistMeOrbLogic orbLogic = obj.GetComponent<AssistMeOrbLogic>();
+
+                orbLogic.characterCausingDamage = WorldAIManager.Instance.spawnedInBosses[0];
+            }
         }
 
         private IEnumerator SpawnSyncedObjectWithDelay(ulong clientID, int indicatorObjectTypeID, float spawnDelay, Vector3 spawnLocation, Quaternion spawnRotation)

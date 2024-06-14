@@ -9,6 +9,7 @@ public class AssistMeOrbLogic : SyncedObject, IDamageable
     public NetworkVariable<float> currentObjectHealth = new NetworkVariable<float>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> objectMaxHealth = new NetworkVariable<float>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    public CharacterManager characterCausingDamage;
     private float elapsedTime;
     private bool dealtDamage = false;
 
@@ -77,6 +78,13 @@ public class AssistMeOrbLogic : SyncedObject, IDamageable
     {
         base.OnObjectEnabledChange(oldID, newID);
 
+        if (newID)
+        {
+            startedTimer = false;
+            dealtDamage = false;
+            activeTime = maxActiveTime;
+        }
+
         if (NetworkManager.Singleton.IsServer)
         {
             currentObjectHealth.Value = objectMaxHealth.Value;
@@ -126,7 +134,7 @@ public class AssistMeOrbLogic : SyncedObject, IDamageable
             Vector3 contactPoint = player.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
             TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.Instance.takeDamageEffect);
-            damageEffect.characterCausingDamage = null;
+            damageEffect.characterCausingDamage = characterCausingDamage;
             damageEffect.physicalDamage = damage * multiplier;
             damageEffect.magicDamage = 0 * multiplier;
             damageEffect.fireDamage = 0 * multiplier;
