@@ -26,8 +26,13 @@ namespace Erikduss
             meleeDamageCollider.light_Attack_02_Modifier = weapon.light_Attack_02_Modifier;
             meleeDamageCollider.light_Attack_03_Modifier = weapon.light_Attack_03_Modifier;
 
+            meleeDamageCollider.jump_Attack_01_Modifier = weapon.jump_Attack_01_Modifier;
+
             meleeDamageCollider.heavy_Attack_01_Modifier = weapon.heavy_Attack_01_Modifier;
             meleeDamageCollider.charged_Heavy_Attack_01_Modifier = weapon.charged_Heavy_Attack_01_Modifier;
-        }
+
+            meleeDamageCollider.heavy_Attack_02_Modifier = weapon.heavy_Attack_02_Modifier;
+            meleeDamageCollider.charged_Heavy_Attack_02_Modifier = weapon.charged_Heavy_Attack_02_Modifier;
+    }
     }
 }
