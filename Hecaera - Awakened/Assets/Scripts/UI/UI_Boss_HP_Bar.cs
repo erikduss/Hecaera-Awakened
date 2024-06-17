@@ -14,6 +14,10 @@ namespace Erikduss
 
         public bool hasAnotherPhase = false;
 
+        public Material phase02Skybox;
+        public Material phase03Skybox;
+        public Material phase04Skybox;
+
         public void EnableBossHPBar(AIBossCharacterManager boss)
         {
             bossCharacter = boss;
@@ -63,16 +67,22 @@ namespace Erikduss
             {
                 SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
                 bossPhaseText.text = "Phase 2: Acceptance";
+                //RenderSettings.skybox = phase02Skybox;
+                RenderSettings.skybox.Lerp(RenderSettings.skybox, phase02Skybox, 5f);
             }
             else if (bossCharacter.currentBossPhase.Value == 3)
             {
                 SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
                 bossPhaseText.text = "Phase 3: Sadness";
+                //RenderSettings.skybox = phase03Skybox;
+                RenderSettings.skybox.Lerp(RenderSettings.skybox, phase03Skybox, 5f);
             }
             else if (bossCharacter.currentBossPhase.Value == 4)
             {
                 SetStat(bossCharacter.aICharacterNetworkManager.currentHealth.Value);
                 bossPhaseText.text = "Phase 4: Hatred";
+                //RenderSettings.skybox = phase04Skybox;
+                RenderSettings.skybox.Lerp(RenderSettings.skybox, phase04Skybox, 5f);
             }
         }
 
